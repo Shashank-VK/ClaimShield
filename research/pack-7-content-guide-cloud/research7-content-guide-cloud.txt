@@ -1,0 +1,303 @@
+================================================================================
+RESEARCH FINDINGS — PACK 5 & PACK 6
+Hackathon Content Guide & Hindsight Cloud Verification
+Date: Fri Nov 06 2026
+Research Agent: Nemotron 3.5 Super VL Free (opencode)
+Method: Direct URL fetching only (web search blocked HTTP 402)
+Output file: /mnt/c/Users/Shashank Karamudi/Desktop/ClaimShield/research/research7.txt
+================================================================================
+
+================================================================================
+PACK 5 — HACKATHON CONTENT GUIDE ("AI Agents That Learn Using Hindsight")
+================================================================================
+
+SEARCH STATUS: CONTENT GUIDE NOT FOUND on any publicly accessible source.
+
+SOURCES CHECKED (all direct-fetched):
+
+1. https://hindsight.vectorize.io/ (homepage)
+   - Fetched successfully. Navigation includes: Docs, Integrations, Changelog,
+     Academy, Resources (Bank Templates, Best Practices, FAQ, Cookbook, Blog,
+     API Reference, Community/Slack, Benchmarks, Paper), Blog posts, Architecture,
+     API, Security, Clients, Coding agents, Frameworks & SDKs, Apps & tools,
+     Legacy, Cloud & Enterprise, Hosting, Installation, Resources, More.
+   - Blog posts listed: Introducing Hindsight Models (Nov 3 2026), Introducing
+     Hindsight Memlake (Oct 13 2026), Enterprise Features in Hindsight Cloud
+     (Sep 3 2026).
+   - NO hackathon link, NO "AI Agents That Learn Using Hindsight" mention,
+     NO Content Guide reference.
+   - Status: NO HACKATHON CONTENT FOUND. [FACT — page fully fetched]
+
+2. https://hindsight.vectorize.io/blog (Hindsight blog)
+   - Fetched successfully. Featured posts: Hindsight Models (Nov 3 2026),
+     Memlake (Oct 13 2026), Enterprise Features (Sep 3 2026), Version 1.2.0
+     (Nov 3 2026), OpenBot persistent memory (Oct 29 2026), Hindsight Cloud
+     October (Oct 27 2026), Nemotron 3.5 Embed (Oct 21 2026), Version 1.1.0
+     (Oct 21 2026), Agent swarm memory (Oct 20 2026), Eve memory provider
+     (Oct 16 2026), 50,000 GitHub Stars (Oct 15 2026).
+   - NO hackathon post, NO Content Guide mention.
+   - Status: NO HACKATHON CONTENT FOUND. [FACT — page fully fetched]
+
+3. https://vectorize.io/ (main Vectorize site)
+   - Fetched successfully. Product nav: Pricing, Docs, Blog, About.
+   - Mentions Hindsight Cloud, Hindsight OSS, Enterprise, Memlake, Models,
+     RAG Platform. NO hackathon link, NO Content Guide reference.
+   - Status: NO HACKATHON CONTENT FOUND. [FACT — page fully fetched]
+
+4. https://vectorize.io/blog (Vectorize blog)
+   - Fetched successfully. 16 pages of posts. Recent: Customer Support Agent
+     with Hindsight + ADK (Jul 14 2026), Coding Agents Killed SaaS (Mar 3 2026),
+     Hindsight Building AI Agents (Dec 16 2025), Introducing Hindsight (Dec 16 2025),
+     Beyond Retrieval MCP Tools (Nov 20 2025), Cursor + Vectorize (Sep 15 2025),
+     Groq Desktop + Vectorize (Sep 12 2025), Conversational Docs (Sep 11 2025),
+     Vectorize 2.0 (Sep 8 2025), Launch Week posts (Sep 2025).
+   - NO hackathon post, NO Content Guide mention.
+   - Status: NO HACKATHON CONTENT FOUND. [FACT — page fully fetched]
+
+5. https://github.com/vectorize-io/hindsight (repo + discussions + issues)
+   - Repo README fetched: no hackathon mention. Topics: agentic-ai, agents,
+     ai-memory, memory. 59.4k stars.
+   - Discussions page fetched: categories Announcements, General, Ideas, Polls,
+     Q&A, Show and tell. Recent discussions include hindsight-livekit (Oct 22),
+     Hindsight Desktop macOS client (Nov 4), 1M small banks Q&A (Nov 1),
+     external Postgres tip (Oct 30), Memory Tournament invitation (Oct 12),
+     etc. NO hackathon discussion, NO Content Guide reference.
+   - Issues page fetched: 168 open issues. Recent issues are core bugs,
+     integration bugs, flaky tests. NO hackathon issue, NO Content Guide issue.
+   - Status: NO HACKATHON CONTENT FOUND. [FACT — pages fully fetched]
+
+6. https://discord.com/invite/5YkNXmYfjk (Band Discord)
+   - Fetch returned only the text "BAND" — Discord invite page not renderable
+     via server-side fetch (client-side SPA / requires auth). Hackathon channel
+     content NOT accessible.
+   - Status: NOT FETCHABLE / UNVERIFIED.
+
+7. https://vectorize.io/slack (Hindsight community Slack)
+   - Fetch returned HTTP 403 Forbidden. Slack invite/landing not accessible.
+   - Status: NOT FETCHABLE (403) / UNVERIFIED.
+
+Hackathon URL pattern guesses (all returned HTTP 404):
+   - https://hindsight.vectorize.io/hackathon
+   - https://vectorize.io/hackathon
+   - https://hindsight.vectorize.io/blog/hackathon
+   - Status: 404 NOT FOUND. [FACT — HTTP 404 confirmed]
+
+================================================================================
+PACK 5 — CONTENT GUIDE FINDINGS SUMMARY
+================================================================================
+
+WHERE IS THE CONTENT GUIDE HOSTED?
+   → NOT FOUND. The official Hackathon Content Guide for "AI Agents That Learn
+   Using Hindsight" was not located on any of the seven specified sources, nor
+   on guessed hackathon URL patterns. It may exist only behind Discord/Slack
+   (both inaccessible to server-side fetching) or may not be publicly published.
+   → Label: UNVERIFIED (guide location unknown)
+
+REQUIRED DELIVERABLE FORMATS (Article, Social Media post, Video):
+   → NOT FOUND. No deliverable format requirements located.
+   → Label: UNVERIFIED
+
+WORD COUNTS, VIDEO DURATION LIMITS:
+   → NOT FOUND. No word counts or duration limits located.
+   → Label: UNVERIFIED
+
+TAGS/HASHTAGS THAT MUST BE USED:
+   → NOT FOUND. No tags/hashtags located.
+   → Label: UNVERIFIED
+
+SUBMISSION DEADLINES:
+   → NOT FOUND. No deadlines located.
+   → Label: UNVERIFIED
+
+CAN THE CONTENT GUIDE VIDEO ALSO COUNT AS THE DEMO VIDEO?
+   → NOT FOUND. Cannot determine without the guide.
+   → Label: UNVERIFIED
+
+DOES "USE BAND" MEAN BAND INSIDE THE PRODUCT OR ONLY IN BUILD PROCESS?
+   → NOT FOUND. "Band" not mentioned on any fetched page. The Discord invite
+     returned only "BAND" (likely the Band community platform, unrelated to
+     Hindsight product). No product feature named "Band" found.
+   → Label: UNVERIFIED
+
+IS BAND USAGE MANDATORY FOR ELIGIBILITY?
+   → NOT FOUND. Cannot determine without the guide.
+   → Label: UNVERIFIED
+
+IS HINDSIGHT USAGE MANDATORY?
+   → NOT FOUND. Cannot determine without the guide. (Hackathon is titled
+     "AI Agents That Learn Using Hindsight" which strongly implies Hindsight
+     usage, but this is an INFERENCE, not a confirmed requirement.)
+   → Label: INFERENCE (hackathon title implies Hindsight usage, but unconfirmed)
+
+================================================================================
+PACK 5 — UNRESOLVED QUESTIONS LIST
+================================================================================
+
+1. Where is the Hackathon Content Guide hosted? — UNRESOLVED (not on any
+   public page checked; possibly behind Discord/Slack which are inaccessible).
+2. What are the required deliverable formats (Article, Social Media post,
+   Video)? — UNRESOLVED.
+3. What are word counts and video duration limits? — UNRESOLVED.
+4. What tags/hashtags must be used? — UNRESOLVED.
+5. What are submission deadlines? — UNRESOLVED.
+6. Can the Content Guide video also count as the demo video? — UNRESOLVED.
+7. Does "use Band" mean Band inside the product or only in build process?
+   — UNRESOLVED ("Band" not found on any Hindsight/Vectorize page).
+8. Is Band usage mandatory for eligibility? — UNRESOLVED.
+9. Is Hindsight usage mandatory? — UNRESOLVED (title implies yes, unconfirmed).
+
+RECOMMENDATION: Access the Band Discord (https://discord.com/invite/5YkNXmYfjk)
+and/or Hindsight Slack (https://vectorize.io/slack) directly via browser to
+locate the Content Guide, as it is not published on any public web page.
+
+================================================================================
+PACK 6 — HINDSIGHT CLOUD + MEMHACK99 PROMO CODE VERIFICATION
+================================================================================
+
+SOURCES FETCHED:
+
+1. https://ui.hindsight.vectorize.io (Cloud login/signup)
+   - NOT FETCHABLE (no tool output returned; likely requires JS/auth).
+   - Referenced from homepages as signup target.
+
+2. https://hindsight.vectorize.io/cloud-enterprise/overview (Cloud overview)
+   - FETCHED. Comparison table: Self-hosted (bring your own LLM/embeddings,
+     free MIT), Hindsight Cloud (models included, managed, pay-as-you-go from
+     prepaid credits), Hindsight Enterprise (contract, single-tenant).
+   - Cloud: "The LLM, embedding and reranking models are included."
+   - Decision model: optional, from Hindsight Inference.
+   - [FACT — page fully fetched]
+
+3. https://hindsight.vectorize.io/cloud-enterprise/hindsight-cloud (Cloud features)
+   - FETCHED. Cloud includes: nothing to run, same API, console, teams,
+     usage analytics, prepaid credit billing.
+   - Pricing section: "You pay for what you use, from a prepaid credit balance:
+     per token for retain and recall, per call for reflect and for creating or
+     refreshing mental models and knowledge pages, and for storage of memories
+     kept longer than 30 days. See Billing for current rates."
+   - [FACT — page fully fetched]
+
+4. https://hindsight.vectorize.io/developer/decision-models (decision model on Cloud)
+   - FETCHED. Decision model (hs-decide-1-flash) from Hindsight Inference at
+     $0.02 per million input tokens. Optional. Works with every operation.
+     Open weights on Hugging Face (Apache 2.0).
+   - [FACT — page fully fetched]
+
+5. https://hindsight.vectorize.io/developer/models (models on Cloud vs local)
+   - FETCHED. Four model kinds: LLM (default openai gpt-4o-mini), Embedding
+     (default BAAI/bge-small-en-v1.5 local), Reranker (default hs-rerank-1
+     local), Decision model (off by default). Hindsight Inference serves
+     hs-decide-1-flash, hs-rerank-1, hs-embed-1.
+   - [FACT — page fully fetched]
+
+6. https://inference.hindsight.vectorize.io/v1/systemone (decision model API)
+   - FETCHED but returned HTTP 405 (GET not allowed) — expected; the
+     /v1/systemone endpoint is a POST-only API endpoint. Endpoint EXISTS.
+   - [FACT — endpoint returns 405 Method Not Allowed, confirming it exists]
+
+7. https://vectorize.io/pricing (pricing page — added source)
+   - FETCHED. Hindsight Models pricing:
+     - hs-decide-1-flash: $0.02 per 1M input tokens (output free)
+     - hs-rerank-1: $0.015 per 1M input tokens (output free)
+     - hs-embed-1: $0.005 per 1M input tokens (output free)
+   - "New accounts start with $5 of free credit."
+   - Hindsight Cloud: Pay as you go, no fixed monthly fee, no seat pricing.
+   - [FACT — page fully fetched]
+
+8. https://docs.hindsight.vectorize.io/cloud/billing (Cloud billing — added source)
+   - FETCHED. Detailed Cloud pricing table (effective July 6 2026):
+     - Retain: $10.00 per million input tokens
+     - Import: $5.00 per million input tokens
+     - Recall: $0.75 per million output tokens
+     - Reflect: $0.05 per call
+     - Retrieve Model: $0.25 per million output tokens
+     - Refresh Model: $0.05 per call
+     - File Conversion (Iris): $7.50 per million output tokens
+     - Storage: $0.25 per million tokens/month (first 30 days free)
+   - Credit packages: $10, $25, $50, $100, or custom $5–$1,000. 1 credit = $1.
+   - New accounts: $5 free credit (confirmed here and on pricing page).
+   - HTTP 402 when insufficient credits.
+   - [FACT — page fully fetched]
+
+9. https://docs.hindsight.vectorize.io/cloud/recall (Cloud recall — added source)
+   - FETCHED. Recall uses TEMPR strategy (semantic, keyword BM25, graph,
+     temporal). No mention of "prune" or "dedup" as separate Cloud-vs-local
+     features. Consolidation dedup is automatic in both Cloud and self-hosted
+     (same engine).
+   - [FACT — page fully fetched]
+
+10. https://docs.hindsight.vectorize.io/cloud (Cloud intro — added source)
+    - FETCHED. Cloud features: managed infrastructure, models (LLM, embeddings,
+      reranking) included, integrations, team management, usage analytics,
+      credit system.
+    - [FACT — page fully fetched]
+
+================================================================================
+PACK 6 — HINDSIGHT CLOUD FINDINGS
+================================================================================
+
+DOES MEMHACK99 PROMO CODE COVER hs-decide-1-flash / hs-rerank-1 INFERENCE API USAGE?
+   → NOT FOUND. The string "MEMHACK99" does not appear on any fetched page
+     (pricing, billing, Cloud overview, Cloud features, decision models, models,
+     inference docs index). No promo code, coupon, or discount code is
+     documented anywhere on the public sites.
+   → Label: UNVERIFIED (MEMHACK99 not found on any public source)
+
+WHAT IS THE $50 FREE CREDIT COVERAGE ON CLOUD?
+   → NOT FOUND AS "$50 FREE CREDIT". The only free credit documented is
+     "$5 of free credit when you sign up with GitHub" (homepage) and
+     "New accounts start with $5 of free credit" (pricing page). A $50 credit
+     package exists as a PURCHASE option ($10/$25/$50/$100 or custom $5–$1,000),
+     but it is not a free credit. No $50 free credit promotion documented.
+   → Label: UNVERIFIED for "$50 free credit" (only $5 free credit confirmed as FACT)
+
+IS DECISION MODEL AVAILABLE ON CLOUD BANKS?
+   → YES (with caveat). Cloud includes LLM, embedding, and reranking models.
+     The decision model (hs-decide-1-flash) is available via Hindsight Inference
+     provider at $0.02 per 1M input tokens, billed from the same credit balance
+     as Cloud. It is optional and must be configured via
+     HINDSIGHT_API_DECISION_MODEL_PROVIDER=hindsight. Reflect and knowledge-page
+     refresh support only `hindsight` and `typesafe` providers; recall and
+     consolidation support it too.
+   → Label: FACT (decision model available on Cloud via Hindsight Inference,
+     optional, per-token billed from shared credits)
+
+WHAT ARE CLOUD vs LOCAL OSS DIFFERENCES FOR RECALL PRUNE/DEDUP?
+   → PARTIAL. Both Cloud and self-hosted run the SAME Hindsight engine, so
+     recall (TEMPR: semantic + keyword BM25 + graph + temporal, fused by rank,
+     re-ranked by cross-encoder) and consolidation dedup (overlapping facts
+     merge into one observation) work identically. Difference: on Cloud, the
+     embedding and reranking models are included/managed; on self-hosted OSS,
+     you bring your own models (or run local defaults). No separate
+     "prune/dedup" Cloud-vs-local distinction documented.
+   → Label: FACT for "same engine, same recall/dedup behavior"; UNVERIFIED for
+     any Cloud-specific prune/dedup differential (none documented)
+
+================================================================================
+PACK 6 — MEMHACK99 COVERAGE SUMMARY
+================================================================================
+
+| Question | Answer | Label |
+|----------|--------|-------|
+| MEMHACK99 covers hs-decide-1-flash / hs-rerank-1? | Not found; no promo code documented anywhere | UNVERIFIED |
+| $50 free credit on Cloud? | Only $5 free credit confirmed; $50 is a purchase package, not free | UNVERIFIED (for $50 free) |
+| Decision model on Cloud banks? | Yes, via Hindsight Inference ($0.02/M input tokens), optional | FACT |
+| Cloud vs local OSS recall prune/dedup? | Same engine; no Cloud-specific difference documented | FACT (same behavior) / UNVERIFIED (no differential) |
+
+Cloud pricing (FACT, from billing page effective Jul 6 2026):
+  Retain $10.00/M input tokens | Import $5.00/M input tokens
+  Recall $0.75/M output tokens | Reflect $0.05/call
+  Retrieve Model $0.25/M output tokens | Refresh Model $0.05/call
+  File Conversion (Iris) $7.50/M output tokens
+  Storage $0.25/M tokens/month (first 30 days free)
+  New accounts: $5 free credit. Credit packages $10/$25/$50/$100 or custom $5–$1,000.
+  HTTP 402 when insufficient credits.
+
+Hindsight Models / Inference pricing (FACT, from pricing page):
+  hs-decide-1-flash $0.02/1M input tokens (output free)
+  hs-rerank-1 $0.015/1M input tokens (output free)
+  hs-embed-1 $0.005/1M input tokens (output free)
+
+================================================================================
+END OF RESEARCH FINDINGS
+================================================================================

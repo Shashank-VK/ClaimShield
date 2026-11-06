@@ -1,0 +1,26 @@
+Metric / Asserted Rule	Value or Asserted Provision	Source Context Identified	Analytical Ground for Non-Confirmation
+Ombudsman Pecuniary Ceiling	₹50,00,000 (Rupees Fifty Lakhs)	
+Legal blogs and financial news summaries
+
+UNVERIFIED. While featured in the Draft Insurance Ombudsman Amendment Rules, the operative Gazette ceiling in Rule 17(3) of the Insurance Ombudsman Rules 2017 remains ₹30 Lakhs.
+
+Rupee Disallowance Breakdown (FY 2022-23)	Specific rupee deductions for room-rent caps and non-medical items	
+Private consulting whitepapers and market surveys
+
+UNVERIFIED. The IRDAI Annual Report 2022-23 (Table I.25 & I.26) provides gross paid and repudiated totals; it does not publish an official industry-wide breakdown categorized by specific disallowance types.
+
+Bima Bharosa Standalone Health Split (FY 2022-23 & 2023-24)	Health-only grievances for general insurers separated from fire/motor	
+Media portal articles and industry reports
+
+UNVERIFIED. Table II.17 and Table II.19 of the IRDAI Annual Reports combine general and health insurers into a single non-life category, without isolating health-specific complaints handled by multi-line general insurers.
+
+Rupee Disallowance Sub-Allocations (FY 2024-25)	Exact split of the ₹18,521 Crore disallowance pool across consumables and sub-limits	
+Secondary analytical columns and blog posts
+
+UNVERIFIED. IRDAI Table I.29 reports ₹18,521 Crore under "claims disallowed as per terms and conditions of policy contract" as an aggregate sum without publishing line-item schedules.
+
+DPDP Act Health Insurance Rules Notification	Specific health data handling regulations issued under the DPDP Act 2023	
+Technology compliance blogs and BPO whitepapers
+
+UNVERIFIED. While the Digital Personal Data Protection Act, 2023 is enacted, the Ministry of Electronics and Information Technology (MeitY) has not published gazetted sector-specific sub-rules for health claims processing. Current compliance relies on base statutory provisions and IRDAI 2023 Cybersecurity Guidelines.
+  

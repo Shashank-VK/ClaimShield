@@ -1,0 +1,336 @@
+================================================================================
+PACK 7 — BAND DESKTOP SETUP CONFIRMATION
+Research Findings — research8.txt
+Generated: Fri Nov 06 2026
+Source documents fetched via direct URL from docs.band.ai
+================================================================================
+
+SOURCE DOCUMENTS FETCHED:
+1. https://docs.band.ai/band-desktop.md                      (Band Desktop Overview)
+2. https://docs.band.ai/band-desktop/work.md                 (Work in Band Desktop)
+3. https://docs.band.ai/connect/coding-agents.md             (Coding Agents Overview)
+4. https://docs.band.ai/connect/opencode.md                  (OpenCode Adapter)
+5. https://docs.band.ai/quickstart.md                        (Band Quickstart)
+6. https://docs.band.ai/llms.txt                             (Documentation Index)
+7. https://docs.band.ai/band-desktop/install.md              (Install & Set Up Band Desktop)
+8. https://docs.band.ai/connect/docker-sandbox.md            (Docker Sandbox sbx Kit)
+9. https://docs.band.ai/band-desktop/start-a-collaboration.md (Start a Collaboration)
+
+================================================================================
+SECTION 1 — FINDINGS (claim | source URL | source date | label | confidence)
+================================================================================
+
+1. Band Desktop current version is v0.4.17.
+   | https://docs.band.ai/band-desktop.md | 2026-10-30 | FACT | High
+   - Page states: "This guide describes the full Band Desktop app at 0.4.17,
+     the version observed in the stable updater manifest
+     (https://downloads.band.ai/desktop/latest/updater/full/stable/latest.json)
+     on 2026-10-30. Desktop releases independently of the SDKs."
+   - Confirmed by install page: Settings > General > Version & CLI shows app
+     version; `band daemon status` prints "daemon running (v0.4.17)".
+   - Band Desktop v0.4.17 bundles the band-peer plugin 0.5.34.
+   - Earlier research findings mentioned v0.4.10+; that appears to be outdated.
+     The current confirmed version is v0.4.17.
+
+2. The jamd daemon is the background process that keeps agents connected to Band,
+   starts and stops their runtimes, and serves Band Desktop and the Band CLI.
+   | https://docs.band.ai/band-desktop.md | 2026-10-30 | FACT | High
+
+3. jamd stores local state in ~/.jam on macOS and Linux, and in
+   %LOCALAPPDATA%\jam on Windows, or in JAM_CONFIG_DIR when that variable is set.
+   | https://docs.band.ai/band-desktop.md | 2026-10-30 | FACT | High
+
+4. jamd is bundled with the Band Desktop app; there is nothing else to install.
+   Band Desktop installs the Band CLI and daemon automatically during setup.
+   | https://docs.band.ai/band-desktop/install.md | undated | FACT | High
+
+5. On every start, Band Desktop installs its bundled Band CLI, adds it to the
+   shell PATH, and starts the daemon.
+   | https://docs.band.ai/band-desktop/install.md | undated | FACT | High
+
+6. Daemon status can be checked with `band daemon status`, which prints the
+   daemon version when running (e.g., "daemon running (v0.4.17)"). `band doctor`
+   performs a full check of the daemon, account, and agents.
+   | https://docs.band.ai/band-desktop/install.md | undated | FACT | High
+
+7. Band Desktop installation prerequisites: a Band account; macOS 10.15+ (Apple
+   Silicon or Intel), 64-bit Windows, or 64-bit x86 Linux; at least one coding
+   agent installed and signed in (Claude Code, Codex, GitHub Copilot, OpenCode,
+   Antigravity, or an ACP agent such as Gemini CLI or Cursor).
+   | https://docs.band.ai/band-desktop/install.md | undated | FACT | High
+
+8. Linux .deb package depends on libwebkit2gtk-4.1-0, libgtk-3-0, and
+   libayatana-appindicator3-1. .rpm package depends on glibc 2.36+,
+   libayatana-appindicator3, ca-certificates, and xdg-utils. The installed
+   program is `band-desktop`.
+   | https://docs.band.ai/band-desktop/install.md | undated | FACT | High
+
+9. On Linux with Wayland and an NVIDIA GPU, Band Desktop can fail to start
+   (workaround documented in troubleshooting).
+   | https://docs.band.ai/band-desktop/install.md | undated | FACT | High
+
+10. OpencodeAdapter connects a running OpenCode server (`opencode serve`) to Band
+    rooms. Each room maps to its own OpenCode session on that server. OpenCode's
+    permission requests and questions go to the room.
+    | https://docs.band.ai/connect/opencode.md | undated | FACT | High
+
+11. OpencodeAdapter is part of band-sdk (Python) and @band-ai/sdk (TypeScript).
+    Python install: `uv add "band-sdk[opencode]==6.0.1"`. TypeScript install:
+    `npm install @band-ai/sdk@1.0.0 @opencode-ai/sdk @modelcontextprotocol/sdk express`.
+    | https://docs.band.ai/connect/opencode.md | undated | FACT | High
+
+12. OpencodeAdapter defaults: base_url=http://127.0.0.1:4096,
+    approval_mode="manual", question_mode="manual",
+    approval_wait_timeout_s=300.0, question_wait_timeout_s=300.0,
+    turn_timeout_s=300.0, fallback_send_agent_text=True.
+    | https://docs.band.ai/connect/opencode.md | undated | FACT | High
+
+13. OpenCode server prerequisites: npm install -g opencode-ai, then
+    `opencode auth login`. The server holds the model credentials.
+    | https://docs.band.ai/connect/opencode.md | undated | FACT | High
+
+14. The adapter sends each room message to the room's OpenCode session and reads
+    the server's event stream for text, tool calls, permission requests, and
+    questions. Band's room tools (band_send_message, band_add_participant) are
+    served by a local MCP server the adapter registers with OpenCode.
+    | https://docs.band.ai/connect/opencode.md | undated | FACT | High
+
+15. Band Desktop rooms route messages by @mention only; an agent that is not
+    mentioned never receives the message; people in the room see every message
+    and event.
+    | https://docs.band.ai/band-desktop.md | 2026-10-30 | FACT | High
+
+16. Permission requests in Band Desktop rooms: a banner appears in the room and
+    the room's card on Home turns amber. Select Review to see what the agent
+    wants to run, then choose: Allow once, Deny, Allow always, or Deny always.
+    | https://docs.band.ai/band-desktop/work.md | undated | FACT | High
+
+17. "Allow always" allows this exact operation for this agent from now on (only
+    when Band Desktop can name the exact operation). "Deny always" refuses every
+    request of that kind when Band Desktop cannot name the exact operation.
+    | https://docs.band.ai/band-desktop/work.md | undated | FACT | High
+
+18. To undo an "always" answer, open the agent's Runtime tab and remove it under
+    Standing answers, or select Reset always-decisions to remove them all.
+    | https://docs.band.ai/band-desktop/work.md | undated | FACT | High
+
+19. Requests wait until someone decides them; to refuse them automatically after
+    a while, set Human approval wait in Settings > Runtime.
+    | https://docs.band.ai/band-desktop/work.md | undated | FACT | High
+
+20. OpenCode approval flow (via OpencodeAdapter): default approval_mode="manual"
+    posts each request in the room, e.g. "OpenCode approval requested for `bash`
+    (touch approved.txt). Reply with `approve per_0f17...`, `always per_0f17...`,
+    or `reject per_0f17...`." Requests for Band's own tools are always approved.
+    | https://docs.band.ai/connect/opencode.md | undated | FACT | High
+
+21. OpenCode questions follow question_mode: "manual" (default) posts them in the
+    room where you answer with one line per question or `reject`; "auto_reject"
+    rejects every question.
+    | https://docs.band.ai/connect/opencode.md | undated | FACT | High
+
+22. Docker Sandbox (sbx) kit prerequisites: macOS (guide uses macOS Keychain),
+    Docker Desktop and Docker Sandboxes (sbx) tested with v0.43.0, uv on the
+    host, and exactly one Band credential path (new user API key requiring
+    Enterprise plan on Band Cloud, or existing agent ID + API key).
+    | https://docs.band.ai/connect/docker-sandbox.md | 2026-10-23 | FACT | High
+
+23. Docker Sandbox setup steps: `brew install docker/tap/sbx`, `sbx login`,
+    `sbx policy init balanced`, prepare compatible kit specification
+    (schema v1, digest-pinned image), download starter workspace, register
+    identity or configure existing agent, `sbx run` to start and attach sandbox.
+    | https://docs.band.ai/connect/docker-sandbox.md | 2026-10-23 | FACT | High
+
+24. Docker Sandbox network: baseline allows Band Cloud plus pypi.org and
+    files.pythonhosted.org. LLM providers and other hosts require explicit
+    per-sandbox rules via `sbx policy allow network`.
+    | https://docs.band.ai/connect/docker-sandbox.md | 2026-10-23 | FACT | High
+
+25. Free tier limit of 10 agents: NOT explicitly confirmed in any documentation
+    fetched. The Docker Sandbox page mentions `limit_reached` when "the plan's
+    agent limit is reached" but does not specify the number 10. The Quickstart
+    page confirms the Free plan exists but does not state an agent count limit.
+    | Multiple sources | undated | UNVERIFIED | Low
+
+================================================================================
+SECTION 2 — INSTALLATION STEPS (Band Desktop on Linux / Windows / macOS)
+================================================================================
+
+Source: https://docs.band.ai/band-desktop/install.md
+
+Prerequisites (all platforms):
+- A Band account (app.band.ai)
+- macOS 10.15 or later (Apple Silicon or Intel), 64-bit Windows, or 64-bit x86 Linux
+- At least one coding agent installed and signed in: Claude Code, Codex,
+  GitHub Copilot, OpenCode, Antigravity, or an ACP agent such as Gemini CLI or Cursor
+
+Step 1 — Download the installer (always serves latest stable release):
+  macOS Apple Silicon:  https://downloads.band.ai/desktop/latest/macos/jam-aarch64.dmg
+  macOS Intel:          https://downloads.band.ai/desktop/latest/macos/jam-x86_64.dmg
+  Windows x64:          https://downloads.band.ai/desktop/latest/windows/jam-windows-x64-setup.exe
+  Linux Debian/Ubuntu:  https://downloads.band.ai/desktop/latest/linux/jam-amd64.deb
+  Linux Fedora/RHEL:    https://downloads.band.ai/desktop/latest/linux/jam-x86_64.rpm
+  Linux other distros:  https://downloads.band.ai/desktop/latest/linux/jam-amd64.AppImage
+
+Step 2 — Install per platform:
+  macOS:  Open the .dmg and drag Band into Applications. Signed and notarized,
+          no Gatekeeper prompt.
+  Windows: Run the installer. Installs for current user; downloads Microsoft
+           Edge WebView2 if missing.
+  Linux:  Install .deb or .rpm with your package manager, or make the .AppImage
+          executable and run it. Installed program is `band-desktop`.
+          .deb dependencies: libwebkit2gtk-4.1-0, libgtk-3-0,
+          libayatana-appindicator3-1
+          .rpm dependencies: glibc 2.36+, libayatana-appindicator3,
+          ca-certificates, xdg-utils
+
+Step 3 — Run the setup wizard (first launch):
+  a) Select Start setup.
+  b) Sign in to Band: select Connect to Band and finish signing in in browser.
+     (Or Use organization sign-in with Organization URL for self-hosted Band.)
+  c) Bring your agents together: leave on the coding agents you want to use.
+     If an agent shows Locate..., select it and choose the agent's program file.
+  d) Work that keeps going: turn on Run Band in the background if agents should
+     stay online when you close the window.
+  e) Make it yours: choose Theme and App font size, then Continue.
+  f) Setup ready: select Open Band to save choices and open the app.
+
+Step 4 — Run readiness checks (Settings > General > Version & CLI):
+  - App: shows app version
+  - Daemon: shows daemon version
+  - Command-line tool: shows CLI version with no version mismatch warning
+  Band Desktop installs its bundled Band CLI, adds it to shell PATH, and starts
+  the daemon on every start.
+
+Step 5 — Install Claude Code plugin (optional):
+  a) Turn on Claude Code integration in Settings > Integrations.
+  b) If row shows Not working, select Reinstall and run the integration install.
+  c) In each open Claude Code session, run /reload-plugins (or restart Claude Code).
+     New sessions load the plugin on start.
+
+Step 6 — Confirm readiness from terminal:
+  $ band daemon status
+  daemon running (v0.4.17)
+  $ band doctor
+
+Note: The app bundles a matching `band` CLI and `jamd` daemon — nothing else
+to install separately.
+
+================================================================================
+SECTION 3 — VERSION CONFIRMATION
+================================================================================
+
+Question: What is the current Band Desktop version?
+- Earlier findings mentioned v0.4.10+
+- research4.txt mentioned v0.4.10+
+
+CONFIRMED ANSWER: v0.4.17
+
+Evidence:
+1. https://docs.band.ai/band-desktop.md states: "This guide describes the full
+   Band Desktop app at 0.4.17, the version observed in the stable updater
+   manifest (https://downloads.band.ai/desktop/latest/updater/full/stable/latest.json)
+   on 2026-10-30."
+2. https://docs.band.ai/band-desktop/install.md confirms: Settings > General >
+   Version & CLI shows app version; `band daemon status` prints
+   "daemon running (v0.4.17)".
+3. Band Desktop v0.4.17 bundles the band-peer plugin 0.5.34.
+
+Conclusion: v0.4.17 is the current stable version (observed 2026-10-30).
+The v0.4.10+ figure is outdated/inaccurate.
+
+================================================================================
+SECTION 4 — jamd DAEMON DETAILS
+================================================================================
+
+What is jamd?
+- The background process (daemon) that keeps your agents connected to Band,
+  starts and stops their runtimes, and serves Band Desktop and the Band CLI.
+- The daemon carries the agent's messages to and from Band.
+- Each agent does its reasoning on your machine, in its provider, using your
+  own provider account.
+
+Where does jamd store state?
+- macOS/Linux: ~/.jam
+- Windows: %LOCALAPPDATA%\jam
+- Override: JAM_CONFIG_DIR environment variable
+
+How is jamd installed?
+- Bundled with the Band Desktop app; nothing else to install.
+- Band Desktop installs and repairs the Band CLI and daemon automatically.
+- Started automatically on every app start.
+
+How to verify jamd is running?
+- Settings > General > Version & CLI shows daemon version (Ready state).
+- Terminal: `band daemon status` → prints "daemon running (v0.4.17)"
+- Terminal: `band doctor` → full check; each passing check starts with [ok]
+
+Daemon and runtimes:
+- Owned runtime: agent added from Browse Library or New agent. Band Desktop
+  starts the provider process when a room has work for the agent. Codex, GitHub
+  Copilot, OpenCode, or ACP runtimes stop after 10 minutes idle and restart on
+  next message. Claude Code runtime keeps running between messages.
+  Idle time configurable in Settings > Runtime > Stop idle agents after (seconds).
+- Attached runtime: a Claude Code or GitHub Copilot session you started yourself
+  in a terminal/editor (e.g., /jam as <role>). Stays attached only while its
+  window is open.
+
+================================================================================
+SECTION 5 — HOW OPENCODE CONNECTS AS A CODING AGENT IN BAND DESKTOP
+================================================================================
+
+Note: OpencodeAdapter is for the SDK framework adapter path (headless OpenCode
+server), NOT the Band Desktop path. In Band Desktop, OpenCode is one of the
+supported provider integrations (listed alongside Claude Code, Codex, GitHub
+Copilot, Antigravity, and ACP agents). Band Desktop runs the OpenCode copy
+already installed and signed in on your computer.
+
+For the SDK/OpencodeAdapter path (connect/opencode.md):
+
+Prerequisites:
+- Python 3.11+ and uv, or Node.js 22.12+ for TypeScript
+- OpenCode installed: `npm install -g opencode-ai`, then `opencode auth login`
+- A Band account at app.band.ai
+
+Steps:
+1. Create agent credentials in Band web app (Agents > Connect remote agent),
+   copy Agent ID and API Key, save to agent_config.yaml under key `my_agent`.
+2. Install SDK: `uv add "band-sdk[opencode]==6.0.1"` (Python) or
+   `npm install @band-ai/sdk@1.0.0 ...` (TypeScript).
+3. Start OpenCode server: `opencode serve --hostname=127.0.0.1 --port=4096`
+   (leave running in a second terminal).
+4. Create agent script using OpencodeAdapter with OpencodeAdapterConfig.
+5. Run agent: `uv run python agent.py` (Python) or `npx tsx agent.ts` (TypeScript).
+6. Create a room in Band web app, add the agent, mention it with @handle.
+
+How the adapter works:
+- Sends each room message to the room's OpenCode session; reads server's event
+  stream for text, tool calls, permission requests, questions.
+- Band's room tools served by a local MCP server registered with OpenCode under
+  a name derived from the agent's identity (multiple agents can share one
+  opencode serve).
+- Records each room's session ID in a task event; reattaches after restart.
+- One turn at a time per room; turn_timeout_s default 300s.
+
+================================================================================
+SECTION 6 — FREE TIER LIMIT (10 AGENTS)
+================================================================================
+
+STATUS: UNVERIFIED
+
+The documentation fetched does not explicitly state a "10 agents" free tier
+limit. Relevant findings:
+
+- Quickstart page: "The whole path runs on the Free plan with no model
+  provider key." Confirms Free plan exists but no agent count specified.
+- Docker Sandbox page: "Band returns limit_reached when the plan's agent limit
+  is reached: delete an unused agent, then register again." Confirms agent
+  limits exist per plan but does not state the number 10.
+- No pricing page was fetched that would specify free tier agent limits.
+
+To confirm the 10-agent free tier limit, a pricing or plan-details page on
+docs.band.ai or app.band.ai would need to be consulted.
+
+================================================================================
+END OF FINDINGS
+================================================================================

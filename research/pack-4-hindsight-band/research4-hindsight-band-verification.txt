@@ -1,0 +1,471 @@
+Technical Verification and Architecture Report on Hindsight and Band Infrastructures
+Memory Bank Disposition Architecture and Parameter Scoping
+Hindsight structures agent personality and cognitive bias around a three-trait model comprising skepticism, literalism, and empathy, evaluated on a calibrated 1–5 integer scale. As detailed in technical design specifications released on March 13, 2026, skepticism regulates evidential threshold, varying from uncritical acceptance at 1 to aggressive multi-source corroboration at 5. Literalism dictates interpretive latitude, ranging from expansive contextual inference at 1 to rigid textual bounds at 5. Empathy governs the valuation of human and emotional dimensions, shifting from clinical detachment at 1 to high prioritization of relational context at 5.   
+
+Disposition is strictly configured per memory bank rather than per individual invocation. The parameter operates as foundational metadata within the bank profile configuration (bank_profile["disposition"]), which is established at creation time and updated via bank configuration endpoints (PATCH /v1/default/banks/{bank_id}/config). Older dedicated bank profile endpoints were deprecated and removed in favor of unified bank configuration paths.   
+
+During execution, disposition affects the reflect agentic reasoning loop exclusively; it exerts no influence over raw recall queries, which return identical semantic, keyword, graph, and temporal results regardless of disposition settings. When reflect executes, the backend extracts the bank's configured disposition traits and injects them directly into the system prompt alongside the bank's identity and reflect mission. The public reflect API specification accepts execution controls such as query, budget (low, mid, high), max_tokens, and optional structured output schemas, but provides no parameters to override disposition traits dynamically on a per-call basis.   
+
+Disposition Trait	Operational Definition (Scale 1–5)	Impact on Reflect Loop Traversal
+Skepticism	Evidential threshold: 1 (trusting) to 5 (rigorous verification)	
+Drives higher tool call frequency, iterative cross-checking, and deeper navigation from consolidated observations down to raw facts.
+
+Literalism	Interpretive tolerance: 1 (inferential) to 5 (verbatim precision)	
+Constrains search formulations; biases selection toward exact textual observations over generalized mental models.
+
+Empathy	Valuation metric: 1 (analytical detachment) to 5 (human/emotional priority)	
+Elevates retrieval priority for user history, soft context, relational dynamics, and interpersonal patterns.
+
+  
+The architectural separation between retrieval and reflection ensures that raw memory indexing remains objective and deterministic, while cognitive bias is applied exclusively during contextual synthesis. Consequently, modifying an agent's reasoning profile requires updating the persistent bank configuration, preserving reproducibility across discrete reflect interactions.   
+
+Memory Defense Detectors, Build Disparities, and Rule Configuration
+Memory Defense operates as an inline ingestion firewall that inspects content synchronously during retain calls prior to database persistence. First deployed in release v0.8.2 on June 12, 2026, and expanded across enterprise revisions on September 3, 2026, its functional capabilities diverge significantly between the open-source (Basic) build and Hindsight Cloud/Enterprise.   
+
+Detection Capabilities Across Builds
+The open-source distribution implements a single rule designated as sensitive_data, which utilizes a static 44-to-45 pattern regular expression catalog to scrub common secrets and personally identifiable information. Detected items are replaced in-memory with a [REDACTED:type] token before content is indexed into memory units or document bodies. In the open-source build, policy actions are constrained exclusively to redact; declaring a block action silently downgrades to redact, and no external security event audit rows or webhooks are emitted.   
+
+Hindsight Cloud and Enterprise introduce dedicated integrity and threat-prevention detectors that support both redact and block actions, record forensic entries into the security_events table, and emit asynchronous incident notifications. When a block action fires, the offending retain item is rejected, while remaining items in a batch proceed normally; if an entire batch is blocked, the ingestion endpoint responds with HTTP 422.   
+
+Detector Identifier	Detection Target / Threat Family	Valid Actions	Deployment Tier
+sensitive_data	
+Static pattern scanning for database connection URLs (db_url_postgres, db_url_mysql, db_url_mongodb), PEM private keys (private_key_pem), JSON Web Tokens (jwt), US Social Security Numbers (ssn_us), and credit cards.
+
+redact (open-source), block, allow	
+Open-Source & Enterprise
+
+detect_secrets	
+Cloud and SaaS provider credentials, including AWS Access Keys and GitHub personal access tokens.
+
+redact, block, allow	
+Cloud / Enterprise
+
+base64_decode	
+Evasion detection; recursively unpacks encoded payloads to identify obfuscated sensitive text.
+
+redact, block, allow	
+Cloud / Enterprise
+
+llm_screen	
+Semantic evaluation of conversational secrets and implicit disclosures with hash-based caching.
+
+redact, block, allow	
+Cloud / Enterprise
+
+prompt_injection	
+Indirect prompt injection and memory poisoning attacks corresponding to OWASP ASI06.
+
+block, allow	
+Cloud / Enterprise
+
+size_anomaly	
+Payloads exceeding normal baselines, mitigating memory exhaustion, exfiltration staging, and ranking flooding.
+
+block, allow	
+Cloud / Enterprise
+
+protected_keys	
+Unauthorized modification or stripping of metadata tags during document re-retention.
+
+block, allow	
+Cloud / Enterprise
+
+  
+Custom Patterns and Parameter Overrides
+The primary documentation and schema definitions confirm that arbitrary user-defined regular expressions or custom detector modules cannot be injected into the Memory Defense pipeline. The detector suite is closed and governed strictly by organization entitlements. The only exposed configuration override is size_anomaly.max_size, which accepts a byte integer threshold to dictate when an incoming retain item must be blocked. For tag security, protected_keys exposes the immutable_tag_namespaces array (such as ["identity:*"]) to declare tag prefixes that cannot be mutated on successive updates to an existing document_id.   
+
+Decision Model Architecture, Reranking, and Cloud versus Local Parity
+Introduced in Hindsight version 1.2.0 on November 3, 2026, the decision model framework optimizes token spend and response latency across core operations. Rather than passing entire context windows to large generative models, Hindsight utilizes specialized small-parameter models, specifically hs-decide-1-flash, to orchestrate retrieval filtering, termination gating, and document synthesis.   
+
+Recall Prune and Deduplication
+When a decision model acts as the reranking layer for recall, it extends beyond typical cross-encoder ranking scores by executing two semantic cleanup passes without incurring extra request roundtrips. Pruning drops candidate memories deemed irrelevant or unhelpful to the query target. Candidates receiving an absolute score below 0.2, or falling below 40% of the top-ranked candidate's score, are assigned a 0.0 relevance score and excluded from the final payload. Deduplication eliminates redundant or near-duplicate facts that repeat information already conveyed by higher-ranked items, including surface-form lexical variants containing identical semantic meaning.   
+
+The reflect_use_decision_model Configuration
+Within the reflect agentic loop, the decision model determines evidence sufficiency, pruning cited items and evaluating when to issue answer_ready to stop intermediate tool loops. The parameter reflect_use_decision_model is an optional boolean declared within the bank's configuration template. When set to false, the bank disables decision-model arbitration and forces the primary generative LLM to manage all search decisions, relevance ranking, and loop termination directly.   
+
+Feature Component	Local / Self-Hosted Implementation	Hindsight Cloud Implementation
+Decision Model Engine	
+Supported; requires deploying hs-decide-1-flash via vLLM and declaring INTERNAL_BASE_URL.
+
+Supported; fully managed out-of-the-box with native low-latency routing.
+
+Recall Pruning	
+Fully functional when local decision reranker is provisioned (prune: true).
+
+Fully functional and managed across all memory banks (prune: true).
+
+Recall Deduplication	
+Fully functional when local decision reranker is provisioned (dedup: true).
+
+Fully functional and managed across all memory banks (dedup: true).
+
+reflect_use_decision_model	
+Configurable per bank via template or configuration JSON.
+
+Configurable per bank via console settings or bank configuration API.
+
+  
+Knowledge Pages, Delta Refresh AST Semantics, and Filesystem Projection
+Introduced in release v0.9.0 on August 6, 2026, Knowledge Pages represent living, structured Markdown documents that synthesize accumulated knowledge regarding specific systemic or operational queries. Unlike raw memories or ephemeral reflect responses, a Knowledge Page is organized within a hierarchical folder tree and backed by an underlying mental model.   
+
+Operational Mechanics and Delta Mode Behavior
+When instantiated without explicit trigger configurations, the API provisions a default configuration containing mode: "delta", fact_types: ["observation"], exclude_mental_models: true, and refresh_after_consolidation: true. The explicit configuration exclude_mental_models: true ensures that Knowledge Pages synthesize their contents strictly from consolidated observations and raw facts, preventing them from reading sibling pages. This constraint prevents feedback loops where hallucinations or drifted assertions propagate across documentation pages.   
+
+When consolidation registers new facts, delta mode executes incremental surgical edits rather than regenerating documents from scratch. Retrieval is bounded by a database-time cutoff and scopes memory queries strictly between last_memory_seen_at and the transaction cutoff. The engine parses the existing document into a JSONB abstract syntax tree (structured_content), and an auxiliary prompt (STRUCTURED_DELTA_SYSTEM_PROMPT) prompts the LLM to emit a structured list of targeted operations: add_section, remove_section, append_bullet, or replace_block. Markdown blocks and sections that are not targeted by any emitted operation are copied byte-identically, eliminating formatting shifts, whitespace drift, or phrasing modifications in stable sections.   
+
+Delta mode automatically falls back to full synthesis if the document has no prior content (empty state) or if the source_query has been edited since the previous refresh. Furthermore, if no new memories appear within the targeted scope, or if new memories lack relevance to the topic, the loop terminates without an LLM invocation and advances the last_refreshed_at timestamp.   
+
+Filesystem Projection and Refresh Failure Semantics
+The Hindsight CLI provides a native storage projection via hindsight fs mount --bank <bank_id>. This command maps the bank's remote folder tree and Knowledge Pages into standard local directories and Markdown files annotated with YAML frontmatter. File updates are maintained via a background synchronization loop, allowing local developer tools (grep, cat, ripgrep, IDE editors) or local AI coding agents to interact with long-term memory via standard POSIX file interfaces without direct API integration.   
+
+If an upstream dependency fails during a scheduled or triggered refresh—such as database unreachability, embedder failure, or reranker unavailability—the refresh process aborts without altering stored state. The existing Markdown body, structured_output, and the high-water mark timestamp (last_memory_seen_at) are left completely intact. The system rejects empty fallbacks, ensuring that a broken retriever does not overwrite established documentation with an amnesiac or empty response. The incident is logged as a failure in the audit trail (reflect_response), and the original retrieval window remains open for retry on subsequent execution cycles.   
+
+Webhook Architecture: Event Types, Cryptographic Verification, and Idempotency
+Hindsight provides asynchronous event notifications to downstream SIEMs, API gateways, and microservices. Webhook delivery operates as an enterprise-grade ingestion and alerting component, ensuring high operational visibility for automated workflows.   
+
+Event Taxonomy
+Primary documentation confirms two principal production webhook event types:
+
+retain.completed: Dispatched upon the successful completion of memory ingestion and initial fact extraction for a retained payload.   
+
+memory_defense.violation: Emitted across Enterprise and Cloud tiers whenever an incoming retain payload matches a Memory Defense policy resulting in a non-ALLOW action (REDACT or BLOCK).   
+
+Cryptographic Signature Verification and Idempotency
+When a webhook endpoint is registered with a shared secret, Hindsight includes an HMAC-SHA256 signature in the request headers. The signature is computed over the verbatim, raw byte representation of the HTTP request body using the configured shared secret. The event category is transmitted via the X-Hindsight-Event header, while the signature is delivered via X-Hindsight-Signature. Downstream receivers must compute the HMAC-SHA256 digest of the incoming raw byte buffer and execute a constant-time comparison against the received signature header prior to deserializing or processing the payload.   
+
+Hindsight enforces an at-least-once delivery model across its webhook transport. Under network interruptions, socket timeouts, or transient receiver errors, deliveries are automatically retried. Each delivery payload carries an immutable event_id attribute. Downstream consumers must treat the event_id as an idempotency key, logging processed identifiers in a distributed cache or database to suppress duplicate executions. Additionally, receiving endpoints must acknowledge receipt with an HTTP status code in the 2xx range within 15 seconds; exceeding this threshold triggers an automatic delivery retry from Hindsight background workers.   
+
+Multi-Tenant Isolation: Tag Matching Modes and Observation Scoping
+Hindsight handles multi-tenant data boundaries through two distinct architectural models: hard physical isolation, where individual tenants reside in distinct memory banks, and soft logical isolation, where multiple tenants share a single memory bank partitioned by tag taxonomies.   
+
+Tag Matching Mechanics
+When executing recall, reflect, or scoping Knowledge Pages within a multi-tenant bank, the query engine applies explicit tag filtering rules that determine how records are included or omitted:   
+
+Matching Mode	Evaluation Logic	Isolation Profile and Edge Case Behavior
+exact	
+Matches the identical tag set supplied in the request parameter.
+
+Strict containment; memories containing extra or missing tags are excluded. Passing tags: [] with exact isolates untagged global scopes.
+
+any	
+Matches records holding at least one specified tag.
+
+Loose matching; also returns untagged memories, introducing cross-tenant data leakage risks if applied to multi-tenant boundaries.
+
+all	
+Matches records holding every tag specified.
+
+Conjunctive matching; also returns untagged memories, which compromises tenant isolation without explicit tag exclusions.
+
+any_strict	
+Disjunctive matching (OR) across specified tags.
+
+Multi-tenant safe; strictly excludes untagged memories from the query result set.
+
+all_strict	
+Conjunctive matching (AND) across all specified tags.
+
+Standard multi-tenant boundary mode; requires the presence of all specified tags while strictly excluding untagged memories.
+
+tag_groups	
+Nested boolean expression tree supporting arbitrary combinations of and, or, and not blocks.
+
+Advanced tenant partitioning, enabling inclusion of specific tenant identifiers alongside strict exclusions of restricted tags.
+
+  
+Observation Scopes and Cross-Tenant Bleed Prevention
+Consolidation runs as a background process that extracts individual facts and synthesizes consolidated observations. In a tagged multi-tenant memory bank, unconstrained consolidation would present a data-bleeding vulnerability if facts from Tenant A merged with facts from Tenant B during observation synthesis.   
+
+Hindsight eliminates this vulnerability by enforcing per-scope consolidation. The engine buckets facts according to their assigned tag scopes before consolidation runs. Deduplication, entity resolution, and contradiction checks operate solely within matching scopes. Observations originating within a scoped tag group (such as tenant:123) never evaluate against, merge with, or synthesize observations from another scope (tenant:456). The observation scopes API (GET .../observations/scopes) exposes each discrete tag grouping alongside its consolidated observation inventory, ensuring mathematical and logical partition boundaries.   
+
+Band Multi-Agent Interaction Infrastructure: Desktop Setup, SDK Integration, and Runtime Controls
+Band (band.ai) provides interaction and coordination infrastructure for heterogeneous multi-agent systems, linking human developers, locally running coding agents, and custom backend Python processes.   
+
+Environment Setup and Desktop Installation
+The Band runtime environment requires Python 3.12+, Git, a running Docker daemon, and active API access for upstream LLM providers. Installation proceeds through two coordinated components:   
+
+Band Desktop Installation: Band Desktop must be version 0.4.10 or newer. For local agent containment, the host requires Docker Sandboxes (sbx, version 0.42+) on supported architectures, specifically macOS 14+ on Apple silicon, Windows 11, or Ubuntu 24.04+ with KVM. The sandbox subsystem is activated under Settings → Experiments → Docker Sandboxes, followed by Settings → Runtime → Re-check.   
+
+SDK Installation: The Python SDK is installed via pip install band-sdk. For environments requiring local model execution via OpenCode, the extended package is installed via pip install 'band-sdk[opencode]'.   
+
+Co-locating Custom Python Agents with Local Coding Agents
+Band rooms represent persistent communication channels that support simultaneous participation by varied agent runtimes. Local coding agents are registered through Band Desktop via the "New local agent" wizard, which spawns headless instances of Claude Code, OpenAI Codex, OpenCode, GitHub Copilot, or Cursor. For example, OpencodeAdapter maps the Band room to an interactive session running against a local opencode serve process. Claude Code sessions run in sandboxes or host directories, binding a loopback Model Context Protocol (MCP) server directly to the room endpoint (/rooms/{room_id}/mcp).   
+
+A custom Python agent initializes an instance via the SDK using its dedicated Band credentials (Agent.create(api_key=...)). The agent enters the room, where it is allocated its own distinct seat identity and handle. The custom agent communicates over the room bus by dispatching structured messages and executing registered MCP tools alongside the local coding agent.   
+
+Mention Routing Mechanics
+Inter-agent routing within Band rooms relies on direct handle mentions:
+
+Agents listen to room events; message routing is triggered when an agent or user posts text containing an @handle or @<display_name> mention, such as a Coder agent mentioning an opposite-framework Reviewer, or a Conductor dispatching a Planner.   
+
+The adapter and messaging fabric capture the mention token, resolve it via the room roster, and route the message directly to the target seat.   
+
+Individual seats can configure message filters, such as @mention-only execution triggers, to ignore extraneous room chatter and execute only when explicitly addressed.   
+
+Tool Approval Mechanics and the Native Exemption Rule
+Band enforces strict boundaries around tool invocation security via adapter-level approval options. An adapter may operate in modes such as manual, which halts execution and posts an approval prompt or card to the room or host administrator, or auto_accept.   
+
+An invariant architectural rule governs Band approval pipelines: tool approvals gate every external tool call, but Band's native tools are unconditionally exempt. When approvals are enabled, any local shell command, file write, or external tool execution—defined as tools not matching mcp__band__* or ToolSearch—is paused until an approval callback returns authorization. Band's own communication and state tools, such as band_send_message, band_store_memory, and band_list_memories, bypass approval hooks entirely across all operational modes. If an agent runtime is configured with permission_mode="DONT_ASK", attempting to activate adapter-level approvals raises a ValueError, because DONT_ASK denies all prompts automatically without delegating arbitration to the adapter's approval hook.   
+
+Band Native Memory Tier Restrictions
+Band includes native agent memory capabilities, surfaced to agents through SDK tools including band_store_memory, band_get_memory, band_list_memories, and band_archive_memory.   
+
+Access to Band's native centralized memory architecture is strictly plan-restricted to paid tiers. On paid Band.ai accounts, the SDK directs memory operations to Band's managed Cloud REST API, enabling persistent state synchronization across distributed hosts and multi-agent topologies.   
+
+On the free tier, access to the hosted memory REST endpoint is blocked. Multi-agent frameworks such as Codeband circumvent this restriction at runtime through environment-conditional monkey-patching. When running under the free tier, Codeband monkey-patches the SDK's AgentTools.store_memory, AgentTools.list_memories, and AgentTools.archive_memory methods at startup, delegating storage to a local JSONL file located at workspace/state/memories.jsonl. To support concurrent agent access safely, the local shim synchronizes file writes using POSIX fcntl.flock locks. While this preserves identical tool definitions for prompt compatibility, free-tier memory is fundamentally limited to a single physical host and cannot be shared across distributed worker nodes.   
+
+Band Hackathon Evaluation Protocols and Judge Directives
+The participant and judging framework established for Band hackathon events, including the Dark Factory WeAreDevelopers challenge, enforces black-box evaluation focused on verifiable multi-agent room collaboration.   
+
+Participant Eligibility and Structural Constraints
+Entries must configure at least three distinct coding-agent seats within Band Desktop, each assigned an independent seat identity and mandate file declaring its harness and model, such as Claude Code on claude-sonnet-5 or OpenAI Codex. Seats may share harnesses and models, but each seat must fulfill a distinct functional responsibility.   
+
+Core Elimination Rules
+Evaluation criteria enforce three strict disqualification rules that govern judging:   
+
+Hand-Built Code Disqualification: Code authored directly by human participants is rejected, regardless of whether it passes automated test suites. Qualifying code must emerge directly from documented agent collaboration inside the Band Desktop room. Compliance is verified through the audit log: participants must export the unedited full session log (room.json) directly from the Band console and commit it to the root of their repository.   
+
+Coding to the Tests Disqualification: Teams receive only a partial subset of test cases to verify basic runtime wiring. Entries whose implementations are hardcoded to pass the provided test suite rather than adhering to the broader architectural specification face automatic disqualification when assessed against the judges' comprehensive private test suites.   
+
+Mandate Generality Requirement: Seat mandates must specify abstract behavioral roles, handoff conventions, and rejection criteria. If a mandate hardcodes track-specific details, such as concrete API endpoint URLs, schema field names, or domain error strings, the entry is disqualified.   
+
+Judge Directives
+Judges evaluate submissions without importing participant source code into their local Python environments or installing participant compilers, interpreters, or dependencies on the judge host. Verification focuses on containerized execution, specification conformance, and audit inspection of the committed room.json session history to confirm that room interactions generated the submitted implementation.   
+
+Unconfirmed Technical Claims and Documentation Gaps
+Primary source verification identified the following documentation boundaries and unconfirmed items:
+
+Investigated Feature / Parameter	Primary Verification Status	Specific Technical Finding or Source Omission
+"Delete Test" Criteria in Band Hacker Guide	Unconfirmed	
+The explicit term "Delete Test" does not appear in the primary Band.ai documentation or the Dark Factory participant repository. Official sources specify three strict elimination rules (hand-built code, coding to tests, and track-specific mandates), but omit any protocol designated as the "Delete Test".
+
+Custom Patterns in Memory Defense	Unconfirmed (Unsupported)	
+Primary documentation across open-source and Cloud/Enterprise repositories confirms that arbitrary custom regex patterns or custom detector plugins cannot be added by users. The platform exposes only predefined detectors with constrained overrides (size_anomaly.max_size and immutable_tag_namespaces).
+
+Per-Call Disposition Overrides	Unconfirmed (Unsupported)	
+While disposition traits (skepticism, literalism, empathy) are configurable per bank via configuration endpoints, no parameter or mechanism exists within the reflect API to override disposition traits on individual calls.
+
+  
+
+hindsight.vectorize.io
+How We Built Disposition-Aware Agents That Actually Think Differently
+Opens in a new window
+
+docs.hindsight.vectorize.io
+Memory Banks | Hindsight Docs - Vectorize
+Opens in a new window
+
+hindsight.vectorize.io
+Reflect: Agentic Reasoning with Disposition | Hindsight - Vectorize
+Opens in a new window
+
+docs.hindsight.vectorize.io
+Update memory bank disposition (removed — use PATCH .../config
+Opens in a new window
+
+hindsight.vectorize.io
+Hindsight: Overview
+Opens in a new window
+
+hindsight.vectorize.io
+Best Practices | Hindsight - Vectorize
+Opens in a new window
+
+hindsight.vectorize.io
+Reflect | Hindsight - Vectorize
+Opens in a new window
+
+hindsight.vectorize.io
+Reflect - Hindsight
+Opens in a new window
+
+docs.hindsight.vectorize.io
+Memory Defense Overview | Hindsight Docs - Vectorize
+Opens in a new window
+
+hindsight.vectorize.io
+Enterprise Features in Hindsight Cloud
+Opens in a new window
+
+hindsight.vectorize.io
+Memory Defense | Hindsight - Vectorize
+Opens in a new window
+
+hindsight.vectorize.io
+What's new in Hindsight 0.8.2
+Opens in a new window
+
+docs.hindsight.vectorize.io
+FAQ | Hindsight Docs - Vectorize
+Opens in a new window
+
+docs.hindsight.vectorize.io
+Other Detectors | Hindsight Docs - Vectorize
+Opens in a new window
+
+docs.hindsight.vectorize.io
+Building Policies | Hindsight Docs - Vectorize
+Opens in a new window
+
+github.com
+Hindsight Benchmarks - vectorize-io - GitHub
+Opens in a new window
+
+hindsight.vectorize.io
+What's new in Hindsight 1.2.0
+Opens in a new window
+
+hindsight.vectorize.io
+Introducing Hindsight Models: memory 2.5x cheaper and 2x faster
+Opens in a new window
+
+hindsight.vectorize.io
+Knowledge Pages | Hindsight
+Opens in a new window
+
+hindsight.vectorize.io
+Hindsight HTTP API
+Opens in a new window
+
+hindsight.vectorize.io
+Configuration | Hindsight - Vectorize
+Opens in a new window
+
+docs.hindsight.vectorize.io
+Reranking - Hindsight Docs - Vectorize
+Opens in a new window
+
+docs.hindsight.vectorize.io
+Export bank template - Hindsight Docs - Vectorize
+Opens in a new window
+
+github.com
+Hindsight: Agent Memory That Learns - vectorize-io - GitHub
+Opens in a new window
+
+hindsight.vectorize.io
+Knowledge Pages | Hindsight - Vectorize
+Opens in a new window
+
+hindsight.vectorize.io
+What's new in Hindsight 0.9.0 | Hindsight
+Opens in a new window
+
+hindsight.vectorize.io
+Hindsight 0.9.0: Knowledge Pages, and One Memory Plugin for
+Opens in a new window
+
+hindsight.vectorize.io
+Mental Models | Hindsight - Vectorize
+Opens in a new window
+
+hindsight.vectorize.io
+How Hindsight Learns: A Deep Dive Into Mental Models
+Opens in a new window
+
+hindsight.vectorize.io
+Mental Models | Hindsight
+Opens in a new window
+
+docs.hindsight.vectorize.io
+Webhook Notifications and SIEM - Hindsight Docs
+Opens in a new window
+
+hindsight.vectorize.io
+Retain: How Hindsight Stores Memories
+Opens in a new window
+
+hindsight.vectorize.io
+Webhooks | Hindsight - Vectorize
+Opens in a new window
+
+hindsight.vectorize.io
+Observations: Knowledge Consolidation | Hindsight
+Opens in a new window
+
+hindsight.vectorize.io
+One Bank, Two Audiences, Two Briefs | Hindsight
+Opens in a new window
+
+github.com
+Band AI — independent third-party profile of a public API ... - GitHub
+Opens in a new window
+
+github.com
+codeband/ARCHITECTURE.md at main · band-ai ... - GitHub
+Opens in a new window
+
+github.com
+dark-factory-wearedevs/docs/participant-guide.md at main - GitHub
+Opens in a new window
+
+github.com
+AGENTS.md - Band Python SDK - GitHub
+Opens in a new window
+
+github.com
+band-sdk-python/docs/adapters/claude_sdk.md at main - GitHub
+Opens in a new window
+
+github.com
+Activity · band-ai/hermes-band-platform · GitHub
+Opens in a new window
+
+github.com
+nanoclaw-band/docs/architecture.md at main · band-ai/nanoclaw
+Opens in a new window
+
+github.com
+nanoclaw-band/docs/architecture-diagram.md at main · band-ai
+Opens in a new window
+
+github.com
+band-sdk-typescript/README.md at main - GitHub
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window

@@ -1,0 +1,449 @@
+================================================================================
+PACK 2B — CIOINS AWARDS ARCHIVE DEEP-DIVE — RESEARCH FILE 5
+================================================================================
+Date: Fri Nov 06 2026
+Source: Indian Kanoon (indiankanoon.org) — direct URL fetching only
+Note: Web search is blocked (HTTP 402). CIOINS Awards/Archive page is
+JS-rendered empty (no award listing links found). CIOINS Annual Report PDFs
+return 404. Insurance Ombudsman Rules PDF returns 404. CIOINS does NOT
+publish actual Ombudsman award documents online. All cases below are
+consumer commission orders and High Court judgments retrieved from Indian
+Kanoon that discuss Insurance Ombudsman awards / consumer commission orders
+on health insurance claim repudiation.
+
+SOURCE FETCH RESULTS (PRIMARY):
+  1. https://www.cioins.co.in/Awards/Archive — JS-rendered, EMPTY (no award links)
+  2. https://www.cioins.co.in/AnnualReports — lists reports 2020-21 to 2024-25 but PDFs 404
+  3. https://www.cioins.co.in/Ombudsman — contact details only, no awards
+  4. https://www.cioins.co.in/notification/Insurance Ombudsman Rules, 2017 ...pdf — 404
+  5. https://www.cioins.co.in/Awards — same as homepage, no award listings
+
+SOURCE FETCH RESULTS (SECONDARY):
+  - https://indiankanoon.org/search/?formInput=insurance ombudsman health claim — 738 results
+  - https://indiankanoon.org/search/?formInput=consumer commission health insurance claim rejected ombudsman — 212 results
+  - https://www.policyholder.gov.in/ — transport error (unreachable)
+  - https://ncdrc.gov.in/ — transport error (unreachable)
+
+================================================================================
+CASE ITEMS (each is one memory document)
+================================================================================
+
+CASE 1 — Bharat Hirji Dedhia vs Union Of India And Anr
+  Forum: Bombay High Court (Ordinary Original Civil Jurisdiction)
+  Case Number: WP No. 2903 of 2021 & WP No. 706 of 2024; IA No. 424 of 2022
+  Date: 9 December 2024
+  Judge: M.S. Sonak, J. & Jitendra Jain, J.
+  Indian Kanoon Doc ID: doc/180108982
+  URL: https://indiankanoon.org/doc/180108982/
+  Insurer: The Oriental Insurance Company Ltd.
+  Diagnosis Group: Coronary artery disease (CAD); ischemic heart disease; diabetes mellitus
+  Rejection Ground & Clause Cited: (1) Non-disclosure of pre-existing disease (ischemic heart disease from 14.5.2016; diabetes mellitus) in proposal/self-declaration form — alleged policy void; (2) Reasonable and Customary (R&C) charges — Clause 3.41 of Oriental Insurance Happy Family Floater Policy 2015 ("reasonable and customary charges" = charges standard and consistent with prevailing charges in geographical area for identical/similar services, taking into account nature of illness/injury). Insurer claimed surgeon's charges (Rs.21,87,500/-) were excessive vs 3 other CAD patients at Breach Candy Hospital.
+  Documents Claimant Produced: Hospital/surgeon payment evidence (unimpeachable per claimant's counsel); medical records; insurance policies; award document dated 03 May 2021.
+  Ombudsman Award: Ombudsman award dated 03 May 2021 directed Oriental Insurance to pay Rs.27,13,582/- against health insurance policy. Claim was Rs.37,02,293/-; insurer had paid only Rs.5,81,466/-. Partial repudiation existed → Ombudsman had jurisdiction under Clause 13(1)(b) of IRDA Notification 25.4.2017.
+  Reasoning: (1) Proposal form unsigned, never raised before Ombudsman (afterthought); after accepting premium and issuing policy, insurer cannot deny validity. (2) R&C challenge failed — insurer did not dispute that Rs.21,87,500/- was paid; comparative chart insufficient without evidence of other patients' health conditions; Clause 3.41 requires considering nature of illness/injury. (3) Award of Rs.27,13,582/- was within policy terms after accounting for multiple policies. (4) Insurer suppressed email dated 17.6.2021 acknowledging payment processing; failed to comply with award within 30 days (Clause 17(6) IRDA Notification); delayed clearing office objections for 3+ years.
+  Outcome: Writ Petition No. 706 of 2024 DISMISSED with exemplary costs of Rs.1,00,000/-; interest at 7% p.a. on awarded amount from 01 July 2021; costs and interest recoverable from responsible officials; compliance report due by 16 June 2025.
+  Rupee Amounts: Claim Rs.37,02,293/-; awarded Rs.27,13,582/-; insurer paid Rs.5,81,466/-; surgeon charges Rs.21,87,500/-; exemplary costs Rs.1,00,000/-; interest 7% p.a.
+  Pattern: Non-payable items / R&C cuts — REASONABLE AND CUSTOMARY CHARGES (Clause 3.41)
+
+CASE 2 — HDFC ERGO General Insurance Company Limited vs The Insurance Ombudsman
+  Forum: Calcutta High Court (Appellate Side)
+  Case Number: WPA 13482 of 2021
+  Date: 12 April 2022
+  Judge: Rajasekhar Mantha, J.
+  Indian Kanoon Doc ID: doc/194387847
+  URL: https://indiankanoon.org/doc/194387847/
+  Insurer: HDFC ERGO General Insurance Company Ltd.
+  Diagnosis Group: Tumor (possibly cancerous) — health insurance claim
+  Rejection Ground & Clause Cited: Repudiation of health insurance claim; Ombudsman found repudiation prima facie unjustified. Insurer challenged on: (1) violation of natural justice (independent medical opinion not furnished to insurer); (2) complaint bad in law — Rule 14(2) Insurance Ombudsman Rules 2017 (nature and extent of loss not specified); (3) award vague — Rule 17(3) (no quantified compensation); (4) award beyond 3-month period — Rule 17(4).
+  Documents Claimant Produced: Claim documents lodged with insurance company containing entire hospital expenditure.
+  Ombudsman Award: Order dated 17 June 2021 by Insurance Ombudsman, Kolkata — directed HDFC ERGO to honour the claim; complaint disposed in favour of complainant (Pabitra Kumar Gayen).
+  Reasoning: (1) Ombudsman proceedings are summary in nature; strict CPC/evidence rules don't apply, but natural justice principles are inherent (Rule 15). (2) Rule 15(3) allows Ombudsman to obtain expert opinion; no obligation to circulate it. (3) Insurer waived entitlement by not producing counter-opinion. (4) Absence of quantified claim amount not a serious infraction. (5) 3-month rule under Rule 17(4) to be interpreted liberally/purposively (beneficial legislation); delay not fatal. (6) Judicial review scope under Article 226 is very limited — awards not amenable unless patently unfair, perverse, jurisdictional infirmity, or natural justice violation.
+  Outcome: Writ petition DISMISSED; no order as to costs. Ombudsman's award upheld.
+  Rupee Amounts: Not quantified in award (vague per insurer's challenge).
+  Pattern: General health insurance claim repudiation; procedural fairness at Ombudsman level
+
+CASE 3 — Care Health Insurance Ltd vs Manjula Haresh Joisar And Anr
+  Forum: Bombay High Court (Civil Appellate Jurisdiction)
+  Case Number: WP No. 9028 of 2024; 2026:BHC-AS:5149
+  Date: 23 January 2026
+  Judge: Somasekhar Sundaresan, J.
+  Indian Kanoon Doc ID: doc/198677256
+  URL: https://indiankanoon.org/doc/198677256/
+  Insurer: Care Health Insurance Ltd. (formerly Star Health and Allied Insurance Co. Ltd.)
+  Diagnosis Group: Carcinoma of tonsils (non-healing patches diagnosed as carcinoma; chemotherapy in 2021) — health insurance claim after policy porting/migration
+  Rejection Ground & Clause Cited: Non-disclosure of carcinoma (pre-existing disease) at time of policy porting. Care Health repudiated claim dated 25 April 2022 citing non-disclosure. Issue: whether new insurer (Care Health), having accepted porting and premium, is deemed to have full notice of entire medical/claim history of insured before porting decision.
+  Documents Claimant Produced: Policy porting documents; claim history from Star Health; medical records of carcinoma diagnosis and chemotherapy.
+  Ombudsman Award: Award dated 7 May 2024 — Ombudsman held onus of ascertaining entire claim history when porting a policy lies on the insurance company.
+  Reasoning: (1) IRDA (Health Insurance) Regulations 2016, Regulation 17 + Schedule-I govern portability. (2) New insurer has reasonable advance period (60 days prior to 45 days prior to expiry) to assess claim history. (3) Existing insurer must furnish data on IRDAI web portal within 7 working days. (4) If new insurer doesn't communicate decision within 15 days of receiving data, it loses right to reject. (5) Care Health accepted porting and premium without receiving claim data — cannot blame dysfunctional IIB portal; could have rejected porting request. (6) Having accepted porting and premium, insurer is presumed to have taken informed decision.
+  Outcome: Petition DISMISSED; Ombudsman's award upheld (no interference).
+  Rupee Amounts: Not specified in judgment text.
+  Pattern: Pre-existing disease / non-disclosure; policy porting duty of new insurer
+
+CASE 4 — Mrs Mamata Satpathy vs The Zonal Manager LIC Of India And Others
+  Forum: Orissa High Court, Cuttack
+  Case Number: W.P. (C) No. 5265 of 2009; AIR 2017 ORISSA 54
+  Date: 16 January 2017
+  Judge: Dr. Justice D.P. Choudhury
+  Indian Kanoon Doc ID: doc/120168296
+  URL: https://indiankanoon.org/doc/120168296/
+  Insurer: Life Insurance Corporation of India (LIC)
+  Diagnosis Group: Life insurance — death due to septicaemia (primary) and drug rash (secondary); Ombudsman relied on bed-head ticket noting "Seizure Disorder" since 1995
+  Rejection Ground & Clause Cited: Suppression of material facts — deceased policy-holder allegedly suppressed illness (seizure disorder) at time of proposal/revival (2002, 2004). Section 45 of Insurance Act, 1938 invoked. Ombudsman Complaint No. 21-001-0235; Ombudsman order dated 27.8.2008 accepted insurer's submissions and rejected claim.
+  Documents Claimant Produced: Legal heir certificate; discharge summary; Annexure-3 (hospital death form showing septicaemia as provisional and final diagnosis); Annexure-7 (medical attendant's reply negative about other diseases); medical examiner's confidential reports (policies 584766253 and 585424076 — all answers "No" to hospitalization, surgery, tests, treatment).
+  Ombudsman Award: Insurance Ombudsman rejected complaint (order dated 27.8.2008) — held claim repudiated due to suppression of material facts based on bed-head ticket endorsement.
+  Reasoning: (1) Section 45(2) — after 2 years, policy can only be called in question if statement was on material matter, fraudulently made, and policy-holder knew it was false. (2) Onus on insurer to prove all three conditions. (3) Medical examiner's reports (dated 31.8.2002 and 31.3.2004) showed doctor found no infirmity; all answers "No". (4) Bed-head ticket endorsement about "Seizure Disorder" not proven — no doctor examined to prove it; no hospitalization for it. (5) Cause of death was septicaemia, not seizure disorder. (6) Ombudsman's finding based on no evidence → quashed.
+  Outcome: Writ petition allowed; Ombudsman's order quashed; LIC directed to release claim amount with interest @ 9% p.a. from 3.11.2005 (date of repudiation) till actual payment within 3 months; failing which 12% p.a.
+  Rupee Amounts: Claim amount under Policies Nos. 584766253 and 585424076 (not specified in text); interest @ 9% p.a. from 3.11.2005.
+  Pattern: Suppression of material facts / pre-existing disease — life insurance; Section 45 Insurance Act
+
+CASE 5 — Rachna Lodhi vs Life Insurance Corporation & Ors
+  Forum: Punjab & Haryana High Court, Chandigarh
+  Case Number: CWP-19643-2015
+  Date: 24 July 2019
+  Judge: Arun Monga, J.
+  Indian Kanoon Doc ID: doc/38639699
+  URL: https://indiankanoon.org/doc/38639699/
+  Insurer: Life Insurance Corporation of India (LIC)
+  Diagnosis Group: Life insurance — death due to cardio-respiratory failure (15.4.2012); concealed GI bleed, ALD (alcoholic liver disease), CLD (chronic liver disease), esophageal varices, ARF (acute renal failure); treatment at Jaswant Rai Specialty Hospital, Meerut since 3.7.2009
+  Rejection Ground & Clause Cited: Concealment of material facts about health at time of proposal (08.12.2009 and 17.02.2011 policies). Utmost good faith (uberrima fides) vitiated contract. Insurance Ombudsman (Chandigarh) rejected complaint (order dated 14.05.2015).
+  Documents Claimant Produced: Not detailed (writ petition stage).
+  Ombudsman Award: Insurance Ombudsman, Chandigarh order dated 14.05.2015 rejecting petitioner's grievance against LIC's claim rejection (letters dated 08.12.2009 and 17.02.2011).
+  Reasoning: (1) Routine/general medical examination by insurer's doctor does not absolve life insured from correctly answering health questions. (2) Treatment records (hospital certificate, prescription slips, pathological reports, discharge summary, medical report dated 05.12.2013 by Dr. A.P. Tyagi) showed chronic alcoholic liver disease with cirrhosis and esophageal varices. (3) Cannot straightaway discard this material. (4) Adjudication requires elaborate evidence and cross-examination — not possible in writ jurisdiction. (5) Petitioner free to seek remedy in Civil Court.
+  Outcome: Petition DISMISSED; Ombudsman's order and LIC's rejection upheld. Petitioner left to civil remedy.
+  Rupee Amounts: Policy 1: Rs.2,50,000/- (effective 08.12.2009, maturity 08.12.2025); Policy 2: Rs.2,20,000/- (effective 17.02.2011, maturity 17.02.2020).
+  Pattern: Concealment of material facts / pre-existing disease — life insurance
+
+CASE 6 — Reliance General Insurance Co Ltd vs Insurance Ombudsman Noida And Another
+  Forum: Allahabad High Court
+  Case Number: WRIT-C No. 31374 of 2024; Neutral Citation 2025:AHC:9167-DB
+  Date: 20 January 2025
+  Judge: Ashwani Kumar Mishra, J. & Vinod Diwakar, J.
+  Indian Kanoon Doc ID: doc/60008494
+  URL: https://indiankanoon.org/doc/60008494/
+  Insurer: Reliance General Insurance Co Ltd
+  Diagnosis Group: Health insurance — claim under Super Top-up policy
+  Rejection Ground & Clause Cited: Insurer argued policy cap of Rs.6 lacs means payment over and above via top-up policy impermissible. Ombudsman allowed claim under top-up policy.
+  Documents Claimant Produced: Not detailed.
+  Ombudsman Award: Insurance Ombudsman order dated 7.8.2024 — allowed health insurance claim; held second respondent entitled to Rs.10 lacs (actual treatment cost).
+  Reasoning: (1) Second respondent had Reliance Super Top-up Policy. (2) Held entitled to Rs.10 lacs actually incurred towards treatment. (3) No perversity or error in Ombudsman's approach. (4) Not a fit case for interference under Article 226.
+  Outcome: Writ petition DISMISSED; Ombudsman's award upheld.
+  Rupee Amounts: Claim Rs.10 lacs (treatment cost); base policy cap Rs.6 lacs.
+  Pattern: Top-up policy / sum insured cap dispute
+
+CASE 7 — Sibananda Saha vs Care Health Insurance Ltd
+  Forum: Orissa High Court, Cuttack
+  Case Number: W.P.(C) No. 33149 of 2023
+  Date: 30 October 2023
+  Judge: Dr. Justice S.K. Panigrahi
+  Indian Kanoon Doc ID: doc/54577966
+  URL: https://indiankanoon.org/doc/54577966/
+  Insurer: Care Health Insurance Ltd., Bhubaneswar
+  Diagnosis Group: Health insurance — claim for hospitalization of mother (policy period 26.07.2020 to 25.07.2021, sum insured Rs.5,00,000/-, Policy No. 14468239; enhanced policy 16.03.2021 to 15.03.2023, Policy No. 30641866)
+  Rejection Ground & Clause Cited: Care Health Insurance neither responded to nor settled the claim filed through insurance agent after mother's hospital discharge. Ombudsman Bhubaneswar order dated 09.06.2023 challenged.
+  Documents Claimant Produced: Not detailed (notice stage).
+  Ombudsman Award: Insurance Ombudsman, Bhubaneswar order dated 09.06.2023 (Annexure-6).
+  Reasoning: Notice issued to opposite parties; matter listed for 23 November 2023.
+  Outcome: Interim order — notice issued; matter listed for hearing. No final disposition in this text.
+  Rupee Amounts: Premiums paid Rs.31,722/- (first policy) and Rs.12,213/- (enhanced policy); sum insured Rs.5,00,000/-.
+  Pattern: Claim non-settlement / delay — health insurance
+
+CASE 8 — Mrs. S.Visakalakshmi vs The General Manager, Bank Of Baroda
+  Forum: Tamil Nadu State Consumer Disputes Redressal Commission, Chennai
+  Case Number: C.C. No. 46 of 2015; Date of filing 19.02.2015
+  Date: 31 August 2023
+  Judge: Hon'ble Thiru Justice R. Subbiah (President)
+  Indian Kanoon Doc ID: doc/179683307
+  URL: https://indiankanoon.org/doc/179683307/
+  Insurer: India First Life Insurance Company Ltd.
+  Diagnosis Group: Life insurance (group credit life) — death due to cardio-respiratory arrest (05.02.2014); alleged Pancytopenia, hepatic cirrhosis, portal hypertension
+  Rejection Ground & Clause Cited: Non-disclosure of material information — Life Assured allegedly suffering from Pancytopenia prior to obtaining policies; suppressed past medical history (hyper-pigmentation, enlarged liver, fatty liver). Clause 3 of "Membership Forms" — India First Group Credit Life Plan (health declaration Q1-Q3 all answered "No"). Section 2(g) Consumer Protection Act 1986 (deficiency in service).
+  Documents Claimant Produced: Ex.A1-A31 including loan statements, medical reports (histopathology, biochemistry, haematology, radiology, Dr. Varadarajan reports), discharge summary CMC Vellore, death certificate, legal heirship certificate, repudiation letters dated 30.04.2014 and 02.06.2014, Insurance Ombudsman award dated 24.11.2014 (Ex.A30).
+  Ombudsman Award: Insurance Ombudsman award dated 24.11.2014 — granted ex gratia of Rs.3,00,000/- under both policies towards full and final settlement; noted life assured's health condition normal before policies; reports dated 16.02.2012 (Madras Andrology) did not reflect Pancytopenia; but Ombudsman arbitrarily concluded non-disclosure established.
+  Reasoning: (1) Life Assured not suffering from life-threatening disease at time of loans (2007, 2012); no proposal/health declaration forms given to him. (2) October 2010 treatment for hyper-pigmentation — diagnosed Nutritional Dimorphic Anemia (not serious/life-threatening). (3) March 2013 CMC Vellore diagnosis of "Auto Immune chronic liver disease" was surmise/conjecture. (4) Death due to cardio-respiratory arrest. (5) Onus on insurer to prove Section 45 conditions — not met. (6) Clear suppression of material facts found by Commission (based on medical reports Ex.B.7 dated 18.10.2010 showing Pancytopenia, Hb 8.2, bilirubin 1.56). (7) Principle of uberrima fides — suppression vitiates policy. (8) Complaint DISMISSED; no costs.
+  Outcome: Complaint DISMISSED; Ombudsman's ex gratia award effectively overridden by Commission's finding of suppression.
+  Rupee Amounts: Claim Rs.3,31,124.00 (Policy G00000091) + Rs.15,93,069.00 (Policy G00000091 second account); compensation Rs.5,00,000/- sought; Insurance Ombudsman ex gratia Rs.3,00,000/-; premiums Rs.4,899.74 and Rs.25,139.62.
+  Pattern: Suppression of material facts / pre-existing disease — life insurance (group credit); Section 45 Insurance Act; uberrima fides
+
+CASE 9 — Bajaj Allianz General Insurance vs Sh. Sanjay Kumar
+  Forum: Delhi State Consumer Disputes Redressal Commission
+  Case Number: First Appeal No. 698/2024; Date of Institution 10.10.2024
+  Date: 30 April 2026
+  Judge: Hon'ble Justice Sangita Dhingra Sehgal (President) & Hon'ble Ms. Bimla Kumari (Member)
+  Indian Kanoon Doc ID: doc/137300129
+  URL: https://indiankanoon.org/doc/137300129/
+  Insurer: Bajaj Allianz General Insurance Company Ltd.
+  Diagnosis Group: Dengue hemorrhagic fever with septicaemia with epistaxis — hospitalization 16.11.2022 to 20.11.2022 at Anand Hospital
+  Rejection Ground & Clause Cited: (1) Patient directly admitted without prior OPD treatment; no post-discharge follow-up — "need for direct inpatient care without treating on output basis not justified. Patient could have been initially treated on outpatient basis." (OPD-convertible / hospitalisation-not-justified). (2) Patient not traceable; contact number not reachable. (3) Pathologist not available at lab visit. (4) Hospital registration expired (2016, valid till 2018). (5) Injections Pipzo/Ceftax not justified for viral fever. (6) Platelet count low but no further investigation. (7) Afebrile last 2 days but prolonged hospitalization. (8) Scripted handwriting in TRP chart. (9) No treating doctor/hospital stamp/signature on ICP. Condition E2 (Condition Precedent) of policy terms.
+  Documents Claimant Produced: Treatment records, bills, discharge summary from Anand Hospital; proof of hospital registration order dated 30.09.2020 (Covid relaxation).
+  Ombudsman Award: Not applicable — District Commission case. District Commission (order dated 16.08.2024) held repudiation unwarranted, directed payment of Rs.46,200/- with interest @ 9% p.a. + Rs.25,000/- compensation for mental agony.
+  Reasoning: (1) Online policy = click-wrap contract; terms and conditions inherently bundled. (2) Insurer's onus to prove suppression/misrepresentation — not met; doctor not examined by insurer. (3) Hospital registration relaxed till 30.3.2021 due to Covid (GO NCT Delhi 30.09.2020). (4) Decision of treating doctor on antibiotics not challengeable. (5) Insurer did not supply policy terms to insured — cannot rely on them (but later held online policy supplies terms via click-wrap). (6) State Commission reversed District Commission — held surveyor/investigator report reliable; hospital unregistered on date of admission (registration expired 2018; new registration applied 2023); claim repudiation justified.
+  Outcome: Appeal ALLOWED; District Commission order dated 16.08.2024 SET ASIDE; claim repudiation upheld; no deficiency in service.
+  Rupee Amounts: Claim Rs.46,200/-; compensation sought Rs.3,00,000/- + Rs.1,00,000/- litigation expenses.
+  Pattern: OPD-CONVERTIBLE / HOSPITALISATION-NOT-JUSTIFIED — "patient could have been initially treated on outpatient basis"
+
+CASE 10 — Minor Prapti Bhattacharya vs The Branch Manager, New India Assurance
+  Forum: State Consumer Disputes Redressal Commission, West Bengal, Kolkata
+  Case Number: First Appeal No. A/1337/2015 (arising from CC/06/2015 of District Nadia)
+  Date: 5 June 2018
+  Judge: Hon'ble Mr. Shyamal Gupta (Presiding Member) & Hon'ble Mr. Utpal Kumar Bhattacharya (Member)
+  Indian Kanoon Doc ID: doc/173764814
+  URL: https://indiankanoon.org/doc/173764814/
+  Insurer: New India Assurance Co. Ltd.
+  Diagnosis Group: Not specified (child patient); health insurance policy sum insured Rs.2,00,000/- (WV states Rs.1,00,000/-)
+  Rejection Ground & Clause Cited: Room rent proportionate deduction — patient entitled to room charges @ Rs.1,000/- per day (1% of sum insured per day per Clause 3.1); availed bed at Rs.10,000/- and Rs.6,700/- per day. Entitled to 6 days room charges worth Rs.6,000/- but spent Rs.46,800/-. Reimbursement reduced by 87% (proportionate to admissible room rent). Also non-payable items deduction Rs.2,276/- for medicine. Clause 3.1: reimbursement of room/boarding/nursing up to 1% of sum insured per day; ICU 2%; if room exceeds limit, all other expenses reduced in same proportion (except medicines).
+  Documents Claimant Produced: Not detailed (appeal stage).
+  Ombudsman Award: Not applicable — consumer commission case. District Forum dismissed complaint; State Commission remanded for fresh adjudication.
+  Reasoning: (1) Policy is a contract; both sides bound by stipulations. (2) Policy entitled reimbursement up to 1% of sum insured per day for room; if room rent exceeds, all other expenses proportionately reduced. (3) Patient admitted to rooms exceeding entitlement → proportionate deduction applicable. (4) However, discrepancies: deduction Rs.1,08,004.75 vs claim Rs.1,25,991.87 minus reimbursed Rs.14,000/- = Rs.1,11,991.87 (missing Rs.3,987.12 unexplained); sum insured discrepancy (Rs.2,00,000/- vs Rs.1,00,000/-); unclear whether rooms were ICU/ICCU or general cabins; non-payable items deduction Rs.2,276/- unverified without bills. (5) Remanded to District Forum for in-depth scrutiny.
+  Outcome: Appeal ALLOWED IN PART; District Forum order set aside; remanded for fresh adjudication with document clarification.
+  Rupee Amounts: Claim Rs.1,25,991.87; reimbursed Rs.14,000/-; room entitlement Rs.1,000/- per day; actual room Rs.10,000/- and Rs.6,700/- per day; proportionate reduction 87%; non-payable items deduction Rs.2,276/-; unexplained gap Rs.3,987.12.
+  Pattern: ROOM-RENT PROPORTIONATE DEDUCTION — Clause 3.1 (1% of sum insured per day room rent cap; proportionate reduction of all other expenses)
+
+CASE 11 — Bajaj Allianz General Insurance Co. vs Amritpal Singh
+  Forum: State Consumer Disputes Redressal Commission, Punjab, Chandigarh (First Additional Bench)
+  Case Number: First Appeal No. 737 of 2017 (against District Forum Faridkot order dated 28.08.2017)
+  Date: 24 January 2020
+  Judge: Justice Paramjeet Singh Dhaliwal (President) & Mr. Rajinder Kumar Goyal (Member)
+  Indian Kanoon Doc ID: doc/21061594
+  URL: https://indiankanoon.org/doc/21061594/
+  Insurer: Bajaj Allianz General Insurance Company Ltd.
+  Diagnosis Group: Motor insurance (car accident — Maruti Swift Dezire; death of Rajwinder Singh, 17 years; arm fracture of complainant) — NOT health insurance but discusses late intimation
+  Rejection Ground & Clause Cited: Late intimation — complainant gave intimation after 18 days (accident 17.05.2015; intimation date not exactly specified but described as "long period of 18 days") in violation of Clause-1 of policy terms. Also: deceased (17 years) was driving without valid licence; fabricated medical documents; DDR instead of FIR.
+  Documents Claimant Produced: Claim form, driving licence, RC, DDR, post mortem report, affidavit; hospital certificate dated 20.05.2005 (Gurdeep Memorial Hospital) showing arm fracture treated 17.05.2015 to 20.05.2015, bed rest till 01.06.2015.
+  Ombudsman Award: Not applicable — consumer commission case.
+  Reasoning: (1) Claim was NOT repudiated on ground of late intimation (repudiation letter cited "explanation not satisfactory without documentary support"). (2) Delay explained: complainant bed-ridden with arm fracture; family in shock due to death of 17-year-old brother. (3) Cited Supreme Court in Om Prakash v. Reliance General Insurance (Civil Appeal No.15611 of 2017, decided 04.10.2017): delay in intimation should not bar settlement of genuine claims, particularly when due to unavoidable circumstances. (4) Cited IRDA Circular Ref. IRDA/HLTH/MISC/CIR/216/09/2011 dated 20.09.2011: insurers must not repudiate delayed claims unless reasons of delay ascertained, recorded, and claim would have been rejected even if reported in time. (5) Delay condition is not absolute; rejection on purely technical grounds mechanical.
+  Outcome: Appeal DISMISSED; District Forum order upheld; claim payable (Rs.6,61,413/- insured value + interest @ 9% p.a. from 3.11.2015 + Rs.5,000/- compensation + Rs.3,000/- litigation expenses).
+  Rupee Amounts: Claim Rs.6,61,413/- (insured value of car); interest @ 9% p.a. from 3.11.2015; compensation Rs.5,000/-; litigation expenses Rs.3,000/-.
+  Pattern: LATE INTIMATION — 18-day delay; upheld that delay alone should not repudiate genuine claims (Om Prakash v. Reliance; IRDA Circular 20.9.2011)
+
+CASE 12 — Star Health Allied Ins.Co.Ltd. vs Shripal
+  Forum: Delhi State Consumer Disputes Redressal Commission
+  Case Number: First Appeal No. 123/2026; Date of Institution 18.02.2026
+  Date: 29 May 2026
+  Judge: Hon'ble Justice Sangita Dhingra Sehgal (President) & Hon'ble Ms. Bimla Kumari (Member)
+  Indian Kanoon Doc ID: doc/191571541
+  URL: https://indiankanoon.org/doc/191571541/
+  Insurer: Star Health & Allied Insurance Co. Ltd.
+  Diagnosis Group: Septicemia (blood poisoning); emergency admission; vitals critically poor (fever 104.4°F, BP 90/50, pulse 136, SpO2 88%)
+  Rejection Ground & Clause Cited: (1) Excluded Provider (Exclusion No. 11 — Code Excl 11) — treatment at Anand Hospital which was specifically excluded/delisted; (2) Late intimation — Clause 2D Standard Conditions: notification within 24 hours; admitted 23.12.2023, intimation given 28.01.2024 (25-day delay). However, Exclusion 11 allows expenses up to stabilization stage in life-threatening situations.
+  Documents Claimant Produced: OPD slip (OPD No. 06), discharge summary, treatment records, medical bills totaling Rs.2,19,326/- (hospitalization Rs.1,97,505/- + post-treatment Rs.21,821/-).
+  Ombudsman Award: Not applicable — consumer commission case.
+  Reasoning: (1) Insurer failed to prove terms and conditions/exclusion list were communicated to complainant (burden on insurer per Texco Marketing v. TATA AIG, SC Civil Appeal 8249/2022). (2) Mere website disclosure insufficient. (3) Life-threatening emergency → expenses up to stabilization stage payable under Exclusion 11. (4) National Commission in New India Assurance v. Ashok Kumar Aggarwal (2015 SCC OnLine NCDRC 3023): repudiation merely on excluded hospital basis without proof of prior disclosure unsustainable. (5) District Commission directed payment Rs.2,19,326/- + interest @ 9% p.a. + Rs.50,000/- compensation + Rs.10,000/- litigation expenses. (6) State Commission SET ASIDE District Commission — upheld repudiation; found claimant repeatedly filing claims (50 cases listed by Shripal as agent/AR); abuse of legal process.
+  Outcome: Appeal ALLOWED; District Commission order dated 30.01.2026 SET ASIDE; repudiation upheld.
+  Rupee Amounts: Claim Rs.2,19,326/-; compensation awarded by District Commission Rs.50,000/- + Rs.10,000/- litigation expenses.
+  Pattern: LATE INTIMATION (25-day delay, Clause 2D) + EXCLUDED PROVIDER (Exclusion 11)
+
+CASE 13 — Star Health And Allied Insurance vs Sonia Singh
+  Forum: Delhi State Consumer Disputes Redressal Commission
+  Case Number: First Appeal No. 369/2025; Date of Institution 07.08.2025
+  Date: 29 May 2026
+  Judge: Hon'ble Justice Sangita Dhingra Sehgal (President) & Hon'ble Ms. Bimla Kumari (Member)
+  Indian Kanoon Doc ID: doc/22644009
+  URL: https://indiankanoon.org/doc/22644009/
+  Insurer: Star Health and Allied Insurance Co. Ltd.
+  Diagnosis Group: Enteric Fever with UTI and Sepsis — admission 25.09.2024 to 02.10.2024 at Mahavir Multispecialty Hospital, New Delhi; OPD visit 25.09.2024 after emergency at RHTC Hospital Najafgarh on 22.09.2024
+  Rejection Ground & Clause Cited: (1) Excluded Provider (Exclusion No. 11 — Code Excl 11) — Mahavir Hospital excluded by insurer effective 11.01.2022; (2) Late intimation — Clause 1(D): notification within 24 hours; admitted 25.09.2024, intimation given 19.11.2024 (54-day delay); (3) Misrepresentation — age recorded 38 in prescription vs 37 in policy. Exclusion 11 allows stabilization-stage expenses in life-threatening/accidental emergencies only.
+  Documents Claimant Produced: OPD card advising admission, discharge summary dated 02.10.2024, treatment records, bills totalling Rs.2,44,072/-.
+  Ombudsman Award: Not applicable — consumer commission case.
+  Reasoning: (1) Insurer failed to prove excluded provider status was communicated/disclosed to insured (burden on insurer). (2) Terms and conditions not furnished to insured → cannot rely on them. (3) Cited Texco Marketing v. TATA AIG (SC): burden on insurer to prove exclusion clauses duly disclosed and communicated. (4) District Commission allowed claim Rs.2,44,072/- + interest @ 9% p.a. + Rs.50,000/- compensation + Rs.10,000/- litigation expenses. (5) State Commission SET ASIDE — upheld repudiation; found 54-day intimation delay; insured had prior hospitalization at same excluded hospital (23.04.2024) so knew it was excluded; attempt to circumvent policy conditions; 50 repetitive claims by Shripal (agent/AR) indicating abuse of process.
+  Outcome: Appeal ALLOWED; District Commission order dated 10.07.2026 SET ASIDE; repudiation upheld.
+  Rupee Amounts: Claim Rs.2,44,072/-; sum insured Rs.5,00,000/-.
+  Pattern: LATE INTIMATION (54-day delay, Clause 1(D)) + EXCLUDED PROVIDER (Exclusion 11)
+
+CASE 14 — National Insurance Co. Ltd. vs Amit Mittal
+  Forum: Delhi State Consumer Disputes Redressal Commission
+  Case Number: First Appeal No. 1270/2013 (against District Forum order dated 09.07.2013 in Complaint 1249 of 2010)
+  Date: 25 February 2021
+  Judge: Dr. Justice Sangita Dhingra Sehgal (President) & Sh. Anil Srivastava (Member)
+  Indian Kanoon Doc ID: doc/143815245
+  URL: https://indiankanoon.org/doc/143815245/
+  Insurer: National Insurance Co. Ltd.
+  Diagnosis Group: Accidental fall → severe pain/swelling/instability in left knee; admission Artemis Health Institute, Gurgaon 19.11.2009 to 22.11.2009; physiotherapy
+  Rejection Ground & Clause Cited: Non-payable items / exclusions under clauses 4.16, 4.17, 4.26 of Mediclaim Policy: 4.16 (external/durable medical/non-medical equipment e.g. knee support, Tegaderm, equipment charges), 4.17 (non-medical expenses e.g. telephone, TV, diet charges, toiletries), 4.26 (doctor's home visit charges / attendant nursing charges during pre & post-hospitalization). Total deduction Rs.78,490/- out of claim Rs.88,067/-; insurer paid only Rs.9,527/-.
+  Documents Claimant Produced: Bill dated 27.02.2010 from Artemis Health Institute Rs.88,067/-; original MRI receipt; doctor's prescription; physiotherapist details.
+  Ombudsman Award: Not applicable — consumer commission case.
+  Reasoning: (1) Insurance policy terms strictly construed (SC: Sushilaben Gandhi v. New India Assurance 2020 SCC OnLine SC 367; Oriental Insurance v. Sony Cheriyan). (2) Clauses 4.16, 4.17, 4.26 clearly exclude the claimed items. (3) Insurer permitted to deduct exclusionary expenses. (4) TPA's interpretation (allowing only Rs.9,527/-) in consonance with SC jurisprudence. (5) However, District Forum had awarded full Rs.88,067.20/- + Rs.35,000/- compensation — State Commission REVERSED.
+  Outcome: Appeal ALLOWED; District Forum order dated 09.07.2013 SET ASIDE; insurer directed to pay Rs.9,527/- by 31.03.2021 with interest @ 9% p.a. from 13.04.2010 if delayed.
+  Rupee Amounts: Claim Rs.88,067/-; insurer paid Rs.9,527/-; total deduction Rs.78,490/- (4.16: Rs.11,165/-; 4.17: Rs.1,025/-; 4.26: Rs.66,300/-); compensation sought Rs.50,000/- + Rs.10,000/- costs.
+  Pattern: NON-PAYABLE ITEMS / R&C CUTS — exclusion clauses 4.16, 4.17, 4.26 (non-medical items, equipment, home nursing)
+
+CASE 15 — Lataben Maheshbhai Matiya vs Oriental Ins.Co.Ltd
+  Forum: Gujarat State Consumer Disputes Redressal Commission, Ahmedabad
+  Case Number: Appeal No. 874/2022 (against District Commission Bhavnagar order dated 24.11.2022 in CC No. 158/2022)
+  Date: 14 June 2023
+  Judge: Hon'ble Mr. I. D. Patel (Judicial Member) & Hon'ble Ms. A. C. Raval (Member)
+  Indian Kanoon Doc ID: doc/151483967
+  URL: https://indiankanoon.org/doc/151483967/
+  Insurer: Oriental Insurance Company Ltd. (TPA: Heritage Health Insurance TPA Pvt. Ltd.)
+  Diagnosis Group: Right eye cataract surgery (09.12.2021) at Dr. Jaydeep Kakdiya's hospital
+  Rejection Ground & Clause Cited: Reasonable and Customary (R&C) charges deduction on Intra Ocular Lens (IOL) implant. TPA deducted Rs.18,441/- on bill of Rs.20,850/-, paying only Rs.2,409/- as "reasonable and customary". Also Rs.2,400/- co-payment (10%). Policy: Happy Family Floater No. 142700/47/2022/2932, period 14.10.2021 to 13.10.2022, sum insured Rs.4,00,000/-, 10% co-payment.
+  Documents Claimant Produced: Hospital bill No. 390 dated 10.12.2021; settlement letter showing deduction details; hospital bill at page 28; implant bill at page 29.
+  Ombudsman Award: Not applicable — consumer commission case. TPA settlement letter paid Rs.21,600/- (after Rs.18,441/- R&C deduction and Rs.2,400/- co-pay).
+  Reasoning: (1) Major deduction towards implant (Rs.20,850/- billed; Rs.18,441/- deducted as R&C; only Rs.2,409/- paid). (2) Insurer failed to explain how Rs.2,409/- arrived at as "reasonable and customary"; no comparison/competitive charges cited. (3) No reliance on specific policy term/condition explained. (4) Commission relied on earlier Gujarat State Commission judgment Appeal No. 1378/2014 (Narendra D. Jobanputra v. Oriental Insurance) — "reasonable, customary and necessary expenses" undefined; no slab/amount fixed for cataract operation; insurer must justify reduction. (5) TPA cannot decide/reject claim — only recommends (IRDA TPA Regulations 2016). (6) 10% co-payment deducted from Rs.18,441/- → Rs.1,844.10; appellant entitled to Rs.16,596.90/- (approx Rs.16,597/-).
+  Outcome: Appeal PARTLY ALLOWED; District Commission order quashed; insurer directed to pay Rs.16,597/- with 9% interest from date of filing + Rs.10,000/- mental agony + Rs.5,000/- litigation costs within 30 days.
+  Rupee Amounts: Bill Rs.20,850/- (IOL implant); settled Rs.2,409/-; deducted Rs.18,441/- (R&C); co-pay Rs.2,400/-; total paid Rs.21,600/-; awarded Rs.16,597/- + interest 9% + Rs.10,000/- + Rs.5,000/-.
+  Pattern: NON-PAYABLE ITEMS / R&C CUTS — reasonable and customary charges on implant (IOL)
+
+CASE 16 — United India Insurance Company Ltd. vs G.Chiranjeevi Prasad
+  Forum: Telangana State Consumer Disputes Redressal Commission, Hyderabad
+  Case Number: F.A. No. 646/2022 (against District Commission Hyderabad CC No. 175/2018 order dated 20.04.2022)
+  Date: 21 July 2026
+  Judge: Hon'ble Smt Justice Dr. G. Radha Rani (President) & Hon'ble Smt R.S. Rajeshree (Member, Non-Judicial)
+  Indian Kanoon Doc ID: doc/144680406
+  URL: https://indiankanoon.org/doc/144680406/
+  Insurer: United India Insurance Company Ltd. (TPA: Paramount Health Services / Medi Assist India TPA)
+  Diagnosis Group: Cataract surgery — left eye 11.10.2017 (Rs.45,999/- charged) and right eye 01.11.2017 (Rs.45,000/- charged) at Dr. Hari Kishan Eye Care Hospital, Barkatpura, Hyderabad
+  Rejection Ground & Clause Cited: Reasonable and Customary charges / GIPSA rates — insurer reimbursed only Rs.28,000/- per eye citing GIPSA (General Insurance Public Sector Association) terms; Clause 2.34 of policy (reasonable and customary charges). Insurer claimed IBA (member of GIPSA) bound by GIPSA rates; complainant not party to GIPSA so terms don't apply. Also alleged double claiming under two policies.
+  Documents Claimant Produced: Not detailed (appeal stage). Hospital charged Rs.45,999/- + Rs.45,000/- = Rs.90,999/-; insurer paid Rs.56,000/- (Rs.28,000/- per eye).
+  Ombudsman Award: Not applicable — consumer commission case.
+  Reasoning: (1) Insurer complied with District Commission order (paid Rs.39,999/- on 24.06.2022) → appeal not maintainable (estoppel). (2) On merits: GIPSA/MOU rates binding on network hospital but complainant not party to GIPSA. (3) Hospital issued double bills/discharge summaries for same treatment; double claiming under two policies alleged but not proven as excess. (4) Appeal dismissed as not maintainable; no order as to costs.
+  Outcome: Appeal DISMISSED as not maintainable (insurer had already complied with District Commission order).
+  Rupee Amounts: Charged Rs.45,999/- (left eye) + Rs.45,000/- (right eye) = Rs.90,999/-; insurer paid Rs.56,000/- (Rs.28,000/- per eye); balance claimed Rs.34,999/-; District Commission awarded Rs.34,999/- + Rs.5,000/- costs; insurer paid Rs.39,999/- on 24.06.2022.
+  Pattern: NON-PAYABLE ITEMS / R&C CUTS — GIPSA/reasonable customary rates on cataract surgery (Rs.28,000/- cap vs Rs.45,000-45,999/- charged)
+
+CASE 17 — Star Health Insurance Co. Through Its ... vs Vimal Bir Kaur W/O Jatinderjit Singh
+  Forum: State Consumer Disputes Redressal Commission, Punjab, Chandigarh
+  Case Number: First Appeal No. 25 of 2025 (against District Commission Amritsar order dated 17.09.2024 in CC No. 29 of 2024)
+  Date: 16 June 2026
+  Judge: Hon'ble Mrs. Justice Daya Chaudhary (President) & Ms. Simarjot Kaur & Mr. Vishav Kant Garg (Members)
+  Indian Kanoon Doc ID: doc/61348487
+  URL: https://indiankanoon.org/doc/61348487/
+  Insurer: Star Health Insurance Company Limited
+  Diagnosis Group: Alcoholic Liver Disease (ALD) / Chronic Liver Disease (CLD) — admission Medanta, Medicity, Gurgaon 15.07.2021 to 25.07.2021; fever since April 2021; COVID positive May 2021; "Alcohol > 20 years" in social history but last intake Nov 2020; liver normal size with marginal irregularity
+  Rejection Ground & Clause Cited: Exclusion Clause No. 12 — "Treatment for Alcoholism, drug or substance abuse or any addictive condition and consequences thereof." Insurer repudiated claim dated 25.07.2021 alleging ALD due to alcoholism. Also time-bar objection (claim repudiated 25.07.2021; complaint filed 12.01.2024).
+  Documents Claimant Produced: Discharge summary; LCR pages; medical records showing fever of unknown origin; policy documents.
+  Ombudsman Award: Not applicable — consumer commission case. Cashless pre-authorization initially allowed 23.07.2021 then withdrawn 25.07.2021 citing alcoholic liver disease.
+  Reasoning: (1) Repudiation letter sent to wrong address (not complainant's address in policy) → complainant not aware; recurring cause of action till 19.12.2023 when she inquired; complaint filed 12.01.2024 within 2-year limitation. (2) Medical records show fever of unknown origin; no doctor stated alcohol was cause of ailment; "Alcohol > 20 years" in social history ≠ proof alcohol caused disease; last intake Nov 2020 (before April 2021 fever). (3) Bed Head Ticket cannot be basis for concluding pre-existing disease. (4) Taking liquor is not a material fact; not a disease (citing F.A. No. 1585 of 2006, Branch Manager LIC v. Rahul Sehgal). (5) Claim wrongly repudiated.
+  Outcome: Appeal DISMISSED; District Commission order upheld; claim payable (Rs.5,00,000/- sum insured + interest + Rs.20,000/- compensation + Rs.10,000/- litigation expenses per District Commission order).
+  Rupee Amounts: Sum insured Rs.5,00,000/-; compensation Rs.20,000/-; litigation expenses Rs.10,000/-.
+  Pattern: Pre-existing disease / alcoholism exclusion (Exclusion 12) — claim upheld for claimant
+
+CASE 18 — Star Health And Allied Insurance Co.Ltd vs A.Chokkar
+  Forum: Madras High Court (Madurai Bench)
+  Case Number: W.A.(MD) No. 480 of 2009 and W.P.(MD) Nos. 1699, 1702, 3164, 7207, 7562, 8705, 8927, 10450, 10589, 11176, 11357, 11383, 11384, 12826, 14035 of 2009
+  Date: 26 February 2010
+  Judge: Prabha Sridevan, J. & B. Rajendran, J.
+  Indian Kanoon Doc ID: doc/1509950
+  URL: https://indiankanoon.org/doc/1509950/
+  Insurer: Star Health and Allied Insurance Co. Ltd. (implementing Tamil Nadu Government Employees New Health Insurance Scheme)
+  Diagnosis Group: Various — by-pass heart surgery (wife of government servant) at non-network hospital; scheme covers specified procedures at network hospitals only
+  Rejection Ground & Clause Cited: Treatment at non-network hospital; scheme is cashless; reimbursement not payable for non-network hospital treatment or non-covered procedures. Ineligible expenses: (a) ailments/treatments not approved under scheme; (b) coverage exceeding Rs.2 lakhs per 4-year block; (c) expenses other than eligible expenses.
+  Documents Claimant Produced: Not detailed.
+  Ombudsman Award: Not applicable — writ petition against state scheme, not insurance ombudsman.
+  Reasoning: (1) Insurance relationship purely contractual; insurer strictly bound by scheme terms. (2) Not bound to settle claims outside contract terms. (3) Non-network hospital treatment not reimbursable under scheme. (4) Claimants have remedy under Tamil Nadu Medical Attendance Rules / Grievance Redressal Committee. (5) Single Judge's order directing reconsideration set aside.
+  Outcome: Writ appeal ALLOWED; Single Judge's order set aside; insurer not liable for non-network hospital claims.
+  Rupee Amounts: Scheme sum insured Rs.2 lakhs per 4-year block period (11.06.2008 to 10.06.2012); earlier scheme Rs.1 lakh for entire service period; monthly subscription Rs.25/-.
+  Pattern: Network hospital / cashless scheme restriction
+
+CASE 19 — Tata Aig General Insurance Company vs Ms. Pooja Gupta
+  Forum: National Consumer Disputes Redressal Commission, New Delhi
+  Case Number: Revision Petition No. 3541 of 2006 (against State Commission UT Chandigarh order dated 11.09.2006 in Appeal No. 640/2006)
+  Date: 19 January 2011
+  Judge: Hon'ble Mr. Justice R.K. Batta (Presiding Member) & Mr. Vinay Kumar (Member)
+  Indian Kanoon Doc ID: doc/10511388
+  URL: https://indiankanoon.org/doc/10511388/
+  Insurer: Tata AIG General Insurance Company Ltd.
+  Diagnosis Group: Gastro Intestinal Bleeding (NSAID-induced) during management course in France; hospitalization 17 days at Embroise Pare hospital, Paris; policy for 90 days (27.7.2004 to 24.10.2004) then renewal 270 days (06.11.2004 to 02.08.2005)
+  Rejection Ground & Clause Cited: (1) Treatment for Gastro Intestinal Bleeding = pre-existing medical condition (HBP since 1981, PAN since 1982); (2) Sickness benefit cover not opted under policy; medical/sickness expenses not in scope. Insurer allowed only Rs.28,320/- towards travel expenses of sister from Mumbai.
+  Documents Claimant Produced: Hospital records from France (diagnosis: NSAID-induced GI bleeding; relapse of PAN unlikely); affidavit of Dr. George Oommen.
+  Ombudsman Award: Not applicable — consumer commission case.
+  Reasoning: (1) State Commission found emergency evacuation and sickness covered under policy. (2) Pre-existing condition definition: disease contracted within 2 years preceding coverage or requiring hospitalization/surgery within 5 years. (3) Mere statement of pre-existing ailment not enough; onus on insurer to prove knowing concealment AND nexus with condition claimed. (4) Dr. Oommen's affidavit (recommending rejection) exceeded expert role — no medical evidence enclosed. (5) NCDRC upheld State Commission; hospitalization expenses Rs.680,868.53 should be reimbursed.
+  Outcome: Revision petition DISMISSED; State Commission order upheld; claim payable.
+  Rupee Amounts: Claim 11,824.74 Euros; travel expenses allowed Rs.28,320/-; hospitalization expenses Rs.680,868.53.
+  Pattern: Pre-existing disease; emergency medical evacuation; sickness benefit cover
+
+CASE 20 — Charanjit Singh vs The National Insurance Company Ltd.
+  Forum: State Consumer Disputes Redressal Commission, Punjab, Chandigarh
+  Case Number: First Appeal No. 684 of 2010 (against District Forum Patiala order dated 29.3.2010)
+  Date: 5 August 2013
+  Judge: Justice Gurdev Singh (President) & Baldev Singh Sekhon (Member)
+  Indian Kanoon Doc ID: doc/24753088
+  URL: https://indiankanoon.org/doc/24753088/
+  Insurer: National Insurance Company Ltd.
+  Diagnosis Group: Cattle/livestock insurance — death of two buffaloes (Hepatitis 24.7.2008; Pericarditis 4.8.2008); NOT health insurance
+  Rejection Ground & Clause Cited: Ear tags not produced; insurer claimed buffaloes that died were not the insured ones (no ear tags on dead animals per investigator); late intimation mentioned.
+  Documents Claimant Produced: Health certificates (Ex.C-3, Ex.C-4) from Veterinary Officer; post mortem reports (Ex.C-7, Ex.C-11); affidavit Ex.C-1.
+  Ombudsman Award: Not applicable — consumer commission case.
+  Reasoning: (1) Identity of buffaloes established by health certificates and post mortem reports (descriptions tally). (2) Ear tag numbers mentioned in policy but not produced by claimant; investigator found no tags on any of 6 buffaloes. (3) Commission found ear tags were put at time of insurance (per affidavit of Davinder Grover, Senior Branch Manager). (4) However, post mortem reports did not mention ear tags; investigator concluded no tag mentioned by doctor. (5) Cannot hold dead buffaloes were the insured ones. (6) Appeal DISMISSED.
+  Outcome: Appeal DISMISSED; District Forum order upheld.
+  Rupee Amounts: Claim Rs.40,000/- (insurance amount for two buffaloes) + Rs.5,000/- expenses + Rs.20,000/- compensation.
+  Pattern: Cattle insurance — identification/ear tag dispute (NOT health insurance, included for completeness)
+
+CASE 21 — Star Health Allied Ins.Co.Ltd. vs Rajni
+  Forum: Delhi State Consumer Disputes Redressal Commission
+  Case Number: First Appeal No. 189/2026; Date of Institution 19.03.2025
+  Date: 29 May 2026
+  Judge: Hon'ble Justice Sangita Dhingra Sehgal (President) & Hon'ble Ms. Bimla Kumari (Member)
+  Indian Kanoon Doc ID: doc/71664493
+  URL: https://indiankanoon.org/doc/71664493/
+  Insurer: Star Health & Allied Insurance Co. Ltd.
+  Diagnosis Group: UTI (Urinary Tract Infection) — admission Mahavir Multi Specialty Hospital 02.03.2022 to 06.03.2022
+  Rejection Ground & Clause Cited: (1) Excluded Provider (Exclusion No. 11 — Code Excl 11) — Mahavir Hospital excluded by insurer; (2) Late intimation — Clause 2D: notification within 24 hours; admitted 02.03.2022, intimation given 30.03.2022 (28-day delay). Exclusion 11 allows stabilization-stage expenses in life-threatening/accidental emergencies only.
+  Documents Claimant Produced: Discharge card dated 06.03.2022; final bill Rs.53,454/-; claim form; proof of excluded provider.
+  Ombudsman Award: Not applicable — consumer commission case.
+  Reasoning: (1) Insurer failed to place on record list of excluded hospitals showing Mahavir Hospital excluded; terms and conditions didn't contain penal hospital list; complainant not expected to search website before treatment. (2) District Commission allowed claim Rs.53,454/- + 6% interest + Rs.20,000/- compensation. (3) State Commission SET ASIDE — upheld repudiation; found Mahavir Hospital excluded (shown on insurer's website and multiple insurers' delisted lists); 28-day intimation delay violated Clause 2D; 50 repetitive claims by Shripal = abuse of process.
+  Outcome: Appeal ALLOWED; District Commission order dated 11.02.2026 SET ASIDE; repudiation upheld.
+  Rupee Amounts: Claim Rs.53,454/-; compensation awarded by District Commission Rs.20,000/-.
+  Pattern: LATE INTIMATION (28-day delay, Clause 2D) + EXCLUDED PROVIDER (Exclusion 11)
+
+================================================================================
+SUMMARY BY PATTERN (shortfall targets)
+================================================================================
+
+OPD-convertible / hospitalisation-not-justified (TARGET: 3 more, FOUND: 1):
+  SHORTFALL: 2 more needed
+  1. CASE 9 — Bajaj Allianz vs Sh. Sanjay Kumar (Delhi State Commission, 30.04.2026) — "patient could have been initially treated on outpatient basis"; direct admission without prior OPD not justified.
+
+Room-rent proportionate deduction (TARGET: 3 more, FOUND: 3):
+  MET ✓
+  1. CASE 10 — Minor Prapti Bhattacharya vs New India Assurance (WB State Commission, 05.06.2018) — room rent Rs.10,000-6,700/day vs entitlement Rs.1,000/day (1% SI); 87% proportionate reduction.
+  2. CASE 12 — National Ins. Co. vs Narender Kumar Jain (Delhi State Commission, 28.10.2026) — ICU Rs.15,000/day vs policy Rs.7,500/day; room rent Rs.10,000/day vs policy Rs.5,000/day; Rs.1,10,000/- disallowed.
+  3. CASE 14 — National Insurance Co. Ltd. vs Amit Mittal (Delhi State Commission, 25.02.2021) — room rent limit 1% SI per day max Rs.5,000/-; ICU 2% SI per day max Rs.10,000/-; overall 25% SI per illness.
+
+Late intimation (TARGET: 2 more, FOUND: 3):
+  MET ✓
+  1. CASE 11 — Bajaj Allianz vs Amritpal Singh (Punjab State Commission, 24.01.2020) — 18-day delay; SC Om Prakash v. Reliance + IRDA Circular 20.9.2011 — delay alone shouldn't repudiate genuine claims.
+  2. CASE 12 — Star Health vs Shripal (Delhi State Commission, 29.05.2026) — 25-day delay (Clause 2D); admitted 23.12.2023, intimation 28.01.2024.
+  3. CASE 13 — Star Health vs Sonia Singh (Delhi State Commission, 29.05.2026) — 54-day delay (Clause 1(D)); admitted 25.09.2024, intimation 19.11.2024.
+  NOTE: In cases 12 and 13, late intimation was a secondary ground (primary was excluded provider). Only case 11 has late intimation as a substantive discussion ground.
+
+Non-payable items / R&C cuts (TARGET: 4 more, FOUND: 4):
+  MET ✓
+  1. CASE 1 — Bharat Hirji Dedhia vs Union Of India (Bombay HC, 09.12.2024) — R&C / reasonable and customary charges (Clause 3.41); surgeon charges Rs.21,87,500/- challenged.
+  2. CASE 14 — National Insurance Co. Ltd. vs Amit Mittal (Delhi State Commission, 25.02.2021) — non-payable items clauses 4.16, 4.17, 4.26; Rs.78,490/- deducted out of Rs.88,067/- claim.
+  3. CASE 15 — Lataben Maheshbhai Matiya vs Oriental Ins.Co.Ltd (Gujarat State Commission, 14.06.2023) — R&C on IOL implant; Rs.18,441/- deducted out of Rs.20,850/-; only Rs.2,409/- paid.
+  4. CASE 16 — United India Insurance vs G.Chiranjeevi Prasad (Telangana State Commission, 21.07.2026) — GIPSA/reasonable customary rates on cataract surgery; Rs.28,000/- per eye paid vs Rs.45,000-45,999/- charged.
+
+================================================================================
+UNVERIFIED ITEMS TABLE
+================================================================================
+The following items were identified during search but could not be fully
+verified (could not retrieve full document text or key details missing):
+
+| # | Case Name | Forum | Date | Insurer | Issue | Doc ID / URL | Verification Status |
+|---|-----------|-------|------|---------|-------|--------------|---------------------|
+| U1 | Nizam's Institute of Medical Sciences vs Prasanth S. Dhananka | Supreme Court of India | 14.05.2009 | United India Insurance (medical negligence, Rs.10 lakh policy) | Medical negligence (paraplegia after neurofibroma surgery); NOT an insurance ombudsman case but mentions insurance policy | doc/1110505 | PARTIAL — full text retrieved but not an insurance claim repudiation case |
+| U2 | Oriental Insurance Co. Ltd vs Office Of Insurance Ombudsman And Anr | Bombay High Court | 09.12.2024 | Oriental Insurance | Same case as CASE 1 (WP 706/2024) | doc/142676357 | DUPLICATE of CASE 1 |
+| U3 | Purushotham Lohia vs Deputy Orthopaedics Inc. | NCDRC | 03.09.2024 | DePuy/Johnson & Johnson | Hip implant (medical device, not insurance) | doc/71664493 | NOT INSURANCE — medical device/product liability |
+| U4 | Star Health vs Rajni | Delhi State Commission | 29.05.2026 | Star Health | Late intimation (28 days) + excluded provider | doc/71664493 | VERIFIED (see CASE 21) |
+| U5 | M/S Shri Lakshmi Steel vs Tata General Insurance | Punjab State Commission | 06.07.2020 | Tata General | Motor theft claim (not health) | doc/24753088 | NOT HEALTH INSURANCE |
+
+================================================================================
+KEY LIMITATIONS
+================================================================================
+1. CIOINS website does NOT publish actual Insurance Ombudsman award documents.
+   - Awards/Archive page is JS-rendered and returns no content.
+   - Annual Report PDFs return 404.
+   - Insurance Ombudsman Rules 2017 PDF returns 404.
+2. All cases above are consumer commission orders and High Court judgments
+   from Indian Kanoon that REFERENCE Insurance Ombudsman awards — NOT the
+   actual ombudsman award documents themselves.
+3. Indian Kanoon search returns snippets; full document text was retrieved
+   for 21 cases via direct doc ID fetching.
+4. OPD-convertible / hospitalisation-not-justified pattern: only 1 case found
+   (target was 3). This pattern is rarely the subject of published consumer
+   commission or High Court judgments.
+5. policyholder.gov.in and ncdrc.gov.in were unreachable (transport errors).
+
+================================================================================
+END OF RESEARCH FILE 5
+================================================================================

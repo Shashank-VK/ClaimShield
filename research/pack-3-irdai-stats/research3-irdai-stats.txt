@@ -1,0 +1,475 @@
+================================================================================
+PACK 3B — IRDAI HEALTH INSURANCE STATISTICS COMPLETION (RESEARCH AGENT)
+Verification of Pack 1 questions against official IRDAI sources
+================================================================================
+
+METHOD NOTE:
+- Web search was blocked (HTTP 402). Only direct URL fetching was used.
+- All six confirmed IRDAI documents were downloaded via curl/wget to /tmp/opencode/downloads/:
+    * Annual Reports (PDF): 2022-23, 2023-24, 2024-25
+    * Handbooks on Indian Insurance Statistics (ZIP of XLSX): 2022-23, 2023-24, 2024-25
+- PDF text extracted with pdfplumber and saved to /tmp/opencode/extracted/.
+- ZIP contents (XLSX) extracted with Python zipfile (not analyzed in depth; AR statistical
+  tables are the primary source used).
+- Label key: OFFICIAL = confirmed from an IRDAI primary source (Annual Report / cited IRDAI
+  regulation or circular); REAL-CASE = not applicable (no real-case data available);
+  UNVERIFIED = could not be confirmed from the primary sources fetched.
+- Confidence: High / Medium / Low.
+
+--------------------------------------------------------------------------------
+SOURCE DOCUMENTS (official IRDAI, irdai.gov.in)
+--------------------------------------------------------------------------------
+S1. IRDAI Annual Report 2024-25 (PDF)
+    URL: https://irdai.gov.in/documents/37343/366637/%E0%A4%86%E0%A4%88%E0%A4%86%E0%A4%B0%E0%A4%A1%E0%A5%80%E0%A4%8F%E0%A4%86%E0%A4%88+%E0%A4%B5%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%B7%E0%A4%BF%E0%A4%95+%E0%A4%B0%E0%A4%BF%E0%A4%AA%E0%A5%8B%E0%A4%B0%E0%A5%8D%E0%A4%9F+_+IRDAI+Annual+Report+2024-25.pdf/06f02832-66a3-6308-a16f-f46a6640fc93?version=2.0&t=1767598639163&download=true
+    Source date: Annual Report 2024-25 (FY ending 31 Mar 2025)
+    Local text: /tmp/opencode/extracted/AR_2024_25.txt
+
+S2. IRDAI Annual Report 2023-24 (PDF)
+    URL: https://irdai.gov.in/documents/37343/366637/%E0%A4%B5%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%B7%E0%A4%BF%E0%A4%95+%E0%A4%B0%E0%A4%BF%E0%A4%AA%E0%A5%8B%E0%A4%B0%E0%A5%8D%E0%A4%9F+2023-24+_+Annual+Report+2023-24.pdf/22950192-b116-35ed-a3a9-d2cfdb660206?version=1.0&t=1734934358396&download=true
+    Source date: Annual Report 2023-24 (FY ending 31 Mar 2024)
+    Local text: /tmp/opencode/extracted/AR_2023_24.txt
+
+S3. IRDAI Annual Report 2022-23 (PDF)
+    URL: https://irdai.gov.in/documents/37343/366637/%E0%A4%B5%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%B7%E0%A4%BF%E0%A4%95+%E0%A4%B0%E0%A4%BF%E0%A4%AA%E0%A5%8B%E0%A4%B0%E0%A5%8D%E0%A4%9F+_+Annual+Report+2022-23.pdf/c3ecf83d-ddc1-3d13-da8c-c64364baf20f?version=1.0&t=1703656400415&download=true
+    Source date: Annual Report 2022-23 (FY ending 31 Mar 2023)
+    Local text: /tmp/opencode/extracted/AR_2022_23.txt
+
+S4. Handbook on Indian Insurance Statistics 2024-25 (ZIP of XLSX)
+S5. Handbook on Indian Insurance Statistics 2023-24 (ZIP of XLSX)
+S6. Handbook on Indian Insurance Statistics 2022-23 (ZIP of XLSX)
+    (Handbooks downloaded and unzipped; contain Part I–V, Index, Summary XLSX files.
+     Statistical claims tables were taken from the Annual Reports instead.)
+
+================================================================================
+FINDINGS BY PACK 1 QUESTION
+================================================================================
+
+--------------------------------------------------------------------------------
+QUESTION 1 — Health claims registered, paid, repudiated, disallowed, pending
+        FY2022-23, FY2023-24, FY2024-25
+--------------------------------------------------------------------------------
+
+SOURCE: IRDAI Annual Reports, "Status of Claims under Health Insurance" tables
+        (Table I.26 in AR 2022-23; Table I.29 in AR 2023-24 and AR 2024-25) for
+        General & Health Insurers; Table I.31 (Status of Claims under Health
+        Insurance Business of Life Insurers) for Life Insurers.
+        Units: General & Health = number in lakhs, amount in ₹ crore.
+        Life Insurers = number in actuals, amount in ₹ crore.
+
+Q1-A. GENERAL & HEALTH INSURERS — claims counts (number in lakhs)
+----------------------------------------------------------------
+FY2022-23 (AR 2022-23, Table I.26):
+  Claims outstanding at beginning : 20.06 lakhs (₹5,978.44 crore)
+  New claims registered           : 255.18 lakhs (₹93,060.46 crore)
+  Total claims                    : 275.24 lakhs (₹99,038.92 crore)
+  Claims paid                     : 235.75 lakhs (₹70,929.82 crore)   [85.66% of total number]
+  Claims disallowed               : 0.00 lakhs (₹12,754.95 crore)     [0% of total number]
+  Claims repudiated               : 21.65 lakhs (₹9,107.68 crore)     [7.87% of total number]
+  Claims outstanding at end       : 17.84 lakhs (₹6,246.88 crore)     [6.48% of total number]
+  Narrative (AR 2022-23): insurers settled ~86% of claims, repudiated ~8%,
+  remaining ~6% pending as on 31 Mar 2023.
+  -> claim text | S3 | Annual Report 2022-23 | OFFICIAL | High
+
+FY2023-24 (AR 2023-24, Table I.29):
+  Claims outstanding at beginning : 17.85 lakhs (₹6,290.28 crore)
+  New claims registered           : 307.87 lakhs (₹1,10,825.06 crore)
+  Total claims                    : 325.72 lakhs (₹1,17,115.34 crore)
+  Claims paid                     : 268.59 lakhs (₹83,493.17 crore)   [82.46%]
+  Claims disallowed               : 0.00 lakhs (₹15,100.42 crore)     [0%]
+  Claims repudiated               : 36.40 lakhs (₹10,937.18 crore)    [11.18%]
+  Claims outstanding at end       : 20.73 lakhs (₹7,584.57 crore)     [6.36%]
+  Narrative (AR 2023-24): insurers settled ~83% of claims, repudiated ~11%,
+  remaining ~6% pending as on 31 Mar 2024.
+  -> claim text | S2 | Annual Report 2023-24 | OFFICIAL | High
+
+FY2024-25 (AR 2024-25, Table I.29):
+  Claims outstanding at beginning : 20.73 lakhs (₹7,584.58 crore)
+  New claims registered           : 351.85 lakhs (₹1,24,903.22 crore)
+  Total claims                    : 372.58 lakhs (₹1,32,487.81 crore)
+  Claims paid                     : 326.01 lakhs (₹94,247.60 crore)   [87.50%]
+  Claims disallowed               : 0.00 lakhs (₹18,521.02 crore)     [0%]
+  Claims repudiated               : 29.51 lakhs (₹11,412.42 crore)    [7.92%]
+  Claims outstanding at end       : 17.07 lakhs (₹8,306.76 crore)     [4.58%]
+  Narrative (AR 2024-25): insurers settled ~87% of claims, repudiated ~8%,
+  remaining ~5% pending as on 31 Mar 2025.
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL | High
+
+NOTE on "disallowed": The IRDAI tables show disallowed NUMBER as 0.00 lakhs in all
+three years (not separately counted in the narrative), while a disallowed AMOUNT is
+shown (₹12,754.95 crore / ₹15,100.42 crore / ₹18,521.02 crore). Paid + Repudiated +
+Outstanding = Total exactly for counts, so disallowed is not a separate claim count;
+the disallowed amount likely reflects amounts disallowed/deducted within paid claims.
+Narratives mention only settled / repudiated / pending (no separate disallowed %).
+
+Q1-B. LIFE INSURERS — health claims counts (number in actuals)
+--------------------------------------------------------------
+FY2022-23 (AR 2022-23, Table I.28):
+  Health Insurance Products: O/S start 1,587; Reported 45,082; Paid 37,967;
+    Repudiated/Rejected 8,158; O/S end 544. (Amounts: 49.60 / 517.93 / 469.18 /
+    81.31 / 17.04 crore)
+  Health Insurance Riders: O/S start 103; Reported 2,443; Paid 1,955;
+    Repudiated 442; O/S end 149. (Amounts: 8.19 / 96.47 / 68.17 / 24.09 / 12.40 crore)
+  Narrative: life insurers paid ₹469 crore for 37,976 claims (81% of registered);
+    riders: 77% paid, ₹68 crore for 1,955 claims.
+  -> claim text | S3 | Annual Report 2022-23 | OFFICIAL | High
+
+FY2023-24 (AR 2023-24, Table I.31):
+  Health Insurance Products: O/S start 584; Reported 36,389; Paid 30,258;
+    Repudiated 6,291; O/S end 424. (Amounts: 17.34 / 366.09 / 314.55 / 51.42 / 17.46 crore)
+  Health Insurance Riders: O/S start 230; Reported 23,894; Paid 23,063;
+    Repudiated 704; O/S end 357. (Amounts: 23.02 / 229.88 / 181.41 / 53.36 / 18.12 crore)
+  Narrative: life insurers paid ₹315 crore for 30,258 claims (83% of registered);
+    riders: 96% paid, ₹181 crore for 23,063 claims.
+  -> claim text | S2 | Annual Report 2023-24 | OFFICIAL | High
+
+FY2024-25 (AR 2024-25, Table I.31):
+  Health Insurance Products: O/S start 424; Reported 35,386; Paid 28,770;
+    Repudiated/Rejected 6,607; O/S end 433. (Amounts: 17.45 / 361.27 / 310.73 /
+    50.44 / 17.55 crore)
+  Health Insurance Riders: O/S start 353; Reported 27,991; Paid 27,775;
+    Repudiated 557; O/S end 12. (Amounts: 18.07 / 152.95 / 136.68 / 32.65 / 1.69 crore)
+  Narrative: life insurers paid ₹311 crore for 28,770 claims (80% of registered);
+    riders: 98% paid, ₹137 crore for 27,775 claims.
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL | High
+
+--------------------------------------------------------------------------------
+QUESTION 2 — Rupee value claimed vs paid vs repudiated vs disallowed
+        FY2022-23, FY2023-24, FY2024-25
+--------------------------------------------------------------------------------
+
+SOURCE: Same IRDAI Annual Report tables as Q1 (amounts in ₹ crore).
+
+FY2022-23 — General & Health Insurers (Table I.26):
+  New claims registered (claimed) : ₹93,060.46 crore (255.18 lakhs)
+  Claims paid                     : ₹70,929.82 crore (235.75 lakhs)
+  Claims repudiated               : ₹9,107.68 crore (21.65 lakhs)
+  Claims disallowed (amount only) : ₹12,754.95 crore (0.00 lakhs count)
+  Claims outstanding at end       : ₹6,246.88 crore (17.84 lakhs)
+  Total claims                    : ₹99,038.92 crore (275.24 lakhs)
+  -> claim text | S3 | Annual Report 2022-23 | OFFICIAL | High
+
+FY2023-24 — General & Health Insurers (Table I.29):
+  New claims registered (claimed) : ₹1,10,825.06 crore (307.87 lakhs)
+  Claims paid                     : ₹83,493.17 crore (268.59 lakhs)
+  Claims repudiated               : ₹10,937.18 crore (36.40 lakhs)
+  Claims disallowed (amount only) : ₹15,100.42 crore (0.00 lakhs count)
+  Claims outstanding at end       : ₹7,584.57 crore (20.73 lakhs)
+  Total claims                    : ₹1,17,115.34 crore (325.72 lakhs)
+  -> claim text | S2 | Annual Report 2023-24 | OFFICIAL | High
+
+FY2024-25 — General & Health Insurers (Table I.29):
+  New claims registered (claimed) : ₹1,24,903.22 crore (351.85 lakhs)
+  Claims paid                     : ₹94,247.60 crore (326.01 lakhs)
+  Claims repudiated               : ₹11,412.42 crore (29.51 lakhs)
+  Claims disallowed (amount only) : ₹18,521.02 crore (0.00 lakhs count)
+  Claims outstanding at end       : ₹8,306.76 crore (17.07 lakhs)
+  Total claims                    : ₹1,32,487.81 crore (372.58 lakhs)
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL | High
+
+Average amount paid per claim (General & Health):
+  FY2022-23: not stated per-claim in table; FY2023-24: ₹31,086; FY2024-25: ₹28,910.
+  (Cashless 58% / reimbursement 36% / both 1% / benefit-based 4% in FY2024-25.)
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL | High
+
+Life Insurers health claim amounts (₹ crore):
+  FY2022-23: Products paid ₹469.18 (37,967 claims); Riders paid ₹68.17 (1,955 claims)
+  FY2023-24: Products paid ₹314.55 (30,258 claims); Riders paid ₹181.41 (23,063 claims)
+  FY2024-25: Products paid ₹310.73 (28,770 claims); Riders paid ₹136.68 (27,775 claims)
+  -> claim text | S1,S2,S3 | Annual Reports 2022-23 to 2024-25 | OFFICIAL | High
+
+--------------------------------------------------------------------------------
+QUESTION 3 — Bima Bharosa grievance counts: life vs general vs health;
+        total vs claim-related
+--------------------------------------------------------------------------------
+
+SOURCE: IRDAI Annual Reports, Grievances section (Table II.15 "Analysis of Grievances
+        Registered", Table II.17/II.19 "Status of Grievances as per Bima Bharosa
+        Portal"), source = Bima Bharosa Portal.
+
+Q3-A. Total grievances by sector (Table II.15):
+FY2024-25:
+  Life Insurance        : 1,20,429 grievances (76,57,01,810 policies/lives) — 15.72 per lakh
+  General & Health      : 1,37,361 grievances (2,59,18,85,672 policies/lives) — 5.29 per lakh
+  TOTAL                 : 2,57,790 grievances (3,35,75,87,482) — 7.67 per lakh
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL | High
+
+FY2023-24 (Table II.17 / narrative):
+  Life: 1,20,726 reported (1,20,579 attended, 436 pending)
+  General & Health: 94,843 reported (93,160 attended, 5,056 pending)
+  Grand Total: 2,15,569 reported (2,13,739 attended, 5,492 pending)
+  -> claim text | S2 | Annual Report 2023-24 | OFFICIAL | High
+
+FY2022-23 (Table II.19):
+  Life Insurers: 1,24,293 reported (1,24,417 attended, 289 pending)
+    - Public sector 81,303; Private sector 42,990 reported / 43,114 attended
+  General Insurers: 78,347 reported (76,959 attended, 3,373 pending)
+    - Public sector 22,563 / 20,781 attended; Private sector 55,784 / 56,178 attended
+  Grand Total: 2,02,640 reported (2,01,373 attended, 3,662 pending)
+  -> claim text | S3 | Annual Report 2022-23 | OFFICIAL | High
+
+Q3-B. Bima Bharosa portal status FY2024-25 (Table II.17):
+  Life Insurers — Total: 1,20,429 reported, 1,19,875 attended, 554 pending at end
+    (Public sector 74,104/74,104/0; Private sector 46,325/45,771/554)
+  General & Health Insurers — Total: 1,37,361 reported, 1,27,755 attended,
+    9,606 pending at end
+    (Public sector 38,924/30,723/8,201; Private sector 98,437/97,032/1,405)
+  Grand Total: 2,57,790 reported, 2,47,630 attended, 10,160 pending
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL | High
+
+Q3-C. Claim-related grievances (AR 2024-25, para II.6.9):
+  FY2024-25: Life insurance claims-related grievances = 33,280 (of 26.68 lakh life
+    claims reported). General & Health insurance claims-related grievances = 88,841
+    (of 11.26 crore claims). "Majority of general insurance grievances related to
+    claims (69 per cent)."
+  FY2022-23: Life — >62% of grievances related to Survival claims, Policy servicing,
+    Unfair business practices. General — majority related to claims (66 percent).
+  -> claim text | S1,S3 | Annual Reports 2024-25 & 2022-23 | OFFICIAL | High
+
+--------------------------------------------------------------------------------
+QUESTION 4 — Insurance Ombudsman award limit
+--------------------------------------------------------------------------------
+
+SOURCE: IRDAI Annual Reports, "Functioning of Ombudsman" (II.8) and Insurance
+        Ombudsman Rules, 2017.
+
+FY2022-23 (AR 2022-23): Award/compensation limit = ₹30 lakhs. 17 Ombudsman Centres.
+  -> claim text | S3 | Annual Report 2022-23 | OFFICIAL | High
+
+FY2023-24 (AR 2023-24, para II.8.4): "Insurance Ombudsman Rules, 2017 have been
+  amended on 9th November, 2023... the main amendment includes the increase in amount
+  of award for compensation from 30 lakhs to 50 lakhs and allowing awards to be signed
+  digitally." 17 Ombudsman Centres.
+  -> claim text | S2 | Annual Report 2023-24 | OFFICIAL | High
+
+FY2024-25 (AR 2024-25, para II.8.5): "Pursuant to the amendment in the Insurance
+  Ombudsman Rules 2017, the compensation limit under Ombudsman awards has been
+  enhanced from ₹30 lakhs to ₹50 lakhs." 18 Ombudsman Centres.
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL | High
+
+VERDICT on user's note (₹30 Lakhs from cioins.co.in): ₹30 lakhs was the PRE-AMENDMENT
+limit (applicable through FY2022-23 and until 8 Nov 2023). Per official IRDAI Annual
+Reports, the limit was enhanced to ₹50 lakhs effective 9 November 2023 and remained
+₹50 lakhs in FY2024-25. So ₹30 lakhs is outdated; current official limit = ₹50 lakhs.
+Label for "₹30 lakhs": OFFICIAL but outdated/superseded. Label for "₹50 lakhs": OFFICIAL, High.
+
+--------------------------------------------------------------------------------
+QUESTION 5 — Penalty/interest for non-compliance with Ombudsman award or
+        delayed claim settlement
+--------------------------------------------------------------------------------
+
+SOURCE: IRDAI Annual Report 2024-25 (paras II.8.3 and III.5.5 Master Circular summary);
+        Insurance Ombudsman Rules, 2017.
+
+Q5-A. Ombudsman award compliance:
+  - Ombudsman shall dispose of a valid complaint by award/recommendation within
+    THREE MONTHS from receipt of complaint (II.8.3, AR 2022-23, 2023-24, 2024-25).
+  - Insurer/intermediary shall comply with the award within THIRTY DAYS of receipt
+    and intimate compliance to the Ombudsman; award/decision binding on insurer.
+  -> claim text | S1,S2,S3 | Annual Reports 2022-23 to 2024-25 | OFFICIAL | High
+
+Q5-B. Penalty for non-compliance with Ombudsman award (AR 2024-25, III.5.5):
+  "the award must be complied with within 30 days. Failure to do so results in a
+  penalty of ₹5,000 per day, in addition to any interest liabilities."
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL | High
+
+Q5-C. Delayed claim settlement interest:
+  The Annual Reports state insurers must bear extra costs from shareholders' funds for
+  delays in cashless authorisation/discharge (Q7), but do NOT state a specific interest
+  rate or penalty % for delayed claim settlement. (Interest rate for delayed claims is
+  set in the IRDAI Protection of Policyholders' Interests Regulations; not reproduced
+  in the AR text fetched.)
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL (partial) | Medium
+
+--------------------------------------------------------------------------------
+QUESTION 6 — PED waiting period maximum and moratorium period, effective dates
+--------------------------------------------------------------------------------
+
+SOURCE: IRDAI Annual Report 2023-24 (IRDAI (Insurance Products) Regulations, 2024,
+        which merged the Health Insurance Regulations 2016 among six regulations);
+        AR 2024-25 (Master Circular on Health Insurance Business,
+        IRDAI/HLT/CIR/PRO/84/5/2024, dated 29 May 2024).
+
+Q6-A. PED waiting period maximum (AR 2023-24, "Salient features of Health Insurance
+  Products", IRDAI (Insurance Products) Regulations, 2024):
+  - Maximum waiting period for DISCLOSED PED: brought down from 48 months to 36 months.
+  - Maximum waiting period for UNDISCLOSED PED: brought down from 96 months to 60 months.
+  - Period for categorising any condition/ailment/injury/disease as PED: reduced from
+    48 months to 36 months prior to policy commencement.
+  - Maximum waiting period for specified diseases/treatment: 48 months to 36 months
+    (not applicable to claims arising from accident).
+  -> claim text | S2 | Annual Report 2023-24 | OFFICIAL | High
+
+Q6-B. Moratorium period (AR 2024-25, III.5.5, Master Circular 29 May 2024):
+  "A 60-month moratorium period, after which no claim can be denied due to
+  non-disclosure or misrepresentation, unless proven fraudulent."
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL | High
+
+Q6-C. Grace period (AR 2024-25, III.5.5): "Grace periods of 15 to 30 days during
+  which all the credits (sum insured, No Claim Bonus, Specific Waiting periods,
+  waiting periods for pre-existing diseases, Moratorium period etc.) under the policy
+  shall be protected."
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL | High
+
+Q6-D. Effective dates:
+  - IRDAI (Insurance Products) Regulations, 2024: discussed in AR 2023-24
+    (notified within FY2023-24; exact notification date not stated in AR text fetched).
+  - Master Circular on Health Insurance Business: 29 May 2024
+    (IRDAI/HLT/CIR/PRO/84/5/2024), consolidating and repealing 55 earlier circulars.
+  Exact gazette notification dates for PED/moratorium changes are NOT stated in the
+  AR text fetched.
+  -> claim text | S1,S2 | Annual Reports 2023-24 & 2024-25 | OFFICIAL (partial) | Medium
+
+--------------------------------------------------------------------------------
+QUESTION 7 — Cashless authorisation and discharge timelines
+--------------------------------------------------------------------------------
+
+SOURCE: IRDAI Annual Report 2024-25, III.5.5 (Master Circular on Health Insurance
+        Business, 29 May 2024) and general claims-process initiatives.
+
+Q7-A. Cashless pre-authorisation: "pre-authorization must be provided within 1 hour"
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL | High
+
+Q7-B. Hospital discharge approval: "hospital discharge approvals within 3 hours"
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL | High
+
+Q7-C. Delay consequence: "In case of delays, insurers must bear the extra costs from
+  their shareholders' funds."
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL | High
+
+Q7-D. Related claim-processing timelines (AR 2024-25):
+  - Surveyor appointment within 24 hours for eligible claims.
+  - Survey report submission within 15 days.
+  - Claims decision within 7 days of report receipt.
+  - Policyholder not required to submit documents; insurers/TPAs collect documents
+    from hospitals.
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL | High
+
+--------------------------------------------------------------------------------
+QUESTION 8 — Rules on insurers citing specific clauses in repudiation letters
+--------------------------------------------------------------------------------
+
+SOURCE: IRDAI Annual Report 2024-25, III.5.5 (Master Circular on Health Insurance
+        Business, 29 May 2024).
+
+Q8-A. "no claim can be repudiated without clearance from either the Product
+  Management Committee (PMC) or a Claims Review Committee (CRC), ensuring
+  accountability and transparency in claim repudiation."
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL | High
+
+Q8-B. "Previous claims cannot be a reason for denial." "Guaranteed policy renewal
+  except in cases of fraud or misrepresentation."
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL | High
+
+Q8-C. The AR summary does NOT reproduce the specific requirement about the exact
+  wording/clauses insurers must cite in repudiation letters (this detail is in the
+  full Master Circular / Protection of Policyholders Regulations text, not in the AR
+  summary fetched).
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL (partial) | Medium
+
+--------------------------------------------------------------------------------
+QUESTION 9 — Intimation windows for emergency/planned hospitalisation
+--------------------------------------------------------------------------------
+
+SOURCE: IRDAI Annual Reports 2022-23, 2023-24, 2024-25 (full text searched).
+
+FINDING: Not stated in the Annual Report text fetched. The ARs describe claim
+ settlement timelines (cashless auth 1 hour, discharge 3 hours, surveyor 24 hrs,
+ decision 7 days) but do not specify the intimation window (e.g., emergency
+ intimation within 24 hours / planned intimation before admission or within 48
+ hours) that appears in the Health Insurance Regulations/Master Circular.
+ 
+STATUS: UNVERIFIED from the primary sources fetched. (Typically cited in IRDAI
+ Health Insurance Regulations: emergency hospitalisation intimation within 24 hours;
+ planned hospitalisation intimation at least 48 hours prior — but this could NOT be
+ confirmed from the AR documents downloaded.)
+
+--------------------------------------------------------------------------------
+QUESTION 10 — Non-payable items lists and room-rent proportionate deduction rules
+--------------------------------------------------------------------------------
+
+SOURCE: IRDAI Annual Reports 2022-23, 2023-24, 2024-25 (full text searched).
+
+FINDING: The ARs mention "exclusions" generically (Customer Information Sheet outlines
+  exclusions; "clarity in coverage... exclusions") and proportionate premium refund on
+  cancellation, but do NOT reproduce the specific non-payable items list nor the
+  room-rent proportionate deduction rule (e.g., proportionate deduction on other
+  charges if room rent exceeds the limit).
+ 
+STATUS: UNVERIFIED from the primary sources fetched.
+
+--------------------------------------------------------------------------------
+QUESTION 11 — Escalation ladder:
+        grievance officer → Bima Bharosa → Ombudsman → consumer commission
+        (timelines, limits)
+--------------------------------------------------------------------------------
+
+SOURCE: IRDAI Annual Reports, Grievances section and Ombudsman section.
+
+Q11-A. Grievance officer / internal escalation (Protection of Policyholders'
+  Interests Regulations, 2017; AR 2022-23 II.6; AR 2024-25 II.6.2):
+  - IRDAI mandated all insurers to have a grievance redressal policy; designate a
+    Grievance Redressal Officer at Head Office/Corporate Office/Principal Office AND
+    at every other office; constitute a Policyholder Protection Committee.
+  - AR 2024-25: insurers must have a Policyholders' Protection, Grievance Redressal
+    and Claims Monitoring Committee (PPGR&CM); a designated officer at every place of
+    business; and a proper internal escalation matrix if grievances are not addressed
+    to the complainant's satisfaction.
+  -> claim text | S1,S3 | Annual Reports 2022-23 & 2024-25 | OFFICIAL | High
+
+Q11-B. Bima Bharosa portal:
+  - IRDAI's online grievance filing/tracking portal, integrated with insurers'
+    Complaints Management System; IRDAI Grievance Call Centre (IGCC) toll-free
+    telephone/email; monitors insurer disposal.
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL | High
+
+Q11-C. Insurance Ombudsman:
+  - Policyholder first approaches insurer; if unresolved/partially resolved, may go to
+    Ombudsman. Ombudsman disposes complaint within 3 months; award binding.
+  - Award limit ₹50 lakhs (enhanced from ₹30 lakhs effective 9 Nov 2023).
+  - Insurer complies within 30 days; penalty ₹5,000/day + interest for failure.
+  -> claim text | S1,S2,S3 | Annual Reports 2022-23 to 2024-25 | OFFICIAL | High
+
+Q11-D. Consumer commission:
+  - The escalation step beyond the Ombudsman (consumer forum/consumer commission) and
+    its timelines/limits are NOT stated in the Annual Report text fetched.
+  STATUS: UNVERIFIED from the primary sources fetched.
+
+--------------------------------------------------------------------------------
+QUESTION 12 — DPDP Act obligations for health data
+--------------------------------------------------------------------------------
+
+SOURCE: IRDAI Annual Report 2024-25 (IV.4 / cyber security section).
+
+FINDING: "Provided inputs of IRDAI to MeitY on impact of DPDP Act and Draft Rules on
+  Insurance Sector after collecting feedback from Insurance Industry." (AR 2024-25)
+  The AR does NOT enumerate the specific DPDP Act obligations for health data
+  (consent, notice, purpose limitation, breach notification, data principal rights,
+  etc.) applicable to insurers.
+ 
+STATUS: UNVERIFIED for specific obligations; only confirmed that IRDAI engaged with
+  MeitY on DPDP Act impact on the insurance sector.
+  -> claim text | S1 | Annual Report 2024-25 | OFFICIAL (partial) | Medium
+
+================================================================================
+TABLE — EVERYTHING NOT CONFIRMED FROM PRIMARY SOURCES
+================================================================================
+
+| # | Item | Status | What primary sources (ARs) contain | Gap / what remains UNVERIFIED |
+|---|------|--------|------------------------------------|-------------------------------|
+| Q4 | Ombudsman award limit | PARTIAL | ₹30 lakhs (FY22-23); enhanced to ₹50 lakhs eff. 9 Nov 2023 (FY23-24, FY24-25) | User's cited ₹30 lakhs is outdated; current = ₹50 lakhs per IRDAI ARs |
+| Q5 | Delayed claim settlement interest rate/penalty % | NOT CONFIRMED | Ombudsman non-compliance penalty ₹5,000/day + interest (AR 24-25); 30-day compliance; 3-month disposal | Specific interest rate for delayed claim settlement not in AR text |
+| Q6 | PED waiting period maximum effective dates | PARTIAL | PED max 36 months (disclosed), 60 months (undisclosed); moratorium 60 months; circular dated 29 May 2024 | Exact gazette notification/effective dates not stated in AR text |
+| Q9 | Intimation windows (emergency/planned hospitalisation) | NOT CONFIRMED | Cashless auth 1 hr; discharge 3 hrs; surveyor 24 hrs; decision 7 days | Emergency (24 hr) / planned (48 hr) intimation windows NOT in AR text |
+| Q10 | Non-payable items list; room-rent proportionate deduction | NOT CONFIRMED | Generic mention of "exclusions" in Customer Information Sheet; proportionate premium refund on cancellation | Specific non-payable items list and room-rent proportionate deduction rule NOT in AR text |
+| Q11 | Escalation: consumer commission step (timelines, limits) | PARTIAL | Grievance officer at every office; internal escalation matrix; Bima Bharosa; Ombudsman (3 months, ₹50L, ₹5,000/day) | Consumer commission/forum timelines and limits NOT in AR text |
+| Q12 | DPDP Act obligations for health data | PARTIAL | IRDAI provided inputs to MeitY on DPDP Act/Draft Rules impact on insurance sector | Specific DPDP obligations (consent, breach notification, rights, etc.) NOT enumerated in AR text |
+
+Note: "disallowed" claim COUNT is shown as 0.00 lakhs in all three IRDAI Annual Report
+tables (not separately counted in narratives), while a disallowed AMOUNT is reported
+(₹12,754.95 crore FY22-23; ₹15,100.42 crore FY23-24; ₹18,521.02 crore FY24-25).
+Paid + Repudiated + Outstanding = Total exactly for counts, indicating disallowed is not
+a separate claim count in IRDAI reporting.
+
+================================================================================
+END OF REPORT
+================================================================================
