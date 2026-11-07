@@ -13,6 +13,7 @@ import asyncio
 import hashlib
 import hmac
 import json
+import os
 import queue as queue_module
 from collections import deque
 from typing import Any, Deque, Dict, List, Optional, Set
@@ -113,9 +114,17 @@ def create_app(
 ) -> FastAPI:
     app = FastAPI(title="ClaimShield Desk")
     # The cockpit runs on localhost:3000 and calls this API from the browser.
+    # FRONTEND_ORIGIN (env) adds the deployed cockpit origin for live hosting;
+    # a bare host is treated as https://<host> (Render's fromService gives a host).
+    _cors_origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
+    _frontend_origin = os.environ.get("FRONTEND_ORIGIN", "").strip()
+    if _frontend_origin and not _frontend_origin.startswith("http"):
+        _frontend_origin = "https://" + _frontend_origin
+    if _frontend_origin:
+        _cors_origins.append(_frontend_origin)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+        allow_origins=_cors_origins,
         allow_methods=["*"],
         allow_headers=["*"],
     )

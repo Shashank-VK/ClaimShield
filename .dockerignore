@@ -1,0 +1,13 @@
+.git
+.venv
+__pycache__
+.pytest_cache
+frontend
+submission
+design
+eval
+tests
+.builder-os
+.logs
+node_modules
+frontend/.next

@@ -1,0 +1,26 @@
+# Render blueprint — free tier. Deploy from the repo root (this file at root).
+# The API needs no secrets: the demo runs on the in-memory backend.
+services:
+  - type: web
+    name: claimshield-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: FRONTEND_ORIGIN
+        fromService:
+          type: web
+          name: claimshield-web
+          property: host
+  - type: web
+    name: claimshield-web
+    env: node
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: claimshield-api
+          property: host

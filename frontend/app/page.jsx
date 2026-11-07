@@ -3,7 +3,14 @@
 import { useEffect, useState } from "react";
 import LilacDuskCanopy from "./canopy-background";
 
-const API = "http://127.0.0.1:8000";
+// NEXT_PUBLIC_API_URL points the cockpit at a deployed API (e.g. Render).
+// A bare host is treated as https://<host>; unset means local dev.
+const _apiEnv = (process.env.NEXT_PUBLIC_API_URL || "").trim();
+const API = _apiEnv
+  ? _apiEnv.startsWith("http")
+    ? _apiEnv
+    : `https://${_apiEnv}`
+  : "http://127.0.0.1:8000";
 const DISCLAIMER = "Draft for human review, not legal/medical advice. All cases SYNTHETIC.";
 
 const DENGUE_CLAIM = {
@@ -147,7 +154,7 @@ export default function Cockpit() {
     fetch(`${API}/health`)
       .then((r) => r.json())
       .then(setHealth)
-      .catch(() => setError("Backend not reachable at 127.0.0.1:8000 — start it with uvicorn backend.main:app"));
+      .catch(() => setError(`Backend not reachable at ${API} — start it with uvicorn backend.main:app`));
     fetch(`${API}/scrubber/rules`)
       .then((r) => r.json())
       .then(setRules)
