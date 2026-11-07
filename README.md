@@ -12,6 +12,27 @@ incomplete pattern is blocked next time.
 All cases are SYNTHETIC. Every appeal packet carries: "Draft for human
 review, not legal/medical advice. All cases SYNTHETIC."
 
+## Demo video
+
+[![ClaimShield Desk — Built on Hindsight](submission/youtube-thumbnail.jpg)](https://youtu.be/_Mc63Yu5DPI)
+
+3:30 walkthrough in the builder's own voice — the four demo beats, from the
+Day-1 veto to the human gate. [Watch on YouTube](https://youtu.be/_Mc63Yu5DPI)
+
+## Screenshots
+
+### The cockpit
+
+![ClaimShield Desk cockpit — Hindsight X-Ray, Band Room, Repo Viewer, beat rail](submission/article-cockpit.png)
+
+### The veto — Beat 1, proof ×0
+
+![Hindsight X-Ray showing the Beat 1 veto at proof ×0, with the Desk chat](submission/article-veto.png)
+
+### How it works
+
+![ClaimShield Desk denial-defense loop — intake, PII scrubber, Hindsight memory, Auditor, Critic, human gate, rule commit](submission/architecture-diagram.png)
+
 ## Headline demo case
 
 Synthetic Star Health dengue claim, **₹1,45,000**, denied as
@@ -53,10 +74,12 @@ Seeded history loads automatically at backend start (`seed_history.py`:
 
 ## What actually runs (honest)
 
-- **Hindsight backend: `memory`** (in-memory fallback). No Hindsight Cloud
-  key is set and Docker is down on this machine, so there is no Cloud or
-  local Hindsight to reach. The adapter is built so Cloud plugs straight in
-  when `HINDSIGHT_API_KEY` is set — the code path is the same.
+- **Hindsight backend: `memory`** (in-memory fallback) — by design for the
+  demo. A Hindsight Cloud key (`claimshield-desk`) exists and is verified
+  live, but Cloud rebuilds the seeded proof counts (seeded 5 → 1, dengue
+  APPROVE → veto), so the demo stays on local memory. The adapter is built
+  so Cloud plugs straight in when `HINDSIGHT_API_KEY` is set — the code path
+  is the same.
 - **Band mode: `local`** (in-process room bus). No Band account, API key or
   room id exists here; the SDK path is detected and falls back honestly.
 - **Product LLM:** OmniRoute at `http://localhost:20128/v1`, model
@@ -92,7 +115,6 @@ draft is actually grounded in the cited evidence.
 
 ## Hands items (need the user)
 
-- Hindsight Cloud signup + MEMHACK99 promo (for the Cloud backend).
 - Band sign-in (for the real SDK room instead of the local bus).
 
 ## Demo
