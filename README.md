@@ -41,6 +41,28 @@ Light theme:
 
 ![ClaimShield Desk denial-defense loop — intake, PII scrubber, Hindsight memory, Auditor, Critic, human gate, rule commit](submission/architecture-diagram.png)
 
+## MCP
+
+Hindsight exposes an MCP server for the project's Cloud memory bank
+(`claimshield-india`):
+
+- Endpoint: `https://api.hindsight.vectorize.io/mcp/claimshield-india/`
+- Auth: Bearer token = your Hindsight API key (keep it in your own client
+  config — never commit it)
+
+Claude Code:
+
+```bash
+claude mcp add --transport http hindsight https://api.hindsight.vectorize.io/mcp/claimshield-india/ --header "Authorization: Bearer <your-hindsight-api-key>"
+```
+
+Honest note: this reaches the Cloud bank, whose seeded data is the
+degraded set (proof_count 1 on the dengue record) — the demo's measured
+19/20 + 5/5 numbers come from the in-memory backend, which exposes no MCP
+endpoint. The product itself has no MCP surface: Band MCP was ruled out in
+the PRD because it cannot deliver room messages, and Band Native Memories
+is enterprise-only.
+
 ## Headline demo case
 
 Synthetic Star Health dengue claim, **₹1,45,000**, denied as
