@@ -1,0 +1,49 @@
+== s1-hook ==
+  HTTP 429 attempt 1
+  OK /home/hatch/workspace/goals/hackwithbangalore-4-0-hackathon/builds/claimshield-desk/submission/vo/v2-s1-hook.mp3 28.170958s
+== s2-problem ==
+  OK /home/hatch/workspace/goals/hackwithbangalore-4-0-hackathon/builds/claimshield-desk/submission/vo/v2-s2-problem.mp3 41.330958s
+== s3-turn ==
+  OK /home/hatch/workspace/goals/hackwithbangalore-4-0-hackathon/builds/claimshield-desk/submission/vo/v2-s3-turn.mp3 39.370958s
+== s4-scrub ==
+  HTTP 429 attempt 1
+  unexpected response shape {"candidates": [{"finishReason": "OTHER", "index": 0}], "usageMetadata": {"promptTokenCount": 123, "totalTokenCount": 123, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 123}], "serviceTier": "standard"}, "modelVersion": "gemini-2.5-flash-preview-tts", "responseId": "mAHvaqXTE-KuytMPx9bw
+  FAILED s4-scrub
+== s5-critic ==
+  HTTP 429 attempt 1
+  HTTP 429 attempt 2
+  HTTP 429 attempt 3
+  FAILED s5-critic
+== s6-gate ==
+  HTTP 429 attempt 1
+  HTTP 429 attempt 2
+  HTTP 429 attempt 3
+  FAILED s6-gate
+== s7-wrap ==
+  HTTP 429 attempt 1
+  HTTP 429 attempt 2
+  HTTP 429 attempt 3
+  FAILED s7-wrap
+== s4-scrub ==
+  HTTP 429 attempt 1
+  HTTP 429 attempt 2
+  HTTP 429 attempt 3
+  FAILED s4-scrub
+== s5-critic ==
+  HTTP 429 attempt 1
+  HTTP 429 attempt 2
+  HTTP 429 attempt 3
+  FAILED s5-critic
+== s6-gate ==
+  HTTP 429 attempt 1
+  HTTP 429 attempt 2
+  HTTP 429 attempt 3
+  FAILED s6-gate
+== s7-wrap ==
+  HTTP 429 attempt 1
+  HTTP 429 attempt 2
+  HTTP 429 attempt 3
+  FAILED s7-wrap
+== s4-scrub ==
+  HTTP 404 attempt 1
+  FAILED s4-scrub

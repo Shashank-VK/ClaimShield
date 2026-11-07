@@ -1,0 +1,1 @@
+Before any of that, the desk scrubs the packet. PAN, Aadhaar, phone numbers — redacted before a single word is remembered. A raw SSN in a document gets caught by the second layer too. Nothing about a patient is ever retained unscrubbed. Memory you can't trust with data is memory you can't trust at all.

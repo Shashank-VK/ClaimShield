@@ -1,0 +1,504 @@
+/* ClaimShield Desk — approved concept, de-cluttered.
+   Tokens: Linear near-black density + Apple frosted glass + Action Blue.
+   Lifted 7 Nov: a scale of near-blacks, not one black — page #0B0E13,
+   frosted cards 30% + saturate(180%) blur(20px) so the canopy refracts
+   through visibly, hover 38% (dark-dashboard pattern, Pinterest:
+   "dark mode dashboard UI" / "glassmorphism dashboard").
+   Glass is a researched 5-layer stack (design/frosted-glass-research.md):
+   tint + blur/saturate + asymmetric specular rim + sheen + lift, with a
+   Chromium-only SVG displacement lens for real refraction.
+   Colours follow 60-30-10 (design/60-30-10-research.md): 60% canvas
+   #0B0E13 / #F5F5F7, 30% glass panels in a muted blue slate (a 10-15%
+   lightness lift over the canvas, so the layers separate), 10% Action
+   Blue on interactive/emphasis only (primary CTA, links, active nav,
+   key numbers); approve/veto/blocked are semantic data colours outside
+   the ratio.
+   No emoji, no hue gradients, no glows, no shadows on chrome. */
+* { box-sizing: border-box; }
+:root {
+  --canvas: #0b0e13;
+  --panel: rgba(35, 43, 56, 0.3);
+  --panel-raised: rgba(42, 51, 66, 0.38);
+  --hairline: rgba(255, 255, 255, 0.07);
+  --hairline-strong: rgba(255, 255, 255, 0.12);
+  --ink: #e6e8eb;
+  --ink-secondary: #9aa3ae;
+  --ink-tertiary: #6b7280;
+  --accent: #2997ff;
+  --accent-btn: #0a84ff;
+  --approve: #30d158;
+  --veto: #ff453a;
+  --blocked: #ffd60a;
+  --chrome: rgba(35, 43, 56, 0.8);
+  --glass-strong: rgba(35, 43, 56, 0.92);
+  --gridline: rgba(255, 255, 255, 0.06);
+  --hover-border: rgba(255, 255, 255, 0.22);
+  --tint: rgba(255, 255, 255, 0.04);
+  --tint-soft: rgba(255, 255, 255, 0.02);
+  --network-node: 41, 151, 255;
+  --network-line: 41, 151, 255;
+  --network-pulse: 255, 255, 255;
+  --nav-active: rgba(41, 151, 255, 0.14);
+  /* Glass rim + sheen + lift (researched 7 Nov, design/frosted-glass-research.md).
+     Asymmetric specular rim: top brightest, sides softer — that asymmetry is
+     what reads as glass instead of an outlined box. */
+  --rim-border: rgba(255, 255, 255, 0.14);
+  --rim-top: rgba(255, 255, 255, 0.45);
+  --rim-bottom: rgba(255, 255, 255, 0.2);
+  --rim-side: rgba(255, 255, 255, 0.14);
+  --glass-lift: 0 10px 28px rgba(0, 0, 0, 0.22);
+  --sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 30%, transparent 60%);
+  --sheen-blend: screen;
+  --grain-opacity: 0.06;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+}
+
+[data-theme="light"] {
+  --canvas: #f5f5f7;
+  --panel: rgba(255, 255, 255, 0.42);
+  --panel-raised: rgba(255, 255, 255, 0.55);
+  --hairline: rgba(0, 0, 0, 0.08);
+  --hairline-strong: rgba(0, 0, 0, 0.16);
+  --ink: #1d1d1f;
+  --ink-secondary: #6e6e73;
+  --ink-tertiary: #86868b;
+  --accent: #0071e3;
+  --accent-btn: #0071e3;
+  --approve: #248a3d;
+  --veto: #d70015;
+  --blocked: #a16207;
+  --chrome: rgba(255, 255, 255, 0.8);
+  --glass-strong: rgba(255, 255, 255, 0.92);
+  --gridline: rgba(0, 0, 0, 0.05);
+  --hover-border: rgba(0, 0, 0, 0.25);
+  --tint: rgba(0, 0, 0, 0.04);
+  --tint-soft: rgba(0, 0, 0, 0.02);
+  --network-node: 0, 113, 227;
+  --network-line: 0, 113, 227;
+  --network-pulse: 0, 113, 227;
+  --nav-active: rgba(0, 113, 227, 0.1);
+  /* Light glass: white rim + dark bottom edge so the edge still reads on white. */
+  --rim-border: rgba(255, 255, 255, 0.65);
+  --rim-top: rgba(255, 255, 255, 0.9);
+  --rim-bottom: rgba(0, 0, 0, 0.06);
+  --rim-side: rgba(255, 255, 255, 0.45);
+  --glass-lift: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.08) 30%, transparent 60%);
+  --sheen-blend: normal;
+  --grain-opacity: 0.05;
+}
+html { background: var(--canvas); }
+body {
+  margin: 0;
+  font-family: -apple-system, "SF Pro Display", "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  background-color: var(--canvas);
+  background-image:
+    linear-gradient(var(--gridline) 1px, transparent 1px),
+    linear-gradient(90deg, var(--gridline) 1px, transparent 1px);
+  background-size: 48px 48px;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+button { font-family: inherit; }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Frosted top bar — Apple spec: 80% surface + saturate(180%) blur(20px) */
+.topbar {
+  position: sticky; top: 0; z-index: 10;
+  height: 56px;
+  display: flex; align-items: center; gap: 12px;
+  padding: 0 24px;
+  background: var(--chrome);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--hairline);
+}
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.brand img { display: block; flex: none; }
+.wordmark { font-size: 17px; font-weight: 600; letter-spacing: -0.3px; white-space: nowrap; }
+.topbar .spacer { flex: 1; }
+.pill {
+  font-family: var(--mono); font-size: 12px; white-space: nowrap;
+  border: 1px solid var(--hairline-strong); border-radius: 999px;
+  padding: 4px 11px; color: var(--ink-secondary);
+}
+.live { font-size: 13px; color: var(--ink-secondary); white-space: nowrap; }
+
+.errorbar {
+  padding: 10px 24px; font-size: 13px; color: var(--veto);
+  border-bottom: 1px solid var(--hairline); background: rgba(255, 69, 58, 0.06);
+}
+
+.wrap { max-width: 1440px; margin: 0 auto; padding: 24px 32px 72px; }
+
+/* Beat controls — one quiet row, one primary */
+.beats { display: flex; gap: 10px; flex-wrap: wrap; margin: 4px 0 20px; }
+.beats button {
+  min-height: 44px; padding: 10px 16px; font-size: 14px; font-weight: 500;
+  cursor: pointer; color: var(--ink);
+  background: var(--panel); border: 1px solid var(--hairline-strong); border-radius: 10px;
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+.beats button:hover { background: var(--panel-raised); border-color: var(--hover-border); }
+.beats button:active { transform: scale(0.98); }
+.beats button.primary { background: var(--accent-btn); border-color: var(--accent-btn); color: #fff; font-weight: 600; }
+.beats button.primary:hover { background: #0a84ff; filter: brightness(1.08); }
+
+.panes { display: grid; grid-template-columns: 320px minmax(0, 1fr) 320px; gap: 20px; align-items: stretch; }
+.pane {
+  background: var(--panel);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  padding: 24px;
+}
+.pane h2 { margin: 0; font-size: 13px; font-weight: 600; color: var(--ink-secondary); }
+.pane .pane-meta { margin: 6px 0 0; font-size: 13px; color: var(--ink-tertiary); }
+.pane .body { margin-top: 16px; }
+
+/* Band Room */
+.turn { display: flex; gap: 12px; padding: 10px 0; border-top: 1px solid var(--hairline); font-size: 14px; }
+.turn:first-of-type { border-top: 0; padding-top: 0; }
+.turn time { font-family: var(--mono); font-size: 12px; color: var(--ink-tertiary); padding-top: 2px; flex: none; }
+.turn p { margin: 0; color: var(--ink-secondary); }
+.turn p b { color: var(--ink); font-weight: 500; }
+.toast {
+  background: rgba(255, 69, 58, 0.08); border: 1px solid rgba(255, 69, 58, 0.3);
+  color: var(--ink); padding: 10px 12px; border-radius: 10px; font-size: 13px; margin-bottom: 12px;
+}
+.toast b { color: var(--veto); font-weight: 600; }
+.commit-note { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--hairline); font-size: 13px; color: var(--ink-secondary); }
+.commit-note b { color: var(--ink); font-weight: 600; }
+
+/* X-Ray — the one bright element */
+.xray { background: var(--panel-raised); border-color: var(--hairline-strong); }
+.verdict-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.verdict { font-size: 24px; font-weight: 600; letter-spacing: -0.4px; }
+.verdict.approve { color: var(--approve); }
+.verdict.veto { color: var(--veto); }
+.proof { font-family: var(--mono); font-size: 15px; color: var(--ink); }
+.proof b { color: var(--accent); font-weight: 600; }
+.reason { color: var(--ink-secondary); font-size: 14px; margin: 8px 0 0; }
+.label { font-size: 12px; font-weight: 600; color: var(--ink-tertiary); margin: 20px 0 4px; }
+.cite { display: flex; align-items: baseline; gap: 12px; padding: 10px 0; border-top: 1px solid var(--hairline); font-size: 14px; }
+.cite .name { flex: 1; min-width: 0; }
+.cite .name small { display: block; color: var(--ink-tertiary); font-size: 12px; }
+.cite .pc { font-family: var(--mono); font-size: 13px; color: var(--ink-secondary); white-space: nowrap; }
+.cite .pc b { color: var(--accent); font-weight: 600; }
+.superseded { color: var(--ink-tertiary); font-size: 12px; }
+.missing li { color: var(--ink-secondary); }
+.recheck { margin-top: 20px; padding: 12px; border: 1px solid var(--hairline); border-radius: 12px; background: var(--tint-soft); font-size: 13px; color: var(--ink-secondary); }
+.recheck b { color: var(--ink); font-weight: 600; }
+.recheck b.blocked { color: var(--blocked); }
+
+/* Repo Viewer — clean rows, not a JSON dump */
+.rule { padding: 12px 0; border-top: 1px solid var(--hairline); }
+.rule:first-of-type { border-top: 0; padding-top: 0; }
+.rule .name { font-size: 14px; font-weight: 600; letter-spacing: -0.1px; }
+.rule .meta { font-family: var(--mono); font-size: 12px; color: var(--ink-secondary); margin-top: 2px; }
+.rule .meta b { color: var(--accent); font-weight: 600; }
+.rule .req { font-size: 13px; color: var(--ink-secondary); margin-top: 4px; }
+.rule .req code { font-family: var(--mono); font-size: 12px; color: var(--ink); }
+.rules-foot { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--hairline); font-size: 12px; color: var(--ink-tertiary); }
+
+/* Beat rail — slim strip */
+.beats-outcome { display: flex; margin-top: 20px; border: 1px solid var(--hairline); border-radius: 16px; background: var(--panel); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); overflow: hidden; }
+.beat { flex: 1; padding: 16px 20px; }
+.beat + .beat { border-left: 1px solid var(--hairline); }
+.beat .n { font-family: var(--mono); font-size: 12px; color: var(--ink-tertiary); }
+.beat .out { font-size: 15px; font-weight: 600; margin: 2px 0; }
+.beat .out.ok { color: var(--approve); }
+.beat .out.no { color: var(--veto); }
+.beat .out.wait { color: var(--blocked); }
+.beat p { margin: 0; font-size: 13px; color: var(--ink-secondary); }
+
+.disclaimer {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+  background: var(--chrome);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-top: 1px solid var(--hairline);
+  text-align: center; font-size: 12px; color: var(--ink-tertiary);
+  padding: 10px 16px;
+}
+.muted { color: var(--ink-secondary); }
+ul { margin: 4px 0; padding-left: 18px; font-size: 13px; }
+li { line-height: 1.5; }
+
+@media (max-width: 1100px) {
+  .panes { grid-template-columns: 1fr 1fr; }
+  .xray { grid-column: 1 / -1; order: -1; }
+}
+@media (max-width: 700px) {
+  .topbar { padding: 0 16px; gap: 10px; }
+  .topbar .pill { display: none; }
+  .topbar .live { display: none; }
+  .wrap { padding: 16px 16px 72px; }
+  .panes { grid-template-columns: 1fr; gap: 16px; }
+  .pane { padding: 20px; }
+  .beats { display: grid; grid-template-columns: 1fr 1fr; }
+  .beats button { width: 100%; }
+  .beats-outcome { flex-direction: column; }
+  .beat + .beat { border-left: 0; border-top: 1px solid var(--hairline); }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+html { scroll-behavior: smooth; }
+section[id], .beats, .beats-outcome { scroll-margin-top: 76px; }
+
+/* Nav bar — fixed sidebar on desktop, sticky nav row on mobile.
+   Glass reserved for sidebar/header/modals; links jump to each pane. */
+.shell { display: grid; grid-template-columns: 224px minmax(0, 1fr); max-width: 1440px; margin: 0 auto; align-items: start; }
+/* Floating glass nav — after his reference: a detached frosted card that
+   floats over the network, icon + label rows, active row in a lighter pill. */
+.sidenav {
+  position: sticky; top: 76px;
+  display: flex; flex-direction: column; gap: 2px;
+  margin: 16px 0 16px 16px; padding: 12px;
+  background: var(--panel);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border: 1px solid var(--hairline);
+  border-radius: 24px;
+}
+.sidenav a, .sidenav button.navlink {
+  display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 14px;
+  font-size: 14px; color: var(--ink-secondary); text-decoration: none;
+  background: none; border: 0; cursor: pointer; text-align: left; font-family: inherit;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.sidenav a svg, .sidenav button.navlink svg { flex: none; }
+.sidenav a:hover, .sidenav button.navlink:hover { background: var(--panel-raised); color: var(--ink); }
+.sidenav a.active, .sidenav button.navlink.active { background: var(--nav-active); color: var(--ink); font-weight: 600; }
+.sidenav a:focus-visible, .sidenav button.navlink:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Sidebar card — live desk context as a raised block inside the glass card. */
+.side-card { margin-top: 12px; padding: 14px; border: 1px solid var(--hairline); border-radius: 14px; background: var(--panel-raised); }
+.side-card-k { font-size: 12px; font-weight: 600; color: var(--ink-tertiary); margin-bottom: 8px; }
+.side-card-v { font-size: 14px; font-weight: 600; color: var(--ink); }
+.side-card-s { font-size: 13px; color: var(--ink-secondary); margin-top: 3px; }
+
+/* Eval strip — measured numbers under the outcomes rail, fills the
+   dead stretch above the disclaimer with real evidence. */
+.eval-strip { display: flex; gap: 24px; flex-wrap: wrap; align-items: baseline; margin: 20px 0 8px; padding-top: 14px; border-top: 1px solid var(--hairline); font-size: 13px; color: var(--ink-secondary); }
+.eval-strip b { color: var(--ink); font-weight: 600; }
+.eval-strip .eval-k { color: var(--ink-tertiary); font-size: 12px; font-weight: 600; }
+
+/* Desk head — two-weight title (dish-orbit style) + live stats.
+   Fills the empty top of the page with real numbers, not decoration. */
+.desk-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin: 4px 0 20px; }
+.desk-head .t1 { display: block; font-size: 15px; font-weight: 200; letter-spacing: -0.01em; color: var(--ink-secondary); }
+.desk-head .t2 { display: block; font-size: 30px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; text-transform: uppercase; }
+.desk-stats {
+  display: flex; gap: 24px; flex-wrap: wrap;
+  background: var(--panel);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  padding: 12px 18px;
+}
+.stat .v { font-family: var(--mono); font-size: 16px; color: var(--ink); }
+.stat .v b { color: var(--accent); font-weight: 600; }
+.stat .k { font-size: 12px; color: var(--ink-secondary); margin-top: 1px; }
+
+/* X-Ray accent arc — pastel arc behind the scene (dish-orbit style),
+   takes the verdict's colour. */
+.xray { position: relative; overflow: hidden; }
+.xray-arc { position: absolute; right: -28px; top: -22px; width: 150px; height: 75px; opacity: 0.4; pointer-events: none; }
+
+/* Bottom tab bar (mobile) — hidden on desktop; the media query below
+   turns it on and hides the sidebar nav. */
+.tabbar { display: none; }
+
+@media (max-width: 1100px) {
+  .shell { display: block; }
+  /* The swipeable top pill row is gone: the nav is a fixed bottom tab
+     bar now — all six destinations visible in one place, at the thumb,
+     always. The top bar keeps only the wordmark, theme and Chat. */
+  .sidenav { display: none; }
+  .tabbar {
+    display: flex; position: fixed;
+    left: 12px; right: 12px;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    z-index: 25; padding: 6px;
+    background: var(--panel);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--hairline); border-radius: 20px;
+  }
+  .tabbar a, .tabbar button {
+    flex: 1; min-width: 0; display: flex; flex-direction: column;
+    align-items: center; gap: 3px; padding: 7px 2px 6px;
+    border-radius: 14px; font-size: 10px; font-weight: 500;
+    color: var(--ink-secondary); text-decoration: none;
+    background: none; border: 0; cursor: pointer; font-family: inherit;
+  }
+  .tabbar svg { width: 20px; height: 20px; flex: none; }
+  .tabbar a.active { background: var(--nav-active); color: var(--accent); font-weight: 600; }
+  .tabbar a:active, .tabbar button:active { transform: scale(0.96); }
+  .tabbar a:focus-visible, .tabbar button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  /* Disclaimer leaves the fixed bottom bar and becomes an in-flow
+     footer card, so it never collides with the tab bar. */
+  .disclaimer {
+    position: static; margin: 20px 16px calc(88px + env(safe-area-inset-bottom, 0px));
+    border: 1px solid var(--hairline); border-radius: 12px;
+    background: var(--panel);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+  section[id], .beats, .beats-outcome { scroll-margin-top: 76px; }
+}
+
+/* Desk chat — slide-over panel, drives the same work as the buttons */
+.chat-toggle {
+  min-height: 36px; padding: 7px 14px; font-size: 14px; font-weight: 500;
+  cursor: pointer; color: var(--ink);
+  background: transparent; border: 1px solid var(--hairline-strong); border-radius: 10px;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+.chat-toggle:hover { background: var(--panel-raised); border-color: var(--hover-border); }
+
+/* Theme toggle — icon-only, same shape as the Chat button */
+.theme-toggle {
+  min-height: 36px; min-width: 36px; padding: 7px; display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--ink);
+  background: transparent; border: 1px solid var(--hairline-strong); border-radius: 10px;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+.theme-toggle:hover { background: var(--panel-raised); border-color: var(--hover-border); }
+.theme-toggle svg { display: block; }
+
+/* Inline logo — stroke follows the theme ink, check follows the accent */
+.brand { color: var(--ink); }
+.brand svg { display: block; flex: none; }
+
+/* Synapse network — fixed backdrop behind the desk, never intercepts clicks */
+.synapse-bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+}
+.synapse-bg canvas { display: block; width: 100%; height: 100%; }
+
+/* Lilac Dusk Canopy — fixed background layer behind the desk. The frosted
+   panels refract it: their backdrop-filter blurs the live sun patch and
+   leaves into the glass. Pointer events come from the window (the component
+   listens there), so the wrapper never takes clicks. */
+.canopy-bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+}
+.canopy-root { position: relative; width: 100%; overflow: hidden; }
+.canopy-root canvas { position: absolute; inset: 0; display: block; touch-action: pan-y; }
+.canopy-fallback { position: absolute; inset: 0; }
+.canopy-children { position: relative; z-index: 10; }
+
+/* Film grain — the premium texture. Inline SVG feTurbulence (fractalNoise,
+   baseFrequency 0.7, 3 octaves, stitchTiles) as a data-URI tile: no asset,
+   no request, rasterised once. Sits over the whole frame like film grain —
+   it is what stops the near-black canvas reading as a flat CSS rectangle.
+   mix-blend-mode overlay adapts it to both themes; opacity is the dial.
+   Static on purpose: animated grain is a battery sink and a flicker risk. */
+.grain {
+  position: fixed; inset: 0; z-index: 30; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: overlay;
+}
+.shell { position: relative; z-index: 1; }
+.chat {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 20;
+  width: min(420px, 100%);
+  display: flex; flex-direction: column;
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-left: 1px solid var(--hairline-strong);
+}
+.chat-head {
+  height: 56px; flex: none;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px; border-bottom: 1px solid var(--hairline);
+}
+.chat-head span { font-size: 15px; font-weight: 600; letter-spacing: -0.2px; }
+.chat-close {
+  font-size: 14px; font-weight: 500; color: var(--accent);
+  background: none; border: 0; padding: 8px 4px; cursor: pointer;
+}
+.chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.msg { max-width: 88%; padding: 10px 14px; border-radius: 14px; font-size: 14px; line-height: 1.5; }
+.msg p { margin: 0; }
+.msg.desk { align-self: flex-start; background: var(--tint); border: 1px solid var(--hairline); border-bottom-left-radius: 4px; color: var(--ink); }
+.msg.user { align-self: flex-end; background: var(--accent-btn); color: #fff; border-bottom-right-radius: 4px; }
+.msg-detail { font-family: var(--mono); font-size: 12px; color: var(--ink-secondary); margin-top: 6px; }
+.msg.user .msg-detail { color: rgba(255, 255, 255, 0.75); }
+.chips { flex: none; display: flex; gap: 8px; flex-wrap: wrap; padding: 12px 20px; border-top: 1px solid var(--hairline); }
+.chip {
+  font-size: 13px; padding: 7px 12px; border-radius: 999px; cursor: pointer;
+  color: var(--ink-secondary); background: transparent; border: 1px solid var(--hairline-strong);
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.chip:hover { background: var(--panel-raised); color: var(--ink); }
+.chat-input { flex: none; display: flex; gap: 10px; padding: 12px 16px 20px; }
+.chat-input input {
+  flex: 1; min-height: 44px; min-width: 0;
+  background: var(--tint); border: 1px solid var(--hairline-strong);
+  border-radius: 12px; color: var(--ink); padding: 0 14px; font-size: 15px; font-family: inherit;
+}
+.chat-input input::placeholder { color: var(--ink-tertiary); }
+.chat-input input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.chat-input button {
+  min-height: 44px; padding: 0 18px; font-size: 14px; font-weight: 600;
+  color: #fff; background: var(--accent-btn); border: 0; border-radius: 12px; cursor: pointer;
+}
+.chat-input button:active { transform: scale(0.98); }
+
+/* Frosted glass, researched 2026-11-07 (design/frosted-glass-research.md).
+   Glass is a stack of optical layers, not one backdrop-filter: tint +
+   blur/saturate + asymmetric specular rim + diagonal sheen + lift.
+   Real refraction is a Chromium-only SVG displacement lens
+   (feTurbulence -> feGaussianBlur -> feDisplacementMap) fed into
+   backdrop-filter, gated by @supports — other browsers keep the frost.
+   The lens runs on the big glass surfaces only (panes, sidenav, tabbar,
+   outcomes rail, desk stats; perf: displacement is the expensive
+   layer); buttons, topbar, disclaimer and chat keep plain frost. */
+.pane, .beats-outcome, .desk-stats { position: relative; }
+.pane, .sidenav, .tabbar, .beats-outcome, .desk-stats {
+  isolation: isolate;
+  border-color: var(--rim-border);
+  box-shadow:
+    var(--glass-lift),
+    inset 0 1px 1px var(--rim-top),
+    inset 0 -1px 1px var(--rim-bottom),
+    inset 1px 0 1px var(--rim-side),
+    inset -1px 0 1px var(--rim-side);
+}
+.pane::after, .sidenav::after, .tabbar::after, .beats-outcome::after, .desk-stats::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: var(--sheen);
+  mix-blend-mode: var(--sheen-blend);
+}
+@supports (backdrop-filter: url('#glass-refract')) {
+  .pane, .sidenav, .tabbar, .beats-outcome, .desk-stats {
+    -webkit-backdrop-filter: url(#glass-refract) blur(12px) saturate(180%) brightness(1.06);
+    backdrop-filter: url(#glass-refract) blur(12px) saturate(180%) brightness(1.06);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .pane, .sidenav, .tabbar, .beats-outcome, .desk-stats, .beats button, .topbar, .disclaimer, .chat {
+    background: var(--glass-strong);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}

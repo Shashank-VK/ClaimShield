@@ -1,0 +1,212 @@
+{
+  "features": [
+    {
+      "area": "memory",
+      "evidence": [
+        "pytest tests/test_memory.py: 7 passed in 4.36s (2026-11-07 ~00:10 IST, .venv python 3.12)",
+        "Backend actually ran: memory (no HINDSIGHT_API_KEY set; Docker daemon down; hindsight-client 1.2.0 installed but no remote reachable)",
+        "PRD 6.4 strings verified verbatim against ClaimShield/prd.md:459-466 (retain mission, observations mission, directives, tag taxonomy incl. diagnosis_group:<dengue|...>, any_strict, insurer:* scopes)",
+        "Groq removed in fix pass: load_groq_key deleted from backend/config.py + its test deleted; grep confirms zero groq references in code/tests/scripts"
+      ],
+      "id": "cs-001",
+      "notes": "UPHILL first: riskiest integration. Hindsight Cloud account + MEMHACK99 is a HANDS item \u2014 do not stall on it. Docker daemon known DOWN on this VM \u2014 check once with docker ps, record, move on. Completed by main (Muse Spark 1.3) after taking over from the build coordinator 2026-11-07 ~00:05 IST; coordinator's scaffold verified file-by-file, Groq helper removed, diagnosis_group tag fixed to PRD form.",
+      "priority": 1,
+      "status": "passing",
+      "title": "Hindsight memory adapter + bank-template.json (retain/recall/reflect, observations + proof_count, cloud/local/memory backends)",
+      "user_visible_behavior": "Resolved claims are retained in bank claimshield-india; a new denial recalls similar past appeals with proof_count; /health reports the real backend in use (cloud/local/memory).",
+      "verification": [
+        "pytest tests/test_memory.py passes: retain then recall returns the seeded Star Health dengue win for a matching denial in the top results, with its observation proof_count.",
+        "Recall with DECISION_MODEL_ENABLED=false never fails when no decision model is reachable (flags from PRD \u00a714).",
+        "bank-template.json contains the PRD \u00a76.4 retain mission, observations mission and directives verbatim, mandatory tag taxonomy, any_strict recall, per-insurer observation scopes.",
+        "Build-log records honestly which backend actually ran (never claim Cloud/local if the fallback ran)."
+      ]
+    },
+    {
+      "area": "data",
+      "evidence": [
+        "pytest tests/test_seed.py: 5 passed; full suite 12 passed in 11.36s (2026-11-07 ~00:15 IST, .venv python 3.12)",
+        "Seeded 13 synthetic records, 4 epochs in chronological order, all timestamps backdated < 2026-11-07",
+        "Bulletin contradiction verified: obs_pt_01 superseded_by obs_pt_02 (proof_count 6); reflect ranks the active 6-week PT observation first",
+        "Headline Star Health dengue Rs.1,45,000 observation proof_count 5 after seeding; a new OVERTURNED_FULL win increments it to 6",
+        "Every seeded record carries SYNTHETIC badge in tags and content; patterns from research pack-2 (5 denial patterns)"
+      ],
+      "id": "cs-002",
+      "notes": "Seed from pack-2's 5 denial patterns; headline case is Star Health dengue \u20b91,45,000 opd_convertible. All synthetic, badged SYNTHETIC.",
+      "priority": 2,
+      "status": "passing",
+      "title": "4-epoch seeder (seed_history.py) with backdated timestamps + proof_count increments",
+      "user_visible_behavior": "The bank ships with 4 epochs of backdated synthetic history: generic denials, first wins, the Oct 2026 Star Health bulletin contradiction (4-week PT -> 6-week PT), and late verdicts applied; a new win visibly increments an observation proof_count (e.g. obs_304 6->7).",
+      "verification": [
+        "pytest tests/test_seed.py passes: epochs load in order with backdated timestamps; the Oct 2026 bulletin contradiction is present (4-week PT tactic superseded by 6-week PT).",
+        "Retaining a new OVERTURNED_FULL verdict for the headline pattern increments the matching observation proof_count by 1.",
+        "No real patient data: every seeded record carries the SYNTHETIC badge in its tags/metadata."
+      ]
+    },
+    {
+      "area": "security",
+      "evidence": [
+        "pytest tests/test_pii.py: 6 passed; full suite 18 passed in 13.42s (2026-11-07 ~00:20 IST, .venv python 3.12)",
+        "PAN/Aadhaar (spaced + unspaced)/+91 mobile replaced with [REDACTED:pan]/[REDACTED:aadhaar]/[REDACTED:phone]; clean text passes through unchanged",
+        "POST /webhooks/claim-intake with SSN returns pii_scrubbed containing [REDACTED:ssn] (native layer) and the retained text contains no SSN",
+        "No raw PAN/Aadhaar/mobile in any stored record (recall-verified after intake)",
+        "Mobile pattern extends PRD with the common +91 98765 43210 5-5 form; card pattern runs before Aadhaar so 16-digit cards are not half-eaten"
+      ],
+      "id": "cs-003",
+      "notes": "Native Memory Defense covers only ssn_us + credit_card \u2014 the backend scrubber is the Indian-ID layer. UI toast labels which layer caught what.",
+      "priority": 3,
+      "status": "passing",
+      "title": "PII scrubber (PAN/Aadhaar/mobile) before retain + redaction toasts",
+      "user_visible_behavior": "A packet containing PAN, Aadhaar or an Indian mobile number is scrubbed before retain; the intake response lists pii_scrubbed[] and the UI shows which layer (backend/native) caught each item; nothing sensitive reaches the bank.",
+      "verification": [
+        "pytest tests/test_pii.py passes: PAN, Aadhaar (spaced/unspaced) and +91 mobile are replaced with [REDACTED:pan]/[REDACTED:aadhaar]/[REDACTED:phone]; clean text passes through unchanged.",
+        "POST /webhooks/claim-intake with an SSN in the content returns pii_scrubbed containing [REDACTED:ssn] and the retained text contains no SSN.",
+        "No raw PAN/Aadhaar/mobile appears in any stored record or log in the test run."
+      ]
+    },
+    {
+      "area": "api",
+      "evidence": [
+        "pytest tests/test_api.py: 8 passed; full suite 26 passed in 18.22s (2026-11-07 ~00:30 IST, .venv python 3.12)",
+        "/health 200 with real backend (memory) + band_mode (local) + rules_version; intake retains with memory_unit_count + pii_scrubbed",
+        "Bad HMAC -> 401; duplicate event_id deduped (processed once); bad payloads -> 422, not 500",
+        "uvicorn starts and /health answers on localhost:8123 (subprocess test); /sse/stream delivers retained events (replay + live thread test)",
+        "SSE bus fixed mid-feature: asyncio.Queue dropped cross-loop wakes (TestClient portals), replaced with thread-safe threading.Queue + to_thread polling"
+      ],
+      "id": "cs-004",
+      "notes": "SSE replays last 50 events on reconnect; UI gates next recall/reflect on consolidation.completed.",
+      "priority": 4,
+      "status": "passing",
+      "title": "FastAPI backend: webhooks (HMAC + dedupe), SSE stream, all endpoints",
+      "user_visible_behavior": "The API serves POST /webhooks/claim-intake, POST /webhooks/hindsight (HMAC-SHA256, dedupe on event_id), POST /appeals/strategy, POST /appeals/veto, POST /scrubber/commit, GET /eval/run, GET /health, GET /sse/stream (multiplexed events, last-50 replay).",
+      "verification": [
+        "pytest tests/test_api.py passes via FastAPI TestClient: /health 200 with real backend + band_mode + rules_version; intake retains and returns memory_unit_count + pii_scrubbed; bad HMAC -> 401; duplicate event_id is deduped (processed once).",
+        "Bad payloads -> 422, not 500 (Pydantic validation on every endpoint).",
+        "uvicorn starts and /health answers on localhost; /sse/stream delivers a retained event to a connected client."
+      ]
+    },
+    {
+      "area": "checker",
+      "evidence": [
+        "pytest tests/test_scrubber.py: 7 passed; full suite 33 passed in 17.61s (2026-11-07 ~00:35 IST, .venv python 3.12)",
+        "Complete dengue packet -> PASS (rule star_health_dengue_opd_v3, source_obs obs_304, proof_count 5)",
+        "Missing discharge_summary -> BLOCKED with missing[] naming it + source_obs + proof_count; missing only NS1 -> WARN",
+        "Rollback verified: v3 -> v2 keeps WARN, v2 -> v1 turns the same packet PASS; rule_history records every version + rollbacks",
+        "Checker never invents a rule: every BLOCKED/WARN cites a rule_id present in scrubber_rules.json; no-match packets PASS with rule_id None",
+        "/health now reports the real rules_version (3) from scrubber_rules.json"
+      ],
+      "id": "cs-005",
+      "notes": "scrubber_rules.json schema exactly as PRD \u00a76.6. Checker returns PASS/WARN/BLOCKED + missing[] + source_obs + proof_count.",
+      "priority": 5,
+      "status": "passing",
+      "title": "Pre-dispatch checker W1 (scrubber_rules.json + validator)",
+      "user_visible_behavior": "A packet manifest is checked against declarative rules: a complete dengue packet PASSES, one missing the discharge summary is BLOCKED naming the missing document and the evidence (source_obs + proof_count), one missing only the NS1 report WARNS.",
+      "verification": [
+        "pytest tests/test_scrubber.py passes: complete packet -> PASS; missing discharge_summary -> BLOCKED with missing[] naming it + source_obs + proof_count; missing only ns1_antigen_report -> WARN.",
+        "Rules are versioned: rule_history records every version; rollback (is_active flip to prior version) restores prior checker behaviour.",
+        "Checker never invents a rule: every BLOCKED/WARN cites a rule_id present in scrubber_rules.json."
+      ]
+    },
+    {
+      "area": "agents",
+      "evidence": [
+        "pytest tests/test_room.py: 6 passed; full suite 39 passed in 31.74s (2026-11-07 ~00:45 IST, .venv python 3.12)",
+        "Headline dengue denial -> APPROVE packet citing retrieved wins, proof_count 5, disclaimer + draft status",
+        "Stale 4-week PT argument -> VETO with missing_evidence ['6-week PT failure', 'X-ray excerpt'], proof_count 6 (superseding obs_pt_02)",
+        "Citations validated: every packet citation is an id actually returned by recall for the same query",
+        "Delete test: room disabled -> RoomDisabledError + /appeals/strategy 503; room enabled -> chain completes (APPROVE)",
+        "Human gate: /scrubber/commit without approval -> 403; with approval -> 200 committed"
+      ],
+      "id": "cs-006",
+      "notes": "Band SDK room when BAND_AGENT_API_KEY + BAND_ROOM_ID are present, else local in-process room bus with identical @mention semantics and an honest band_mode flag. The PRD delete test must hold either way.",
+      "priority": 6,
+      "status": "passing",
+      "title": "Band room + denial defense W3 (ClaimAuditor -> PolicyCritic veto -> human gate -> appeal packet)",
+      "user_visible_behavior": "A denied claim flows through the room: @ClaimAuditor drafts the appeal from recalled wins, @PolicyCritic APPROVEs or VETOes with citations + proof_count + missing_evidence, a human approves before any patch, and the appeal packet carries the mandatory footer disclaimer.",
+      "verification": [
+        "pytest tests/test_room.py passes: the headline dengue denial produces an appeal packet citing retrieved wins with proof_count; the stale 4-week PT argument is VETOed with missing_evidence naming the 6-week PT failure + X-ray note.",
+        "Citations are validated: every citation id in a packet was actually retrieved by reflect (no hallucinated citations).",
+        "Delete test: with the room bus removed/disabled, the veto->patch chain fails (no packet reaches commit); with it present, the chain completes.",
+        "Human gate: /scrubber/commit without an approval flag is refused (403/422)."
+      ]
+    },
+    {
+      "area": "patch",
+      "evidence": [
+        "pytest tests/test_patch.py: 4 passed; full suite 43 passed in 36.21s (2026-11-07 ~01:00 IST, .venv python 3.12)",
+        "Commit v4 patch (platelet_report added) -> the same complete dengue packet that PASSED is now BLOCKED by star_health_dengue_opd_v4 (missing platelet_report)",
+        "Failing patches revert: bad shape (missing requires) -> 422; probe-failing patch (does not BLOCK) -> 422 with alert; file untouched, v3 still active, packet still PASSES",
+        "Committed rule diff viewable: rule_id, version 4, supersedes 3, source_obs obs_304 in the response and in rule_history; v3 deactivated",
+        "Real scrubber_rules.json verified untouched by the patch tests (all patches ran against temp copies)"
+      ],
+      "id": "cs-007",
+      "notes": "ScrubberCoder reads mounted playbooks (./mounted-playbooks/) and patches scrubber_rules.json, then runs pytest. Patch failure reverts via rule_history.",
+      "priority": 7,
+      "status": "passing",
+      "title": "Rule patch W6 (ScrubberCoder patches rules + pytest + rollback)",
+      "user_visible_behavior": "After human approval, @ScrubberCoder writes a new scrubber rule (e.g. star_health_dengue_opd validator), runs the checker tests, and a fresh incomplete packet for the same pattern is BLOCKED by the new rule.",
+      "verification": [
+        "pytest tests/test_patch.py passes: commit a rule patch, then the same incomplete packet that previously passed/WARNed is now BLOCKED by the new rule version.",
+        "A failing patch (bad rule JSON) reverts to the previous rule version via rule_history and alerts (no silent bad state).",
+        "The committed rule file diff is viewable (rule_id, version, supersedes, source_obs recorded)."
+      ]
+    },
+    {
+      "area": "ui",
+      "evidence": [
+        "pytest tests/test_frontend.py: 3 passed (npm run build exit 0, cockpit serves with Band Room + Hindsight X-Ray + Repo Viewer panes, no forbidden text)",
+        "Basic cockpit only per his order: Next.js 15 + React 19, three panes, four beat buttons wired to the real backend (no hardcoded screenshots)",
+        "Backend gained CORS for localhost:3000 + GET /scrubber/rules + POST /scrubber/check so the UI reads live rules and re-checks packets",
+        "No IRDAI / DPDP / Bima Bharosa text anywhere in the UI source (grep-verified by test)"
+      ],
+      "id": "cs-008",
+      "notes": "No emojis, no cartoonish figures. Clinical, audit-ready. Badges SYNTHETIC/REAL-CASE/OFFICIAL; footer disclaimer mandatory on every packet + cockpit header strip.",
+      "priority": 8,
+      "status": "passing",
+      "title": "Next.js 3-pane cockpit UI (Band Room stream, Hindsight Cognitive X-Ray, Repo Viewer)",
+      "user_visible_behavior": "A tidy Next.js cockpit shows the Band room stream with @mention tags and the Approve button, the Hindsight X-Ray with webhook toasts, reflect trace and observation cards with live proof_count, and the Repo Viewer with mounted-playbook Markdown and the rule-file diff; every amount/case is badged SYNTHETIC and the disclaimer strip is always visible.",
+      "verification": [
+        "Next.js app builds (npm run build) and serves the cockpit; the three panes render with data from the backend (not hardcoded screenshots).",
+        "The 60-sec demo's four beats are all visible/driven from the cockpit (denial in, redaction toast, veto with proof_count, patch commit + BLOCKED re-check).",
+        "No unverified IRDAI % or DPDP sub-rule text appears anywhere in the UI (grep the built output)."
+      ]
+    },
+    {
+      "area": "ship",
+      "evidence": [
+        "pytest tests/test_eval.py: 3 passed; full suite 49 passed in 89.57s (2026-11-07 ~01:45 IST, .venv python 3.12)",
+        "Harness runs all 20 main + 5 adversarial cases; results written to eval/results.json with real numbers",
+        "Measured: hindsight 19/20 (95%) main + 5/5 (100%) adversarial; stateless 16/20 (80%) + 4/5; plain RAG 11/20 (55%) + 0/5",
+        "Poisoned packet VETOed by hindsight, APPROVED by plain RAG (honest comparison); all 5 adversarial VETOed by hindsight",
+        "All four demo beats verified end-to-end by test (Day-1 VETO, SSN redaction, PT veto proof_count 6, commit v4 -> BLOCKED)",
+        "./.builder-os/init.sh exits 0 (49 passed); BUILDER-OS secret scan PASSED on all source paths (backend, tests, eval, frontend/app, docs)",
+        "Two real critic bugs found by the eval and fixed: (1) adapter dropped the observation 'tactic' field; (2) hyphenated tokens ('4-week') collapsed in the grounding tokenizer. Harness re-run after each fix.",
+        "Known limitation documented in README + demo-script: EVAL-14 (bare 'delayed intimation, please approve' shares tokens with the denial record itself)"
+      ],
+      "id": "cs-009",
+      "notes": "Report MEASURED eval numbers honestly, even if below the >85% target. Nothing is 'done' until verify exits 0.",
+      "priority": 9,
+      "status": "passing",
+      "title": "Evaluation harness + 60-sec demo script + README + final verify",
+      "user_visible_behavior": "The repo has a 3-system evaluation harness (Stateless vs Plain RAG vs Hindsight on 20 backdated cases + 5 adversarial incl. the poisoned packet), a 60-second demo script matching the four beats, and a clean README (problem, demo, how to run, architecture, honest backend/band-mode notes, measured eval numbers); init.sh and the secret scan both exit 0.",
+      "verification": [
+        "pytest tests/test_eval.py passes: harness runs all 20 cases + all 5 adversarial cases; the poisoned packet is still VETOed; results are written to a results file with real numbers.",
+        "./.builder-os/init.sh exits 0.",
+        "bash ~/workspace/Build-it/BUILDER-OS/scripts/secret-scan.sh . exits 0 (source only, .venv/__pycache__/node_modules excluded).",
+        "Demo script file exists and matches the demo harness; README documents the real backend/band mode used and the measured eval numbers."
+      ]
+    }
+  ],
+  "last_updated": "2026-11-06",
+  "project": "claimshield-desk",
+  "rules": {
+    "do_not_skip_verification": true,
+    "passing_requires_evidence": true,
+    "single_active_feature": true
+  },
+  "status_legend": {
+    "blocked": "Work cannot continue until a documented blocker is resolved.",
+    "in_progress": "The feature is the current active task.",
+    "not_started": "Work has not begun.",
+    "passing": "Required verification has passed and evidence is recorded."
+  }
+}

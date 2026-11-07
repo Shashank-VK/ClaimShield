@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L9,3 L0,6 Z" fill="#1e293b"/>
+    </marker>
+    <marker id="arrB" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L9,3 L0,6 Z" fill="#1d4ed8"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="780" fill="#f8fafc"/>
+  <text x="600" y="46" text-anchor="middle" font-family="system-ui, sans-serif" font-size="26" font-weight="700" fill="#0f172a">ClaimShield Desk — denial-defense loop</text>
+  <text x="600" y="74" text-anchor="middle" font-family="system-ui, sans-serif" font-size="15" fill="#475569">Hindsight memory + Band room · all cases SYNTHETIC</text>
+
+  <!-- Row 1 -->
+  <g font-family="system-ui, sans-serif">
+    <rect x="40" y="100" width="320" height="72" rx="8" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+    <text x="200" y="128" text-anchor="middle" font-size="19" font-weight="700" fill="#0f172a">1 · Claim intake</text>
+    <text x="200" y="154" text-anchor="middle" font-size="14" fill="#475569">denied claim arrives</text>
+
+    <rect x="440" y="100" width="320" height="72" rx="8" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+    <text x="600" y="128" text-anchor="middle" font-size="19" font-weight="700" fill="#0f172a">2 · PII scrubber</text>
+    <text x="600" y="154" text-anchor="middle" font-size="14" fill="#475569">PAN · Aadhaar · +91 mobile redacted</text>
+
+    <rect x="840" y="100" width="320" height="72" rx="8" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+    <text x="1000" y="128" text-anchor="middle" font-size="19" font-weight="700" fill="#0f172a">3 · Pre-dispatch check</text>
+    <text x="1000" y="154" text-anchor="middle" font-size="14" fill="#475569">packet complete, or blocked?</text>
+
+    <line x1="360" y1="136" x2="432" y2="136" stroke="#1e293b" stroke-width="2" marker-end="url(#arr)"/>
+    <line x1="760" y1="136" x2="832" y2="136" stroke="#1e293b" stroke-width="2" marker-end="url(#arr)"/>
+  </g>
+
+  <!-- Hindsight memory -->
+  <g font-family="system-ui, sans-serif">
+    <rect x="40" y="212" width="1120" height="112" rx="8" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+    <text x="600" y="246" text-anchor="middle" font-size="20" font-weight="700" fill="#1e3a8a">Hindsight memory — bank: claimshield-india</text>
+    <text x="600" y="276" text-anchor="middle" font-size="15" fill="#1e40af">observations carry proof_count · recall by insurer / denial reason / diagnosis</text>
+    <text x="600" y="302" text-anchor="middle" font-size="15" fill="#1e40af">reflect: superseded tactics flagged (4-week PT → 6-week PT + X-ray, Oct 2026 bulletin)</text>
+    <line x1="1000" y1="172" x2="1000" y2="210" stroke="#1d4ed8" stroke-width="2" marker-end="url(#arrB)"/>
+    <line x1="172" y1="324" x2="172" y2="362" stroke="#1d4ed8" stroke-width="2" marker-end="url(#arrB)"/>
+  </g>
+
+  <!-- Row 3: Band room -->
+  <g font-family="system-ui, sans-serif">
+    <rect x="40" y="364" width="265" height="84" rx="8" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+    <text x="172" y="394" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">@ClaimAuditor</text>
+    <text x="172" y="420" text-anchor="middle" font-size="13" fill="#475569">drafts from recalled wins</text>
+    <text x="172" y="438" text-anchor="middle" font-size="13" fill="#475569">cites evidence + proof_count</text>
+
+    <rect x="325" y="364" width="265" height="84" rx="8" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+    <text x="457" y="394" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">@PolicyCritic</text>
+    <text x="457" y="420" text-anchor="middle" font-size="13" fill="#475569">VETO: stale tactic</text>
+    <text x="457" y="438" text-anchor="middle" font-size="13" fill="#475569">VETO: ungrounded draft</text>
+
+    <rect x="610" y="364" width="265" height="84" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="2"/>
+    <text x="742" y="394" text-anchor="middle" font-size="18" font-weight="700" fill="#78350f">Human — approve</text>
+    <text x="742" y="420" text-anchor="middle" font-size="13" fill="#92400e">the gate: no approval,</text>
+    <text x="742" y="438" text-anchor="middle" font-size="13" fill="#92400e">no rule commit</text>
+
+    <rect x="895" y="364" width="265" height="84" rx="8" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+    <text x="1027" y="394" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">@ScrubberCoder</text>
+    <text x="1027" y="420" text-anchor="middle" font-size="13" fill="#475569">patches scrubber_rules.json</text>
+    <text x="1027" y="438" text-anchor="middle" font-size="13" fill="#475569">probe-verifies the block</text>
+
+    <line x1="305" y1="406" x2="317" y2="406" stroke="#1e293b" stroke-width="2" marker-end="url(#arr)"/>
+    <line x1="590" y1="406" x2="602" y2="406" stroke="#1e293b" stroke-width="2" marker-end="url(#arr)"/>
+    <line x1="875" y1="406" x2="887" y2="406" stroke="#1e293b" stroke-width="2" marker-end="url(#arr)"/>
+  </g>
+
+  <!-- Rule commit + loop back -->
+  <g font-family="system-ui, sans-serif">
+    <rect x="40" y="492" width="1120" height="96" rx="8" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+    <text x="600" y="526" text-anchor="middle" font-size="19" font-weight="700" fill="#14532d">Rule commit — the denial never happens again</text>
+    <text x="600" y="556" text-anchor="middle" font-size="15" fill="#166534">dengue rule v4: platelet_report now required · same packet that passed is BLOCKED until attached</text>
+    <text x="600" y="576" text-anchor="middle" font-size="14" fill="#166534">eval: Hindsight 19/20 + 5/5 adversarial · Plain RAG 11/20 + 0/5 (approves the poisoned packet)</text>
+    <line x1="1027" y1="448" x2="1027" y2="490" stroke="#15803d" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M 1027 588 L 1027 640 L 1176 640 L 1176 136 L 1160 136" fill="none" stroke="#15803d" stroke-width="2" marker-end="url(#arr)"/>
+    <text x="1188" y="400" text-anchor="middle" font-size="13" fill="#15803d" transform="rotate(90 1188 400)">loop back to pre-dispatch</text>
+  </g>
+
+  <text x="600" y="736" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#64748b">Draft for human review, not legal/medical advice. All cases SYNTHETIC. · github.com/Shashank-VK/ClaimShield</text>
+</svg>

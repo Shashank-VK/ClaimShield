@@ -1,0 +1,118 @@
+{
+  "rule_history": [
+    {
+      "action": "created",
+      "rule_id": "star_health_dengue_opd_v1",
+      "source_obs": "obs_101",
+      "timestamp": "2026-06-20T10:00:00Z",
+      "version": 1
+    },
+    {
+      "action": "created",
+      "rule_id": "star_health_dengue_opd_v2",
+      "source_obs": "obs_204",
+      "supersedes": 1,
+      "timestamp": "2026-08-22T10:00:00Z",
+      "version": 2
+    },
+    {
+      "action": "created",
+      "rule_id": "star_health_dengue_opd_v3",
+      "source_obs": "obs_304",
+      "supersedes": 2,
+      "timestamp": "2026-10-24T10:00:00Z",
+      "version": 3
+    },
+    {
+      "action": "created",
+      "rule_id": "hdfc_ergo_cataract_roomrent_v1",
+      "source_obs": "obs_102",
+      "timestamp": "2026-06-21T10:00:00Z",
+      "version": 1
+    }
+  ],
+  "rules": [
+    {
+      "blocks_when_missing": [
+        "discharge_summary"
+      ],
+      "denial_reason": "opd_convertible",
+      "diagnosis_group": "dengue",
+      "insurer": "star_health",
+      "is_active": false,
+      "proof_count": 2,
+      "requires": [
+        "discharge_summary",
+        "final_bill_icd10"
+      ],
+      "rule_id": "star_health_dengue_opd_v1",
+      "source_obs": "obs_101",
+      "supersedes": null,
+      "version": 1,
+      "warn_when_missing": []
+    },
+    {
+      "blocks_when_missing": [
+        "discharge_summary"
+      ],
+      "denial_reason": "opd_convertible",
+      "diagnosis_group": "dengue",
+      "insurer": "star_health",
+      "is_active": false,
+      "proof_count": 4,
+      "requires": [
+        "discharge_summary",
+        "ns1_antigen_report",
+        "final_bill_icd10"
+      ],
+      "rule_id": "star_health_dengue_opd_v2",
+      "source_obs": "obs_204",
+      "supersedes": 1,
+      "version": 2,
+      "warn_when_missing": [
+        "ns1_antigen_report"
+      ]
+    },
+    {
+      "blocks_when_missing": [
+        "discharge_summary"
+      ],
+      "denial_reason": "opd_convertible",
+      "diagnosis_group": "dengue",
+      "insurer": "star_health",
+      "is_active": true,
+      "proof_count": 5,
+      "requires": [
+        "discharge_summary",
+        "ns1_antigen_report",
+        "final_bill_icd10"
+      ],
+      "rule_id": "star_health_dengue_opd_v3",
+      "source_obs": "obs_304",
+      "supersedes": 2,
+      "version": 3,
+      "warn_when_missing": [
+        "ns1_antigen_report"
+      ]
+    },
+    {
+      "blocks_when_missing": [
+        "discharge_summary"
+      ],
+      "denial_reason": "room_rent_cap",
+      "diagnosis_group": "cataract",
+      "insurer": "hdfc_ergo",
+      "is_active": true,
+      "proof_count": 2,
+      "requires": [
+        "discharge_summary",
+        "final_bill_icd10"
+      ],
+      "rule_id": "hdfc_ergo_cataract_roomrent_v1",
+      "source_obs": "obs_102",
+      "supersedes": null,
+      "version": 1,
+      "warn_when_missing": []
+    }
+  ]
+}

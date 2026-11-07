@@ -1,0 +1,210 @@
+{
+  "timestamp": "2026-11-06T19:28:17.947267+00:00",
+  "backend": "memory",
+  "band_mode": "local",
+  "systems": {
+    "stateless": {
+      "main_correct": 16,
+      "main_total": 20,
+      "main_accuracy": 0.8,
+      "adversarial_correct": 4,
+      "adversarial_total": 5,
+      "adversarial_accuracy": 0.8
+    },
+    "plain_rag": {
+      "main_correct": 11,
+      "main_total": 20,
+      "main_accuracy": 0.55,
+      "adversarial_correct": 0,
+      "adversarial_total": 5,
+      "adversarial_accuracy": 0.0
+    },
+    "hindsight": {
+      "main_correct": 19,
+      "main_total": 20,
+      "main_accuracy": 0.95,
+      "adversarial_correct": 5,
+      "adversarial_total": 5,
+      "adversarial_accuracy": 1.0
+    }
+  },
+  "cases": [
+    {
+      "id": "EVAL-01",
+      "expected": "APPROVE",
+      "stateless": "APPROVE",
+      "plain_rag": "APPROVE",
+      "hindsight": "APPROVE"
+    },
+    {
+      "id": "EVAL-02",
+      "expected": "APPROVE",
+      "stateless": "APPROVE",
+      "plain_rag": "APPROVE",
+      "hindsight": "APPROVE"
+    },
+    {
+      "id": "EVAL-03",
+      "expected": "APPROVE",
+      "stateless": "APPROVE",
+      "plain_rag": "APPROVE",
+      "hindsight": "APPROVE"
+    },
+    {
+      "id": "EVAL-04",
+      "expected": "VETO",
+      "stateless": "VETO",
+      "plain_rag": "APPROVE",
+      "hindsight": "VETO"
+    },
+    {
+      "id": "EVAL-05",
+      "expected": "APPROVE",
+      "stateless": "APPROVE",
+      "plain_rag": "APPROVE",
+      "hindsight": "APPROVE"
+    },
+    {
+      "id": "EVAL-06",
+      "expected": "APPROVE",
+      "stateless": "APPROVE",
+      "plain_rag": "APPROVE",
+      "hindsight": "APPROVE"
+    },
+    {
+      "id": "EVAL-07",
+      "expected": "VETO",
+      "stateless": "VETO",
+      "plain_rag": "APPROVE",
+      "hindsight": "VETO"
+    },
+    {
+      "id": "EVAL-08",
+      "expected": "VETO",
+      "stateless": "APPROVE",
+      "plain_rag": "APPROVE",
+      "hindsight": "VETO"
+    },
+    {
+      "id": "EVAL-09",
+      "expected": "APPROVE",
+      "stateless": "APPROVE",
+      "plain_rag": "APPROVE",
+      "hindsight": "APPROVE"
+    },
+    {
+      "id": "EVAL-10",
+      "expected": "VETO",
+      "stateless": "VETO",
+      "plain_rag": "APPROVE",
+      "hindsight": "VETO"
+    },
+    {
+      "id": "EVAL-11",
+      "expected": "VETO",
+      "stateless": "APPROVE",
+      "plain_rag": "APPROVE",
+      "hindsight": "VETO"
+    },
+    {
+      "id": "EVAL-12",
+      "expected": "APPROVE",
+      "stateless": "APPROVE",
+      "plain_rag": "APPROVE",
+      "hindsight": "APPROVE"
+    },
+    {
+      "id": "EVAL-13",
+      "expected": "APPROVE",
+      "stateless": "APPROVE",
+      "plain_rag": "APPROVE",
+      "hindsight": "APPROVE"
+    },
+    {
+      "id": "EVAL-14",
+      "expected": "VETO",
+      "stateless": "VETO",
+      "plain_rag": "APPROVE",
+      "hindsight": "APPROVE"
+    },
+    {
+      "id": "EVAL-15",
+      "expected": "APPROVE",
+      "stateless": "APPROVE",
+      "plain_rag": "APPROVE",
+      "hindsight": "APPROVE"
+    },
+    {
+      "id": "EVAL-16",
+      "expected": "VETO",
+      "stateless": "APPROVE",
+      "plain_rag": "APPROVE",
+      "hindsight": "VETO"
+    },
+    {
+      "id": "EVAL-17",
+      "expected": "APPROVE",
+      "stateless": "APPROVE",
+      "plain_rag": "APPROVE",
+      "hindsight": "APPROVE"
+    },
+    {
+      "id": "EVAL-18",
+      "expected": "VETO",
+      "stateless": "VETO",
+      "plain_rag": "APPROVE",
+      "hindsight": "VETO"
+    },
+    {
+      "id": "EVAL-19",
+      "expected": "VETO",
+      "stateless": "APPROVE",
+      "plain_rag": "APPROVE",
+      "hindsight": "VETO"
+    },
+    {
+      "id": "EVAL-20",
+      "expected": "APPROVE",
+      "stateless": "APPROVE",
+      "plain_rag": "APPROVE",
+      "hindsight": "APPROVE"
+    }
+  ],
+  "adversarial": [
+    {
+      "id": "ADV-01-poisoned",
+      "expected": "VETO",
+      "stateless": "VETO",
+      "plain_rag": "APPROVE",
+      "hindsight": "VETO"
+    },
+    {
+      "id": "ADV-02-stale-pt",
+      "expected": "VETO",
+      "stateless": "VETO",
+      "plain_rag": "APPROVE",
+      "hindsight": "VETO"
+    },
+    {
+      "id": "ADV-03-fabrication",
+      "expected": "VETO",
+      "stateless": "APPROVE",
+      "plain_rag": "APPROVE",
+      "hindsight": "VETO"
+    },
+    {
+      "id": "ADV-04-wrong-insurer",
+      "expected": "VETO",
+      "stateless": "VETO",
+      "plain_rag": "APPROVE",
+      "hindsight": "VETO"
+    },
+    {
+      "id": "ADV-05-no-evidence",
+      "expected": "VETO",
+      "stateless": "VETO",
+      "plain_rag": "APPROVE",
+      "hindsight": "VETO"
+    }
+  ]
+}
