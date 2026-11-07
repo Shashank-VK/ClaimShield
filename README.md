@@ -25,9 +25,17 @@ Day-1 veto to the human gate. [Watch on YouTube](https://youtu.be/_Mc63Yu5DPI)
 
 ![ClaimShield Desk cockpit — Hindsight X-Ray, Band Room, Repo Viewer, beat rail](submission/article-cockpit.png)
 
+Light theme:
+
+![ClaimShield Desk cockpit, light theme](submission/light-cockpit.png)
+
 ### The veto — Beat 1, proof ×0
 
 ![Hindsight X-Ray showing the Beat 1 veto at proof ×0, with the Desk chat](submission/article-veto.png)
+
+Light theme:
+
+![Hindsight X-Ray showing the Beat 1 veto at proof ×0, light theme](submission/light-veto.png)
 
 ### How it works
 
