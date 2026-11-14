@@ -289,33 +289,32 @@ export default function Cockpit() {
     if (!text) return;
     setMessages((m) => [...m, { from: "user", text }]);
     setChatInput("");
-    // Agent first (cs-011): when an LLM is wired in, the agent decides
-    // what to do — answer directly, or run the desk's tools (memory
-    // check, packet check, rules, save outcome) — and its tool results
-    // land in the panes, same as the buttons. The scripted routing below
-    // is the fallback for no-LLM mode or an agent failure.
-    const llmOn = !!health?.llm && health.llm !== "off";
-    if (llmOn) {
-      try {
-        const { data } = await post("/assistant/chat", {
-          message: text,
-          history: messages.slice(-6).map((m) => ({ from: m.from, text: m.text })),
-        });
-        if (data?.reply) {
-          if (data.strategy_result) {
-            const s = data.strategy_result;
-            setPacket(s);
-            const act = (data.actions || []).find((a) => a.tool === "check_appeal");
-            const stepNo = act?.args?.case === "pt" ? 3 : 1;
-            setResults((r) => ({ ...r, [stepNo]: { out: verdictLabel(s.verdict), cls: s.verdict === "APPROVE" ? "ok" : "no", note: backedNote(s.proof_count) } }));
-          }
-          if (data.packet_result) setCheck(data.packet_result);
-          const acts = (data.actions || []).map((a) => `${a.note} — ${a.summary}`).join("  ·  ");
-          desk(data.reply, acts || undefined);
-          return;
+    // Backend first (cs-011): the backend chat always gets the message
+    // first — the agent when an LLM is wired in (it decides what to do:
+    // answer directly, or run the desk's tools — memory check, packet
+    // check, rules, save outcome) or the knowledge file for insurance
+    // questions. Its tool results land in the panes, same as the
+    // buttons. The scripted routing below is only the fallback for when
+    // the backend can't answer.
+    try {
+      const { data } = await post("/assistant/chat", {
+        message: text,
+        history: messages.slice(-6).map((m) => ({ from: m.from, text: m.text })),
+      });
+      if (data?.reply) {
+        if (data.strategy_result) {
+          const s = data.strategy_result;
+          setPacket(s);
+          const act = (data.actions || []).find((a) => a.tool === "check_appeal");
+          const stepNo = act?.args?.case === "pt" ? 3 : 1;
+          setResults((r) => ({ ...r, [stepNo]: { out: verdictLabel(s.verdict), cls: s.verdict === "APPROVE" ? "ok" : "no", note: backedNote(s.proof_count) } }));
         }
-      } catch { /* fall through to the scripted answers */ }
-    }
+        if (data.packet_result) setCheck(data.packet_result);
+        const acts = (data.actions || []).map((a) => `${a.note} — ${a.summary}`).join("  ·  ");
+        desk(data.reply, acts || undefined);
+        return;
+      }
+    } catch { /* fall through to the scripted answers */ }
     await scriptedChat(text);
   }
 
@@ -419,11 +418,17 @@ export default function Cockpit() {
       desk("I run the same steps as the buttons. Try: Run step 1, Run step 2, Run step 3, Approve & update, Check this packet, Show the rules, or Status.");
       return;
     }
-    if (packet) {
+    // "Last check" is only ever the answer to asking about the last
+    // result — it must never be served as the reply to a new question.
+    if (packet && /last (check|result|verdict)|what was the (last|result)/.test(t)) {
       desk(`Last check: ${verdictLabel(packet.verdict)} — ${backedNote(packet.proof_count).toLowerCase()}.`, packet.reason);
       return;
     }
-    desk("Nothing has run yet. Try “Run step 1” or “Help” and I will run it for you.");
+    if (/insurance|policy|policies|insurer|claim|room|trap|red flag|reimburse|cashless|star|bajaj|care|niva|hdfc|icici|knee|cataract|dengue|hospital/.test(t)) {
+      desk("That's an insurance question — I answer those from the knowledge file through the backend, and I can't reach it right now. Check the backend is running, then ask me again.");
+      return;
+    }
+    desk("I didn't get that. I can run: Run step 1, Run step 2, Run step 3, Approve & update, Check this packet, Show the rules, or Status — or ask me an insurance question.");
   }
 
   const activeRules = (rules?.rules || []).filter((r) => r.is_active);
@@ -675,7 +680,7 @@ export default function Cockpit() {
           <div className="chat-messages">
             {messages.map((m, i) => (
               <div key={i} className={`msg ${m.from}`}>
-                <p>{m.text}</p>
+                <p style={{ whiteSpace: "pre-wrap" }}>{m.text}</p>
                 {m.detail && <p className="msg-detail">{m.detail}</p>}
               </div>
             ))}

@@ -175,21 +175,30 @@ def create_app(
 
     @app.post("/assistant/chat")
     def assistant_chat(req: AssistantChatRequest):
+        # Knowledge first (cs-014): insurance questions are answered
+        # deterministically from the knowledge document — the backend
+        # reads the file and replies in JSON even with no LLM key, so a
+        # question never comes back {"reply": null} just because the
+        # model is off. Desk commands return None there and fall through.
         # The agent (cs-011): the LLM decides whether to answer directly
         # or call the desk's tools (memory check, packet check, rules,
         # save outcome) and answers from their real results. With no LLM
         # key (or any failure) reply is null and the cockpit falls back
         # to its scripted answers.
         rules_data = load_rules(app.state.rules_path)
+        # Loaded fresh per request: edit the document, the desk knows it
+        # on the next message (cs-012).
+        knowledge_data = knowledge.load_knowledge()
+        knowledge_reply = knowledge.answer_question(knowledge_data, req.message)
+        if knowledge_reply:
+            return {"reply": knowledge_reply, "source": "knowledge", "actions": []}
         result = agent.run_agent(
             req.message,
             history=[h.model_dump(by_alias=True) for h in req.history],
             adapter=app.state.adapter,
             room=app.state.room,
             rules_data=rules_data,
-            # Loaded fresh per request: edit the document, the agent
-            # knows it on the next message (cs-012).
-            knowledge_data=knowledge.load_knowledge(),
+            knowledge_data=knowledge_data,
             knowledge_path=knowledge.DEFAULT_KNOWLEDGE_PATH,
         )
         if result is None:

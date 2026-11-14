@@ -9,15 +9,15 @@
         "Groq removed in fix pass: load_groq_key deleted from backend/config.py + its test deleted; grep confirms zero groq references in code/tests/scripts"
       ],
       "id": "cs-001",
-      "notes": "UPHILL first: riskiest integration. Hindsight Cloud account + MEMHACK99 is a HANDS item \u2014 do not stall on it. Docker daemon known DOWN on this VM \u2014 check once with docker ps, record, move on. Completed by main (Muse Spark 1.3) after taking over from the build coordinator 2026-11-07 ~00:05 IST; coordinator's scaffold verified file-by-file, Groq helper removed, diagnosis_group tag fixed to PRD form.",
+      "notes": "UPHILL first: riskiest integration. Hindsight Cloud account + MEMHACK99 is a HANDS item — do not stall on it. Docker daemon known DOWN on this VM — check once with docker ps, record, move on. Completed by main (Muse Spark 1.3) after taking over from the build coordinator 2026-11-07 ~00:05 IST; coordinator's scaffold verified file-by-file, Groq helper removed, diagnosis_group tag fixed to PRD form.",
       "priority": 1,
       "status": "passing",
       "title": "Hindsight memory adapter + bank-template.json (retain/recall/reflect, observations + proof_count, cloud/local/memory backends)",
       "user_visible_behavior": "Resolved claims are retained in bank claimshield-india; a new denial recalls similar past appeals with proof_count; /health reports the real backend in use (cloud/local/memory).",
       "verification": [
         "pytest tests/test_memory.py passes: retain then recall returns the seeded Star Health dengue win for a matching denial in the top results, with its observation proof_count.",
-        "Recall with DECISION_MODEL_ENABLED=false never fails when no decision model is reachable (flags from PRD \u00a714).",
-        "bank-template.json contains the PRD \u00a76.4 retain mission, observations mission and directives verbatim, mandatory tag taxonomy, any_strict recall, per-insurer observation scopes.",
+        "Recall with DECISION_MODEL_ENABLED=false never fails when no decision model is reachable (flags from PRD §14).",
+        "bank-template.json contains the PRD §6.4 retain mission, observations mission and directives verbatim, mandatory tag taxonomy, any_strict recall, per-insurer observation scopes.",
         "Build-log records honestly which backend actually ran (never claim Cloud/local if the fallback ran)."
       ]
     },
@@ -31,7 +31,7 @@
         "Every seeded record carries SYNTHETIC badge in tags and content; patterns from research pack-2 (5 denial patterns)"
       ],
       "id": "cs-002",
-      "notes": "Seed from pack-2's 5 denial patterns; headline case is Star Health dengue \u20b91,45,000 opd_convertible. All synthetic, badged SYNTHETIC.",
+      "notes": "Seed from pack-2's 5 denial patterns; headline case is Star Health dengue ₹1,45,000 opd_convertible. All synthetic, badged SYNTHETIC.",
       "priority": 2,
       "status": "passing",
       "title": "4-epoch seeder (seed_history.py) with backdated timestamps + proof_count increments",
@@ -52,7 +52,7 @@
         "Mobile pattern extends PRD with the common +91 98765 43210 5-5 form; card pattern runs before Aadhaar so 16-digit cards are not half-eaten"
       ],
       "id": "cs-003",
-      "notes": "Native Memory Defense covers only ssn_us + credit_card \u2014 the backend scrubber is the Indian-ID layer. UI toast labels which layer caught what.",
+      "notes": "Native Memory Defense covers only ssn_us + credit_card — the backend scrubber is the Indian-ID layer. UI toast labels which layer caught what.",
       "priority": 3,
       "status": "passing",
       "title": "PII scrubber (PAN/Aadhaar/mobile) before retain + redaction toasts",
@@ -95,7 +95,7 @@
         "/health now reports the real rules_version (3) from scrubber_rules.json"
       ],
       "id": "cs-005",
-      "notes": "scrubber_rules.json schema exactly as PRD \u00a76.6. Checker returns PASS/WARN/BLOCKED + missing[] + source_obs + proof_count.",
+      "notes": "scrubber_rules.json schema exactly as PRD §6.6. Checker returns PASS/WARN/BLOCKED + missing[] + source_obs + proof_count.",
       "priority": 5,
       "status": "passing",
       "title": "Pre-dispatch checker W1 (scrubber_rules.json + validator)",
@@ -198,13 +198,13 @@
     {
       "area": "agents",
       "evidence": [
-        "pytest tests/test_assistant_llm.py: 5 passed (mocked httpx \u2014 no-key makes no HTTP call, grounded system prompt carries '19 of 20' + live rules context, HTTP 500 and network error both return None, endpoint returns scripted/openrouter correctly, /health llm flag)",
+        "pytest tests/test_assistant_llm.py: 5 passed (mocked httpx — no-key makes no HTTP call, grounded system prompt carries '19 of 20' + live rules context, HTTP 500 and network error both return None, endpoint returns scripted/openrouter correctly, /health llm flag)",
         "Full suite: 54 passed (49 prior + 5 new); frontend npm run build OK; ./.builder-os/init.sh exits 0 (2026-11-14)",
         "Live test on this VM via local OmniRoute gateway (OPENROUTER_BASE_URL=http://localhost:20128/v1, model gemini/gemini-3.1-flash-lite): POST /assistant/chat returned a real grounded answer, source 'openrouter'; screenshot design/verification/chat-live-test.png",
         "Routing fix verified by construction + suite: isCommand guard (command-verb start OR <= 6 words) on all action branches; the live-test question 'Why did the dengue appeal stop in step 3?...' (15 words) no longer re-runs step 3"
       ],
       "id": "cs-010",
-      "notes": "Optional layer: with no OPENROUTER_API_KEY the Assistant is byte-for-byte the old scripted one. Keys live only in the gitignored .env (see .env.example); never in the repo. Any LLM failure falls back to scripted answers \u2014 the demo cannot be broken by the LLM being down.",
+      "notes": "Optional layer: with no OPENROUTER_API_KEY the Assistant is byte-for-byte the old scripted one. Keys live only in the gitignored .env (see .env.example); never in the repo. Any LLM failure falls back to scripted answers — the demo cannot be broken by the LLM being down.",
       "priority": 10,
       "status": "passing",
       "title": "Assistant LLM via OpenRouter (optional, grounded, fail-safe) + chat command routing guard",
@@ -228,6 +228,13 @@
       "status": "passing",
       "passing_requires_evidence": "tests/test_agent.py knowledge tests (lookup by topic returns the reimbursement checklist; lookup by insurer returns Star Health's OPD-convertible pattern; by treatment returns knee risks; unknown topic answers honestly; save_outcome appends to a tmp knowledge file) + live verification 2026-11-14: the agent answered his 3 example questions from the document (policy choice with reasons; reimbursement process + documents; Bajaj knee-surgery denial risks with prevention)",
       "evidence": "backend/knowledge/insurance_knowledge.json + backend/knowledge.py; live probes via POST /assistant/chat 2026-11-14 (lookup_knowledge called on all three questions)"
+    },
+    {
+      "id": "cs-014",
+      "name": "Chat always answers: backend reads the knowledge file for insurance questions; stale 'Last check' parrot fallback removed",
+      "status": "passing",
+      "passing_requires_evidence": "tests/test_knowledge_chat.py 5/5 (red-flags list = 10 traps, Star Assure card with Rs.5,000/day cap, reimbursement docs, command guard returns null, gibberish returns null) + full suite 69 passed 2026-11-14 + live probes on the running backend: both screenshot messages answered source=knowledge, 'what can you help me with' answered source=agent (LLM talking), Star room question answered from the file",
+      "evidence": "tests/test_knowledge_chat.py 5 passed; full suite 69 passed 2026-11-14; live probes on running backend: screenshot messages answered source=knowledge, capability question answered source=agent"
     }
   ],
   "last_updated": "2026-11-14",
