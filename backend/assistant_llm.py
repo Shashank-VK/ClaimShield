@@ -101,10 +101,15 @@ def answer(
             json={
                 "model": config.get_openrouter_model(),
                 "messages": messages,
-                "max_tokens": 400,
+                # Reasoning models (e.g. Muse Spark contributor) spend
+                # tokens thinking before any visible text — measured
+                # 2026-11-14: the grounded prompt burned 898/900 tokens
+                # on reasoning and returned empty content. 3000 leaves
+                # room for the reasoning plus the actual answer.
+                "max_tokens": 3000,
                 "temperature": 0.3,
             },
-            timeout=25.0,
+            timeout=90.0,
         )
     except Exception:
         return None
