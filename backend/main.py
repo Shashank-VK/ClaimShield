@@ -25,7 +25,7 @@ from pydantic import BaseModel, Field, ValidationError
 
 from backend.scrubber_validator import check_packet
 
-from backend import assistant_llm
+from backend import agent
 from backend.band_room import RoomDisabledError
 from backend.config import get_openrouter_api_key, get_webhook_secret
 from backend.denial_defense import build_room, make_critic, run_denial_defense
@@ -175,20 +175,28 @@ def create_app(
 
     @app.post("/assistant/chat")
     def assistant_chat(req: AssistantChatRequest):
-        # Free-form questions only — the step/check/rules commands stay
-        # scripted in the cockpit. With no OpenRouter key (or any failure)
-        # reply is null and the cockpit uses its scripted answers.
+        # The agent (cs-011): the LLM decides whether to answer directly
+        # or call the desk's tools (memory check, packet check, rules,
+        # save outcome) and answers from their real results. With no LLM
+        # key (or any failure) reply is null and the cockpit falls back
+        # to its scripted answers.
         rules_data = load_rules(app.state.rules_path)
-        context = {
-            "rules_version": rules_version(rules_data),
-            "rules": rules_data.get("rules", []),
-        }
-        reply = assistant_llm.answer(
+        result = agent.run_agent(
             req.message,
             history=[h.model_dump(by_alias=True) for h in req.history],
-            context=context,
+            adapter=app.state.adapter,
+            room=app.state.room,
+            rules_data=rules_data,
         )
-        return {"reply": reply, "source": "openrouter" if reply else "scripted"}
+        if result is None:
+            return {"reply": None, "source": "scripted", "actions": []}
+        return {
+            "reply": result["reply"],
+            "source": "agent",
+            "actions": result.get("actions", []),
+            "strategy_result": result.get("strategy_result"),
+            "packet_result": result.get("packet_result"),
+        }
 
     @app.post("/webhooks/claim-intake", response_model=ClaimIntakeResponse)
     def claim_intake(req: ClaimIntakeRequest):

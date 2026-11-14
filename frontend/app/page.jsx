@@ -66,7 +66,7 @@ const NAV_ICONS = {
   chat: <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />,
 };
 const NAV_ITEMS = [
-  { id: "beats", label: "Demo Steps", short: "Steps" },
+  { id: "beats", label: "Quick actions", short: "Actions" },
   { id: "band-room", label: "Live Updates", short: "Live" },
   { id: "xray", label: "Memory Check", short: "Memory" },
   { id: "repo", label: "Rules", short: "Rules" },
@@ -157,7 +157,7 @@ export default function Cockpit() {
   const [messages, setMessages] = useState([
     {
       from: "desk",
-      text: "Assistant. I run the same steps as the buttons — try “Run step 1”, “Check this packet”, “Show the rules”, or “Help”.",
+      text: "Hello, I am the ClaimShield agent. Tell me what to do — I can check a claim against past wins, verify a packet before it goes out, show the rules, or save an outcome so the desk learns. Or just ask me a question.",
     },
   ]);
 
@@ -289,6 +289,37 @@ export default function Cockpit() {
     if (!text) return;
     setMessages((m) => [...m, { from: "user", text }]);
     setChatInput("");
+    // Agent first (cs-011): when an LLM is wired in, the agent decides
+    // what to do — answer directly, or run the desk's tools (memory
+    // check, packet check, rules, save outcome) — and its tool results
+    // land in the panes, same as the buttons. The scripted routing below
+    // is the fallback for no-LLM mode or an agent failure.
+    const llmOn = !!health?.llm && health.llm !== "off";
+    if (llmOn) {
+      try {
+        const { data } = await post("/assistant/chat", {
+          message: text,
+          history: messages.slice(-6).map((m) => ({ from: m.from, text: m.text })),
+        });
+        if (data?.reply) {
+          if (data.strategy_result) {
+            const s = data.strategy_result;
+            setPacket(s);
+            const act = (data.actions || []).find((a) => a.tool === "check_appeal");
+            const stepNo = act?.args?.case === "pt" ? 3 : 1;
+            setResults((r) => ({ ...r, [stepNo]: { out: verdictLabel(s.verdict), cls: s.verdict === "APPROVE" ? "ok" : "no", note: backedNote(s.proof_count) } }));
+          }
+          if (data.packet_result) setCheck(data.packet_result);
+          const acts = (data.actions || []).map((a) => `${a.note} — ${a.summary}`).join("  ·  ");
+          desk(data.reply, acts || undefined);
+          return;
+        }
+      } catch { /* fall through to the scripted answers */ }
+    }
+    await scriptedChat(text);
+  }
+
+  async function scriptedChat(text) {
     const t = text.toLowerCase();
 
     // Command guard: the keyword branches below run real desk actions, so
@@ -382,17 +413,8 @@ export default function Cockpit() {
       }
       return;
     }
-    // Free-form questions: ask the LLM when one is wired in (OpenRouter).
-    // Real commands never reach here (see the isCommand guard above), and
-    // neither do long questions that only mention a command word; with no
-    // key or any failure the scripted answers below take over, as before.
-    try {
-      const { data } = await post("/assistant/chat", {
-        message: text,
-        history: messages.slice(-6).map((m) => ({ from: m.from, text: m.text })),
-      });
-      if (data?.reply) { desk(data.reply); return; }
-    } catch { /* fall through to the scripted answers */ }
+    // The agent already had its chance in sendChat; these are the
+    // scripted answers for no-LLM mode.
     if (/help|what can you/.test(t)) {
       desk("I run the same steps as the buttons. Try: Run step 1, Run step 2, Run step 3, Approve & update, Check this packet, Show the rules, or Status.");
       return;

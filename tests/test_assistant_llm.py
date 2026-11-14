@@ -55,6 +55,10 @@ def test_no_key_returns_none_and_never_calls(monkeypatch):
 
 def test_good_response_returns_text_and_sends_grounded_request(monkeypatch):
     monkeypatch.setenv("OPENROUTER_API_KEY", "sk-or-test")
+    # Hermetic against a developer .env (config loads it at import):
+    # this test asserts the built-in defaults, so pin them explicitly.
+    monkeypatch.setenv("OPENROUTER_MODEL", "openai/gpt-4o-mini")
+    monkeypatch.setenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
     seen = {}
 
     def fake_post(url, headers=None, json=None, timeout=None):
@@ -104,8 +108,8 @@ def test_endpoint_without_key_is_scripted(monkeypatch):
 def test_endpoint_with_key_returns_llm_reply(monkeypatch):
     monkeypatch.setenv("OPENROUTER_API_KEY", "sk-or-test")
     monkeypatch.setattr(
-        "backend.main.assistant_llm.answer",
-        lambda message, history=None, context=None: "A grounded answer.",
+        "backend.agent.run_agent",
+        lambda message, history=None, **kw: {"reply": "A grounded answer.", "actions": []},
     )
     client = TestClient(create_app(HindsightAdapter()))
     resp = client.post(
@@ -115,5 +119,6 @@ def test_endpoint_with_key_returns_llm_reply(monkeypatch):
     assert resp.status_code == 200
     body = resp.json()
     assert body["reply"] == "A grounded answer."
-    assert body["source"] == "openrouter"
+    assert body["source"] == "agent"
+    assert body["actions"] == []
     assert client.get("/health").json()["llm"] == "openrouter"
