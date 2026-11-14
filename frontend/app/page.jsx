@@ -300,7 +300,12 @@ export default function Cockpit() {
     const isCommand =
       words.length <= 6 || /^(run|do|execute|show|check|approve)\b/.test(t);
 
-    if (/help|what can you/.test(t)) {
+    // When an LLM is wired in, capability questions ("what can you do")
+    // are questions for it, not the scripted help line — the scripted
+    // line is only the no-LLM (or LLM-failed) fallback, re-checked after
+    // the LLM call below.
+    const llmOn = !!health?.llm && health.llm !== "off";
+    if (/help|what can you/.test(t) && !llmOn) {
       desk("I run the same steps as the buttons. Try: Run step 1, Run step 2, Run step 3, Approve & update, Check this packet, Show the rules, or Status.");
       return;
     }
@@ -388,6 +393,10 @@ export default function Cockpit() {
       });
       if (data?.reply) { desk(data.reply); return; }
     } catch { /* fall through to the scripted answers */ }
+    if (/help|what can you/.test(t)) {
+      desk("I run the same steps as the buttons. Try: Run step 1, Run step 2, Run step 3, Approve & update, Check this packet, Show the rules, or Status.");
+      return;
+    }
     if (packet) {
       desk(`Last check: ${verdictLabel(packet.verdict)} — ${backedNote(packet.proof_count).toLowerCase()}.`, packet.reason);
       return;
