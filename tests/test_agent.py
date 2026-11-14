@@ -79,11 +79,12 @@ def test_agent_save_outcome_blocked_without_user_approval(desk):
     assert "NOT SAVED" in result["actions"][0]["summary"]
 
 
-def test_agent_save_outcome_runs_with_user_approval(desk):
+def test_agent_save_outcome_runs_with_user_approval(desk, tmp_path):
     adapter, room, rules = desk
     result = run_agent(
         "Yes, save it — the dengue appeal was won",
         adapter=adapter, room=room, rules_data=rules,
+        knowledge_path=tmp_path / "k.json",
         call_model=scripted([
             '{"do": "save_outcome", "args": {"case": "dengue", "outcome": "WON"}, "note": "Saving the outcome"}',
             '{"say": "Saved. Future checks will use it."}',
@@ -112,3 +113,57 @@ def test_agent_returns_none_when_model_unavailable(desk):
         call_model=lambda messages: None,
     )
     assert result is None
+
+
+def test_agent_reads_knowledge_document_for_insurance_questions(desk):
+    from backend.knowledge import load_knowledge
+
+    adapter, room, rules = desk
+    result = run_agent(
+        "How do I get reimbursement and what documents are needed?",
+        adapter=adapter, room=room, rules_data=rules,
+        knowledge_data=load_knowledge(),
+        call_model=scripted([
+            '{"do": "lookup_knowledge", "args": {"topic": "reimbursement"}, "note": "Reading the knowledge document"}',
+            '{"say": "Here is the process and the document list."}',
+        ]),
+    )
+    assert [a["tool"] for a in result["actions"]] == ["lookup_knowledge"]
+    summary = result["actions"][0]["summary"]
+    assert "discharge summary" in summary.lower()
+    assert "claim form" in summary.lower()
+
+
+def test_agent_knowledge_lookup_by_insurer_and_treatment(desk):
+    from backend.knowledge import load_knowledge, lookup
+
+    data = load_knowledge()
+    star = lookup(data, insurer="Star Health")
+    assert "OPD-convertible" in star
+    knee = lookup(data, treatment="knee")
+    assert "physiotherapy" in knee.lower()
+    missing = lookup(data, topic="nonsense")
+    assert "No matching entry" in missing
+
+
+def test_agent_save_outcome_also_updates_knowledge_document(desk, tmp_path):
+    import json as _json
+
+    from backend.knowledge import load_knowledge
+
+    adapter, room, rules = desk
+    kpath = tmp_path / "knowledge.json"
+    kpath.write_text(_json.dumps(load_knowledge()), encoding="utf-8")
+    result = run_agent(
+        "Yes, save it — the dengue appeal was won",
+        adapter=adapter, room=room, rules_data=rules,
+        knowledge_data=load_knowledge(), knowledge_path=kpath,
+        call_model=scripted([
+            '{"do": "save_outcome", "args": {"case": "dengue", "outcome": "WON"}, "note": "Saving"}',
+            '{"say": "Saved."}',
+        ]),
+    )
+    assert "saved outcome=WON" in result["actions"][0]["summary"]
+    updated = _json.loads(kpath.read_text(encoding="utf-8"))
+    assert updated["learned_outcomes"][-1]["case"] == "dengue"
+    assert updated["learned_outcomes"][-1]["outcome"] == "WON"

@@ -1,0 +1,339 @@
+{
+  "appeals": {
+    "irdai": "If the insurer does not resolve it, complain on IRDAI's Bima Bharosa portal (bimabharosa.irdai.gov.in) or call the toll-free 155255 / 1800 4254 732.",
+    "ombudsman": "The Insurance Ombudsman is free for the policyholder and its award is binding on the insurer. Go after the insurer has rejected the complaint or not replied within about 30 days; file within a year of the insurer's final reply. File at the Ombudsman centre covering the insurer's office.",
+    "success_factors": [
+      "Written reasons obtained first",
+      "Doctor's certificate answering the exact denial ground",
+      "Complete paper trail kept from day one"
+    ],
+    "with_insurer": {
+      "steps": [
+        "Get the rejection/part-payment reasons in writing (repudiation letter).",
+        "Write a reconsideration request to the insurer's grievance cell addressing each stated reason point by point.",
+        "Attach the missing evidence: treating doctor's certificate, reports, and a short explanation of medical necessity.",
+        "Insurers must resolve grievances within the timelines in IRDAI's protection-of-policyholders rules; keep the complaint reference number."
+      ]
+    }
+  },
+  "cashless": {
+    "pitfalls": [
+      "Hospital not in network on the day of admission (networks change) — verify before admission, not at discharge.",
+      "Pre-authorisation approved but final settlement reduced: room-rent proportionate deduction and non-payables are the usual gaps.",
+      "PED or waiting-period flag raised at pre-authorisation — keep past records ready.",
+      "Cashless denied does not mean the claim is dead: pay, then claim reimbursement with the full document set."
+    ],
+    "steps": [
+      "Planned: hospital sends pre-authorisation to the insurer/TPA typically 48 hours-4 days before admission; insurer approves an initial amount.",
+      "Emergency: hospital sends pre-authorisation within 24 hours of admission.",
+      "Insurer may query for more documents or approve partially; treatment continues meanwhile.",
+      "At discharge, final bill goes to the insurer; you pay only non-payables, co-pay share and any amount above the approved limit."
+    ]
+  },
+  "choosing_policy": {
+    "by_profile": {
+      "family_floater": "Size the cover for the oldest member's likely surgery costs; check restoration terms and whether the floater has age-based premium jumps at 45/60.",
+      "senior_parents": "Expect PED waiting periods and possible co-pay; disclose every known condition fully — a senior policy bought with clean disclosure beats a cheaper one bought with omissions.",
+      "young_individual": "Prioritise short waiting periods and no room-rent limit; buy early because waiting periods and clean disclosure history are assets that compound."
+    },
+    "how_to_compare": [
+      {
+        "check": "Use the latest IRDAI annual report figures for the insurer, not the insurer's own marketing page.",
+        "factor": "Claim settlement ratio and claim repudiation record",
+        "why": "Shows how often the insurer actually pays; a cheap premium is worthless if claims are fought."
+      },
+      {
+        "check": "Shorter is better; some policies cut PED waiting to 2-3 years or offer riders to reduce it.",
+        "factor": "Waiting periods",
+        "why": "Most disputes are waiting-period disputes: pre-existing diseases (typically 2-4 years) and listed diseases (typically 2 years) are not covered until the period ends."
+      },
+      {
+        "check": "Prefer 'no room rent limit' or a high limit; avoid '1% of sum insured' caps on a small cover.",
+        "factor": "Room rent limit",
+        "why": "If your room rent exceeds the limit, the insurer deducts proportionately from the WHOLE bill, not just the rent difference."
+      },
+      {
+        "check": "Avoid co-pay where possible, especially mandatory co-pay on all claims.",
+        "factor": "Co-pay clause",
+        "why": "A 10-20% co-pay means you pay that share of every claim — common in senior-citizen policies."
+      },
+      {
+        "check": "Check your preferred hospitals are in the network, and have not been de-listed recently.",
+        "factor": "Network hospitals",
+        "why": "Cashless treatment only works at network hospitals; a wide network near your home matters more than a national headline number."
+      },
+      {
+        "check": "Check whether restoration triggers only for a different illness or also the same one.",
+        "factor": "Restoration benefit",
+        "why": "Restores the full sum insured after a claim, so a second hospitalisation in the same year is still covered."
+      },
+      {
+        "check": "Read the sub-limit table; prefer policies without disease-wise caps.",
+        "factor": "Sub-limits on treatments",
+        "why": "Caps on cataract, knee replacement, modern treatments etc. quietly shrink the cover."
+      },
+      {
+        "check": "Rs.10-25 lakh family cover is a saner floor in metros; super top-ups are a cheap way to raise cover.",
+        "factor": "No-claim bonus and sum insured adequacy",
+        "why": "Medical inflation in India runs well ahead of general inflation; Rs.5 lakh no longer covers a major surgery in a metro."
+      }
+    ],
+    "red_flags": [
+      "Agent discourages disclosing an existing condition — non-disclosure is the single biggest cause of claim rejection years later.",
+      "Very low premium with a long list of sub-limits and a 1%-of-cover room rent cap.",
+      "Room rent limit + proportionate deduction clause on a small sum insured.",
+      "Co-pay that applies to every claim, not just specific treatments."
+    ]
+  },
+  "insurers": [
+    {
+      "name": "Star Health",
+      "patterns": [
+        {
+          "pattern": "Fever / dengue admission denied as OPD-convertible",
+          "prevention": "Treating doctor's certificate stating why inpatient care was necessary, platelet trend reports, NS1/antigen report, records of IV fluid administration and vitals monitoring.",
+          "treatments": [
+            "dengue",
+            "viral fever"
+          ],
+          "trigger": "Admission notes show observation and IV fluids without documented medical necessity."
+        },
+        {
+          "pattern": "Room-rent proportionate deduction",
+          "prevention": "Check the rent limit before admission; if exceeded knowingly, budget for a proportionate cut on the full bill.",
+          "treatments": [
+            "all admissions"
+          ],
+          "trigger": "Room chosen above the policy's rent limit."
+        },
+        {
+          "pattern": "PED scrutiny and non-disclosure queries",
+          "prevention": "Full disclosure at purchase; attach treating-doctor history and old prescriptions proactively.",
+          "treatments": [
+            "diabetes",
+            "hypertension",
+            "thyroid related claims"
+          ],
+          "trigger": "Hospital papers mention a long-standing condition not visible in the proposal form."
+        }
+      ]
+    },
+    {
+      "name": "Bajaj Allianz",
+      "patterns": [
+        {
+          "pattern": "Documentation-heavy queries before settlement",
+          "prevention": "Submit the complete document set in one go, including indoor case papers and original reports, and keep a copy of everything submitted.",
+          "treatments": [
+            "surgeries",
+            "reimbursement claims"
+          ],
+          "trigger": "Missing indoor case papers, investigation reports or itemised breakup."
+        },
+        {
+          "pattern": "Surgery claims checked against waiting periods",
+          "prevention": "Verify the waiting period for that exact surgery before a planned admission; for emergencies, attach the doctor's note on why it could not wait.",
+          "treatments": [
+            "knee replacement",
+            "hernia",
+            "cataract",
+            "gallbladder"
+          ],
+          "trigger": "Claim falls inside the 2-year specific-disease waiting period or PED window."
+        },
+        {
+          "pattern": "Proportionate deduction on room rent",
+          "prevention": "Same as any insurer: confirm eligible room category at admission.",
+          "treatments": [
+            "all admissions"
+          ],
+          "trigger": "Room category higher than the eligible limit."
+        }
+      ]
+    },
+    {
+      "name": "HDFC Ergo",
+      "patterns": [
+        {
+          "pattern": "Network and cashless process queries",
+          "prevention": "File pre-authorisation 3-4 days ahead for planned care with the full estimate and treating doctor's plan.",
+          "treatments": [
+            "planned surgeries"
+          ],
+          "trigger": "Pre-authorisation filed late or hospital documentation incomplete."
+        },
+        {
+          "pattern": "PED waiting-period enforcement",
+          "prevention": "Disclose fully; keep continuity certificates when porting so waiting-period credit carries over.",
+          "treatments": [
+            "pre-existing conditions"
+          ],
+          "trigger": "Claim inside the PED waiting window."
+        }
+      ]
+    },
+    {
+      "name": "ICICI Lombard",
+      "patterns": [
+        {
+          "pattern": "Admission-necessity review on short stays",
+          "prevention": "Doctor's note documenting active treatment given as an inpatient and why OPD management was unsafe.",
+          "treatments": [
+            "fever",
+            "gastroenteritis",
+            "observation admissions"
+          ],
+          "trigger": "1-2 day admissions with mostly diagnostic workup."
+        },
+        {
+          "pattern": "Sub-limit application on specific treatments",
+          "prevention": "Check the sub-limit table before planned treatment; choose the policy variant without caps where possible.",
+          "treatments": [
+            "cataract",
+            "modern treatments"
+          ],
+          "trigger": "Policy carries treatment-wise caps."
+        }
+      ]
+    },
+    {
+      "name": "Niva Bupa",
+      "patterns": [
+        {
+          "pattern": "Reimbursement documentation queries",
+          "prevention": "Cross-check that every billed item maps to a prescription or report before submitting.",
+          "treatments": [
+            "reimbursement claims"
+          ],
+          "trigger": "Gaps between bills, prescriptions and reports."
+        },
+        {
+          "pattern": "PED and waiting-period checks",
+          "prevention": "Full disclosure and continuity documentation when porting policies.",
+          "treatments": [
+            "pre-existing conditions"
+          ],
+          "trigger": "Early-policy claims for chronic conditions."
+        }
+      ]
+    },
+    {
+      "name": "Care Health",
+      "patterns": [
+        {
+          "pattern": "Optional co-pay surprises",
+          "prevention": "Read the co-pay clause of the exact variant bought; factor it into claim expectations.",
+          "treatments": [
+            "all claims on co-pay variants"
+          ],
+          "trigger": "Policy variant carries a voluntary/mandatory co-pay the buyer forgot."
+        },
+        {
+          "pattern": "Waiting-period enforcement on listed diseases",
+          "prevention": "Verify dates before planned surgery; attach emergency justification where applicable.",
+          "treatments": [
+            "hernia",
+            "cataract",
+            "joint replacement"
+          ],
+          "trigger": "Claim inside the specific-disease window."
+        }
+      ]
+    }
+  ],
+  "learned_outcomes": [],
+  "reimbursement": {
+    "common_rejection_reasons": [
+      "Late intimation or late submission without a written explanation.",
+      "Missing investigation reports or a discharge summary that does not state why admission was needed.",
+      "Admission the insurer classes as OPD-convertible (investigations/monitoring only, no active inpatient treatment).",
+      "Pre-existing disease within its waiting period, or a condition not disclosed at purchase.",
+      "Non-payable consumables billed (gloves, syringes etc. under the IRDAI non-payable list)."
+    ],
+    "documents": [
+      "Claim form Part A (signed by policyholder) and Part B (hospital)",
+      "Discharge summary",
+      "Final itemised hospital bill with breakup + all payment receipts",
+      "Investigation reports (blood tests, imaging, NS1/pathology as applicable)",
+      "Doctor's prescriptions and consultation notes",
+      "Pharmacy bills with prescriptions",
+      "Implant stickers / invoices for stents, lenses, implants",
+      "Indoor case papers / treating doctor's notes where the insurer asks",
+      "Previous treatment records for the same condition (PED history)",
+      "KYC: Aadhaar/PAN of policyholder",
+      "Cancelled cheque or NEFT details of the policyholder's bank account",
+      "Policy copy / health card",
+      "FIR / medico-legal certificate for accident cases"
+    ],
+    "steps": [
+      "Intimate the insurer/TPA as early as possible — before planned admission, or within 24-48 hours of an emergency admission.",
+      "Collect every document at discharge (see checklist) — hospitals are hard to chase afterwards.",
+      "Fill the claim form (Part A by you, Part B by the hospital) and attach the full document set.",
+      "Submit within the policy deadline — typically 15-30 days from discharge; late submission needs a written delay reason.",
+      "Track the claim ID; answer insurer queries with documents, not phone explanations.",
+      "On part-payment or rejection, demand the reasons in writing — that letter is the base of any appeal."
+    ],
+    "when": "You paid the hospital yourself (non-network hospital, or cashless refused/unavailable) and claim the money back from the insurer."
+  },
+  "source_note": "Compiled from IRDAI-published norms and the standard claim processes insurers publish. Insurer 'patterns' describe commonly reported denial/query behaviour, not guarantees — the policy wording always governs. Being enriched with a sourced Deep Research report.",
+  "treatment_risks": [
+    {
+      "prepare": [
+        "6-week (or longer) physiotherapy and medication records",
+        "X-ray/MRI excerpts showing severity",
+        "Treating surgeon's note on why surgery is now necessary"
+      ],
+      "risks": [
+        "Usually inside the 2-year specific-disease waiting period in the first policy years.",
+        "Insurers may ask for proof that conservative treatment (physiotherapy, medication) was tried and failed first.",
+        "Old X-ray/MRI reports get requested to test whether the condition pre-dates the policy."
+      ],
+      "treatment": "knee replacement / joint surgery"
+    },
+    {
+      "prepare": [
+        "NS1/antigen and platelet trend reports",
+        "Doctor's certificate of admission necessity (falling platelets, IV fluids, warning signs)",
+        "Vitals monitoring charts"
+      ],
+      "risks": [
+        "Denied as OPD-convertible if the file shows only monitoring.",
+        "Short stays get extra scrutiny."
+      ],
+      "treatment": "dengue / viral fever admission"
+    },
+    {
+      "prepare": [
+        "Policy sub-limit check before surgery",
+        "Lens sticker/invoice",
+        "Pre and post procedure reports"
+      ],
+      "risks": [
+        "2-year waiting period commonly applies.",
+        "Per-eye sub-limits in many policies cap the payout below private hospital prices.",
+        "Lens/implant invoices get checked against the billed amount."
+      ],
+      "treatment": "cataract surgery"
+    },
+    {
+      "prepare": [
+        "First diagnosis reports with dates",
+        "Ultrasound/imaging excerpts",
+        "Surgeon note on urgency if operated inside the window for complications"
+      ],
+      "risks": [
+        "Listed-disease waiting period (typically 2 years).",
+        "Insurer may probe whether symptoms pre-date the policy."
+      ],
+      "treatment": "hernia / gallbladder surgery"
+    }
+  ],
+  "updated": "2026-11-14",
+  "version": 1,
+  "waiting_periods": {
+    "initial": "Typically 30 days from policy start for illness claims (accidents are usually covered from day one).",
+    "note": "Exact periods vary by insurer and policy — always read the specific policy wording; the figures here are the common market pattern.",
+    "pre_existing": "Typically 2-4 years depending on the policy, for diseases declared (or found) at purchase.",
+    "specific_diseases": "Typically 2 years for a listed set that commonly includes cataract, hernia, gallbladder stones, knee/joint replacement, hysterectomy, ENT and sinus surgeries, varicose veins."
+  }
+}

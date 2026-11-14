@@ -221,6 +221,13 @@
       "status": "passing",
       "passing_requires_evidence": "tests/test_agent.py (6 tests: direct answer, real memory-check tool call through the loop, save_outcome blocked without user approval + saved with approval, unparseable-output fallback, model-down fallback) + live verification 2026-11-14: Meta Muse Spark contributor called check_appeal (APPROVE proof_count 5) and check_packet (PASS) through POST /assistant/chat and answered from the results",
       "evidence": "tests/test_agent.py 6 passed; live probes via the running backend 2026-11-14 (source=agent, strategy_result/packet_result payloads present)"
+    },
+    {
+      "id": "cs-012",
+      "name": "Insurance knowledge document the agent reads (facts as JSON, not in the memory bank)",
+      "status": "passing",
+      "passing_requires_evidence": "tests/test_agent.py knowledge tests (lookup by topic returns the reimbursement checklist; lookup by insurer returns Star Health's OPD-convertible pattern; by treatment returns knee risks; unknown topic answers honestly; save_outcome appends to a tmp knowledge file) + live verification 2026-11-14: the agent answered his 3 example questions from the document (policy choice with reasons; reimbursement process + documents; Bajaj knee-surgery denial risks with prevention)",
+      "evidence": "backend/knowledge/insurance_knowledge.json + backend/knowledge.py; live probes via POST /assistant/chat 2026-11-14 (lookup_knowledge called on all three questions)"
     }
   ],
   "last_updated": "2026-11-14",

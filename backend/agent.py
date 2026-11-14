@@ -30,7 +30,7 @@ from typing import Any, Callable, Dict, List, Optional
 
 import httpx
 
-from backend import config
+from backend import config, knowledge
 from backend.denial_defense import run_denial_defense
 from backend.pii_scrubber import scrub_text
 from backend.scrubber_validator import check_packet, rules_version
@@ -88,6 +88,7 @@ TOOLS (call them, do not guess their results):
 - check_packet {} — runs the pre-dispatch scrubber on the dengue packet: PASSED, WARN or BLOCKED, with the documents that are missing.
 - show_rules {} — the current pre-dispatch rule checklist (names + version).
 - save_outcome {"case": "dengue"|"pt", "outcome": "WON"|"LOST"} — saves an outcome into memory so future checks learn from it. HUMAN GATE: only call this after the user has clearly approved saving in their latest message; otherwise ask them first.
+- lookup_knowledge {"topic": "choosing_policy"|"reimbursement"|"cashless"|"waiting_periods"|"appeals"|"", "insurer": "<insurer name or empty>", "treatment": "<treatment or empty>"} — reads the desk's insurance knowledge DOCUMENT (a JSON file: how to choose a policy and why, the reimbursement process with the full document checklist, cashless pitfalls, waiting periods, denial patterns per insurer, risks per treatment, and how to appeal). ALWAYS call this before answering general insurance questions (which policy to take, how reimbursement works, what an insurer may deny for a surgery); answer from what it returns, with reasons and checklists, and say plainly when the document has no entry instead of guessing.
 
 OUTPUT CONTRACT — reply with exactly ONE JSON object, nothing else:
 - To call a tool: {"do": "<tool name>", "args": {...}, "note": "<one short line saying what you are doing>"}
@@ -163,6 +164,8 @@ def _execute_tool(
     rules_data: Dict[str, Any],
     user_message: str,
     out: Dict[str, Any],
+    knowledge_data: Optional[Dict[str, Any]] = None,
+    knowledge_path: Any = None,
 ) -> str:
     """Run one tool against the real services; record UI payloads in `out`."""
     if name == "check_appeal":
@@ -175,6 +178,13 @@ def _execute_tool(
         result = check_packet(dict(SAMPLE_PACKET), rules_data)
         out["packet_result"] = result
         return f"verdict={result.get('verdict')} missing={result.get('missing') or []}"
+    if name == "lookup_knowledge":
+        return knowledge.lookup(
+            knowledge_data or {},
+            topic=str(args.get("topic", "")),
+            insurer=str(args.get("insurer", "")),
+            treatment=str(args.get("treatment", "")),
+        )
     if name == "show_rules":
         rules = rules_data.get("rules", [])
         names = [str(r.get("name", "")) for r in rules]
@@ -200,6 +210,8 @@ def _execute_tool(
             tags=["claimshield", "appeal_outcome", case_key],
             timestamp=None,
         )
+        # The knowledge document visibly learns too (cs-012).
+        knowledge.append_outcome(knowledge_path, case_key, outcome)
         return f"saved outcome={outcome} document_id={result.get('document_id')} backend={result.get('backend')}"
     return f"unknown tool: {name}"
 
@@ -211,6 +223,8 @@ def run_agent(
     adapter: Any,
     room: Any,
     rules_data: Dict[str, Any],
+    knowledge_data: Optional[Dict[str, Any]] = None,
+    knowledge_path: Any = None,
     call_model: Callable[[List[Dict[str, str]]], Optional[str]] = _call_model,
 ) -> Optional[Dict[str, Any]]:
     """Run the agent loop. None => no LLM answer (caller falls back)."""
@@ -242,6 +256,7 @@ def run_agent(
             summary = _execute_tool(
                 tool, args, adapter=adapter, room=room,
                 rules_data=rules_data, user_message=message, out=out,
+                knowledge_data=knowledge_data, knowledge_path=knowledge_path,
             )
         except Exception as exc:  # a failed tool must not kill the chat
             summary = f"tool {tool} failed: {exc}"

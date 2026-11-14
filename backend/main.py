@@ -25,7 +25,7 @@ from pydantic import BaseModel, Field, ValidationError
 
 from backend.scrubber_validator import check_packet
 
-from backend import agent
+from backend import agent, knowledge
 from backend.band_room import RoomDisabledError
 from backend.config import get_openrouter_api_key, get_webhook_secret
 from backend.denial_defense import build_room, make_critic, run_denial_defense
@@ -187,6 +187,10 @@ def create_app(
             adapter=app.state.adapter,
             room=app.state.room,
             rules_data=rules_data,
+            # Loaded fresh per request: edit the document, the agent
+            # knows it on the next message (cs-012).
+            knowledge_data=knowledge.load_knowledge(),
+            knowledge_path=knowledge.DEFAULT_KNOWLEDGE_PATH,
         )
         if result is None:
             return {"reply": None, "source": "scripted", "actions": []}
