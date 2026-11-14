@@ -433,7 +433,7 @@
     }
   ],
   "updated": "2026-11-14",
-  "version": 2,
+  "version": 3,
   "waiting_periods": {
     "initial": "30 days from policy start for illness claims; accidental trauma is covered from day one.",
     "maternity": "9 months to 6 years depending on the plan - a key comparison point for young families.",
@@ -449,5 +449,182 @@
     "PED waiting period is capped at 36 months; after 60 months of continuous cover, non-disclosure cannot be challenged except for proven fraud (moratorium).",
     "Insurance Ombudsman is free, takes claims up to Rs.50 lakh, and must award within 3 months; the award binds the insurer.",
     "A verbal cashless refusal has no legal standing - the insurer must give the denial/query in writing citing the exact policy clause."
+  ],
+  "hidden_traps": [
+    {
+      "trap": "Room-rent cap triggers proportionate deduction on the WHOLE bill",
+      "keywords": [
+        "room",
+        "rent",
+        "allot",
+        "admission",
+        "ward"
+      ],
+      "insurers": [
+        "Star Health"
+      ],
+      "treatments": [
+        "admission"
+      ],
+      "hidden_clause": "Star Assure at Rs.5 lakh sum insured caps room rent at 1% of SI = Rs.5,000/day. Choosing a costlier room does NOT just cut the rent difference: the insurer pays ALL associated charges (doctor visits, nursing, OT, investigations) in the ratio cap/chosen rent (proportionate deduction).",
+      "formula": "payable ratio = rent cap / chosen daily rent. Insurer pays (cap x days) + ratio x other charges.",
+      "worked_example": "7 days in a Rs.10,000/day room; other charges Rs.1,80,000; bill Rs.2,50,000. Ratio 5000/10000 = 50%. Insurer pays Rs.35,000 rent + Rs.90,000 = Rs.1,25,000. THE FAMILY PAYS Rs.1,25,000 on a Rs.5 lakh policy. In a Rs.5,000/day room the same bill is paid almost in full.",
+      "decision": "Allot a room at or below Rs.5,000/day on this policy. If the family insists on a costlier room, state the expected cut in rupees BEFORE admission."
+    },
+    {
+      "trap": "Knee replacement procedure cap far below real cost",
+      "keywords": [
+        "knee",
+        "joint",
+        "replacement"
+      ],
+      "insurers": [
+        "Care Health"
+      ],
+      "treatments": [
+        "knee replacement / joint surgery"
+      ],
+      "hidden_clause": "Care Freedom / Care Heart cap knee replacement at Rs.70,000-1,20,000 per knee, against typical costs of Rs.1.5-2.3 lakh per knee.",
+      "worked_example": "One knee at Rs.2,00,000 with a Rs.1,00,000 cap: the family pays Rs.1,00,000 despite holding a large sum insured. Both knees doubles the gap.",
+      "decision": "Quote the CAP, not the sum insured, before scheduling; record the family's expected-gap acknowledgement."
+    },
+    {
+      "trap": "Cataract per-eye cap",
+      "keywords": [
+        "cataract",
+        "eye",
+        "lens"
+      ],
+      "insurers": [
+        "Care Health",
+        "Star Health",
+        "Bajaj"
+      ],
+      "treatments": [
+        "cataract surgery"
+      ],
+      "hidden_clause": "Per-eye cataract caps run from Rs.20,000-30,000 (Care Freedom/Heart) to about Rs.40,000 on many Rs.10 lakh templates; premium/multifocal lens surgery costs Rs.60,000-1,00,000 per eye.",
+      "worked_example": "Premium lens at Rs.80,000 with a Rs.40,000 cap: family pays Rs.40,000 per eye, Rs.80,000 for both eyes.",
+      "decision": "Check the per-eye cap AND the lens type on the CIS before the OT is scheduled."
+    },
+    {
+      "trap": "Robotic / modern treatment per-claim cap",
+      "keywords": [
+        "robotic",
+        "modern treatment",
+        "laser"
+      ],
+      "insurers": [
+        "Niva Bupa"
+      ],
+      "treatments": [
+        "robotic surgery"
+      ],
+      "hidden_clause": "Niva Bupa ReAssure, ReAssure 2.0, Health Pulse and ReAssure 3.0 Classic/Select cap modern/robotic treatments at Rs.1,00,000 per claim, while robotic surgery typically costs Rs.3-5 lakh. (3.0 Black and Elite cover up to SI.)",
+      "worked_example": "Robotic procedure at Rs.3,50,000: the modern-treatment component is capped at Rs.1,00,000; the family carries the rest of that component.",
+      "decision": "Itemise robotic consumables separately from standard surgical fees so the cap hits only the modern component; quote the gap upfront."
+    },
+    {
+      "trap": "Co-pay stacks on top of every other cut",
+      "keywords": [
+        "co-pay",
+        "copay",
+        "co pay"
+      ],
+      "insurers": [
+        "Star Health"
+      ],
+      "treatments": [],
+      "hidden_clause": "A co-pay (e.g. Star Assure 10% when entry age is 61+) is deducted AFTER rent proportionate cuts and sub-limits, not instead of them.",
+      "worked_example": "Worked industry example: with co-pay stacked on rent cuts and sub-limits, Rs.1,75,000 of a Rs.4,00,000 bill stays with the patient.",
+      "decision": "When estimating the family's share, apply co-pay LAST, on top of every other cut - never quote the cuts one at a time."
+    },
+    {
+      "trap": "Same brand, different plan line, different rulebook",
+      "keywords": [
+        "health guard",
+        "supreme",
+        "plan line",
+        "variant",
+        "ihealth",
+        "elevate"
+      ],
+      "insurers": [
+        "Bajaj",
+        "ICICI Lombard"
+      ],
+      "treatments": [],
+      "hidden_clause": "Bajaj Health Guard imposes room caps and sub-limits; Bajaj Health Care Supreme has zero room caps, zero sub-limits, zero co-pay. ICICI legacy iHealth caps cataract at 10% of SI per eye; Elevate has no cataract cap in base cover.",
+      "worked_example": "Two patients with 'Bajaj' cards in adjacent beds can face completely different room and cataract rules.",
+      "decision": "Verify the exact plan LINE on the card/CIS before room allotment or procedure quoting - the brand name is not enough."
+    },
+    {
+      "trap": "Waiting periods: elective surgery inside the wait is a full denial",
+      "keywords": [
+        "waiting",
+        "wait",
+        "hernia",
+        "gallbladder",
+        "hysterectomy",
+        "pre-existing",
+        "ped"
+      ],
+      "insurers": [],
+      "treatments": [
+        "cataract surgery",
+        "knee replacement / joint surgery"
+      ],
+      "hidden_clause": "Listed diseases (cataract, hernia, gallbladder stones, knee/joint replacement, hysterectomy, piles, sinus) typically wait 24 months; pre-existing diseases up to 36 months (IRDAI cap). Surgery inside the wait is denied in full. Dengue and acute fevers are NOT on the list - a waiting-period denial for dengue is challengeable (a Delhi commission overturned a Rs.17.99 lakh dengue denial).",
+      "worked_example": "Hernia surgery in month 20 of a 24-month wait: insurer pays Rs.0; the family pays the entire bill.",
+      "decision": "Check the policy start date against the waiting period BEFORE scheduling elective surgery; never accept a waiting-period denial for an acute fever admission."
+    },
+    {
+      "trap": "Consumables (List I non-payables) quietly eat 5-10% of the bill",
+      "keywords": [
+        "consumables",
+        "gloves",
+        "ppe",
+        "non-payable",
+        "non payable"
+      ],
+      "insurers": [],
+      "treatments": [],
+      "hidden_clause": "IRDAI List I names 68 non-payable items (gloves, PPE kits, admission fees, attendant meals). They are deducted at discharge unless a consumables rider is attached (e.g. Extra Protect, Safeguard+, Claim Protector, Claim Shield).",
+      "worked_example": "On a Rs.2,50,000 bill, expect roughly Rs.12,500-25,000 of consumable deductions without a rider.",
+      "decision": "Check for a consumables rider at admission and warn the family about the expected deduction range."
+    },
+    {
+      "trap": "Variant hides a deductible or an out-of-network co-pay",
+      "keywords": [
+        "deductible",
+        "super saver",
+        "value for money",
+        "out-of-network",
+        "network"
+      ],
+      "insurers": [
+        "Care Health"
+      ],
+      "treatments": [],
+      "hidden_clause": "Care Super Saver carries a Rs.25,000 compulsory deductible on every claim. Care Supreme Value for Money adds a single-AC room cap plus a 20% co-pay outside its select hospitals. Care Senior Super carries disease sub-limits that Senior Premium does not.",
+      "worked_example": "A Rs.60,000 claim on Super Saver: the family pays the first Rs.25,000 before the insurer pays anything.",
+      "decision": "Read the VARIANT name on the CIS - the variant, not the brand, sets the deductible and co-pay."
+    },
+    {
+      "trap": "Restoration benefit may not restore for the same illness",
+      "keywords": [
+        "restoration",
+        "restore",
+        "refill",
+        "second admission"
+      ],
+      "insurers": [
+        "ICICI Lombard"
+      ],
+      "treatments": [],
+      "hidden_clause": "On legacy plans (e.g. ICICI iHealth line) the sum-insured restoration applies only to UNRELATED illnesses; a second admission for the same illness in the same year may find the cover exhausted.",
+      "worked_example": "A Rs.4 lakh first claim drains a Rs.5 lakh floater; a same-illness readmission faces only the remaining Rs.1 lakh.",
+      "decision": "Before a repeat admission for the same illness, verify remaining sum insured and whether restoration covers the same illness on this exact plan."
+    }
   ]
 }

@@ -44,6 +44,27 @@ def lookup(
     treatment = (treatment or "").strip().lower()
     parts: List[str] = []
 
+    # Hidden traps first — they carry the actionable caps and decisions.
+    traps = data.get("hidden_traps", [])
+    if topic == "hidden_traps":
+        if traps:
+            parts.append(f"hidden_traps: {json.dumps(traps, ensure_ascii=False)}")
+    elif traps:
+        query = f"{topic} {insurer} {treatment}"
+        matched = []
+        for t in traps:
+            ins = [str(i).lower() for i in t.get("insurers", [])]
+            trt = [str(x).lower() for x in t.get("treatments", [])]
+            kw = [str(k).lower() for k in t.get("keywords", [])]
+            if insurer and any(insurer in i or i in insurer for i in ins):
+                matched.append(t)
+            elif treatment and any(treatment in x or x.split("/")[0].strip() in treatment for x in trt):
+                matched.append(t)
+            elif any(k in query for k in kw):
+                matched.append(t)
+        if matched:
+            parts.append(f"hidden_traps: {json.dumps(matched, ensure_ascii=False)}")
+
     if topic in _TOPICS and data.get(topic):
         parts.append(f"{topic}: {json.dumps(data[topic], ensure_ascii=False)}")
     if insurer:
@@ -56,7 +77,7 @@ def lookup(
             if treatment in hay or hay.split("/")[0].strip() in treatment:
                 parts.append(f"treatment {entry['treatment']}: {json.dumps(entry, ensure_ascii=False)}")
     if not parts:
-        available = ", ".join(_TOPICS)
+        available = ", ".join(_TOPICS + ("hidden_traps",))
         names = ", ".join(e.get("name", "") for e in data.get("insurers", []))
         treats = ", ".join(e.get("treatment", "") for e in data.get("treatment_risks", []))
         return (

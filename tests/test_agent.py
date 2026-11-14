@@ -146,6 +146,19 @@ def test_agent_knowledge_lookup_by_insurer_and_treatment(desk):
     assert "No matching entry" in missing
 
 
+def test_hidden_traps_lookup_room_rent_and_knee():
+    from backend.knowledge import load_knowledge, lookup
+
+    data = load_knowledge()
+    room = lookup(data, insurer="Star Health", treatment="room allotment")
+    assert "5,000" in room and "proportionate" in room.lower()
+    assert "1,25,000" in room  # worked example: family pays half the bill
+    knee = lookup(data, treatment="knee replacement")
+    assert "70,000" in knee
+    traps = lookup(data, topic="hidden_traps")
+    assert "robotic" in traps.lower() and "25,000" in traps
+
+
 def test_agent_save_outcome_also_updates_knowledge_document(desk, tmp_path):
     import json as _json
 
