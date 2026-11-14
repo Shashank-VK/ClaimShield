@@ -291,11 +291,20 @@ export default function Cockpit() {
     setChatInput("");
     const t = text.toLowerCase();
 
+    // Command guard: the keyword branches below run real desk actions, so
+    // they may only fire for actual commands — a message that starts with a
+    // command verb, or a short one (<= 6 words). A long question that merely
+    // mentions "step 3" or "check" is a question, not a command: it skips
+    // every branch and reaches the LLM fall-through at the bottom.
+    const words = t.split(/\s+/).filter(Boolean);
+    const isCommand =
+      words.length <= 6 || /^(run|do|execute|show|check|approve)\b/.test(t);
+
     if (/help|what can you/.test(t)) {
       desk("I run the same steps as the buttons. Try: Run step 1, Run step 2, Run step 3, Approve & update, Check this packet, Show the rules, or Status.");
       return;
     }
-    if (/(step|beat) 1|day-?1 appeal|first (step|beat)/.test(t)) {
+    if (isCommand && /(step|beat) 1|day-?1 appeal|first (step|beat)/.test(t)) {
       try {
         const d = await beat1();
         desk(`${verdictLabel(d.verdict)} — ${backedNote(d.proof_count).toLowerCase()}.`, d.reason);
@@ -304,7 +313,7 @@ export default function Cockpit() {
       }
       return;
     }
-    if (/(step|beat) 2|scrub|redact|private|ssn/.test(t)) {
+    if (isCommand && /(step|beat) 2|scrub|redact|private|ssn/.test(t)) {
       try {
         const d = await beat2();
         desk("Private details were removed before anything was saved — the saved text is clean.", `Removed: ${(d.pii_scrubbed || []).join(", ")}`);
@@ -313,7 +322,7 @@ export default function Cockpit() {
       }
       return;
     }
-    if (/(step|beat) 3|stale|old argument|pt appeal/.test(t)) {
+    if (isCommand && /(step|beat) 3|stale|old argument|pt appeal/.test(t)) {
       try {
         const d = await beat3();
         desk(`${verdictLabel(d.verdict)} — ${backedNote(d.proof_count).toLowerCase()}.`, d.reason);
@@ -322,7 +331,7 @@ export default function Cockpit() {
       }
       return;
     }
-    if (/(step|beat) 4|commit|patch|approve/.test(t)) {
+    if (isCommand && /(step|beat) 4|commit|patch|approve/.test(t)) {
       try {
         const d = await beat4();
         if (!d) { desk("That update didn't save — see the message above the steps."); return; }
@@ -332,7 +341,7 @@ export default function Cockpit() {
       }
       return;
     }
-    if (/check/.test(t)) {
+    if (isCommand && /check/.test(t)) {
       try {
         const { data } = await post("/scrubber/check", COMPLETE_DENGUE_PACKET);
         setCheck(data);
@@ -342,7 +351,7 @@ export default function Cockpit() {
       }
       return;
     }
-    if (/rules?|checklist/.test(t)) {
+    if (isCommand && /rules?|checklist/.test(t)) {
       const all = rules?.rules || [];
       if (!all.length) { desk("The rules are still loading — try again in a moment."); return; }
       const active = all.filter((r) => r.is_active);
@@ -352,12 +361,12 @@ export default function Cockpit() {
       );
       return;
     }
-    if (/health|status|backend|system/.test(t)) {
+    if (isCommand && /health|status|backend|system/.test(t)) {
       if (!health) { desk("The system is not answering right now."); return; }
       desk(`Everything is running. Checklist version ${health.rules_version || "?"}.`, `Memory mode: ${health.backend === "memory" ? "built-in memory (demo)" : health.backend || "memory"}`);
       return;
     }
-    if (/appeal dengue|dengue appeal/.test(t)) {
+    if (isCommand && /appeal dengue|dengue appeal/.test(t)) {
       try {
         const { data } = await post("/appeals/strategy", DENGUE_CLAIM);
         setPacket(data);
@@ -368,6 +377,17 @@ export default function Cockpit() {
       }
       return;
     }
+    // Free-form questions: ask the LLM when one is wired in (OpenRouter).
+    // Real commands never reach here (see the isCommand guard above), and
+    // neither do long questions that only mention a command word; with no
+    // key or any failure the scripted answers below take over, as before.
+    try {
+      const { data } = await post("/assistant/chat", {
+        message: text,
+        history: messages.slice(-6).map((m) => ({ from: m.from, text: m.text })),
+      });
+      if (data?.reply) { desk(data.reply); return; }
+    } catch { /* fall through to the scripted answers */ }
     if (packet) {
       desk(`Last check: ${verdictLabel(packet.verdict)} — ${backedNote(packet.proof_count).toLowerCase()}.`, packet.reason);
       return;

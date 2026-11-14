@@ -25,8 +25,9 @@ from pydantic import BaseModel, Field, ValidationError
 
 from backend.scrubber_validator import check_packet
 
+from backend import assistant_llm
 from backend.band_room import RoomDisabledError
-from backend.config import get_webhook_secret
+from backend.config import get_openrouter_api_key, get_webhook_secret
 from backend.denial_defense import build_room, make_critic, run_denial_defense
 from backend.hindsight_adapter import HindsightAdapter
 from backend.pii_scrubber import scrub_text
@@ -98,6 +99,18 @@ class CheckRequest(BaseModel):
     documents: List[str] = Field(default_factory=list)
 
 
+class AssistantHistoryItem(BaseModel):
+    from_: str = Field(default="", alias="from")
+    text: str = ""
+
+    model_config = {"populate_by_name": True}
+
+
+class AssistantChatRequest(BaseModel):
+    message: str
+    history: List[AssistantHistoryItem] = Field(default_factory=list)
+
+
 def _verify_hmac(secret: str, body: bytes, signature: Optional[str]) -> bool:
     """Check the X-Hindsight-Signature header (``sha256=<hex>`` or raw hex)."""
     if not signature:
@@ -157,7 +170,25 @@ def create_app(
             "band_mode": app.state.room.mode,
             "rules_version": version,
             "rules_loaded": loaded,
+            "llm": "openrouter" if get_openrouter_api_key() else "off",
         }
+
+    @app.post("/assistant/chat")
+    def assistant_chat(req: AssistantChatRequest):
+        # Free-form questions only — the step/check/rules commands stay
+        # scripted in the cockpit. With no OpenRouter key (or any failure)
+        # reply is null and the cockpit uses its scripted answers.
+        rules_data = load_rules(app.state.rules_path)
+        context = {
+            "rules_version": rules_version(rules_data),
+            "rules": rules_data.get("rules", []),
+        }
+        reply = assistant_llm.answer(
+            req.message,
+            history=[h.model_dump(by_alias=True) for h in req.history],
+            context=context,
+        )
+        return {"reply": reply, "source": "openrouter" if reply else "scripted"}
 
     @app.post("/webhooks/claim-intake", response_model=ClaimIntakeResponse)
     def claim_intake(req: ClaimIntakeRequest):
