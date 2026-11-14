@@ -1,242 +1,332 @@
 {
   "appeals": {
-    "irdai": "If the insurer does not resolve it, complain on IRDAI's Bima Bharosa portal (bimabharosa.irdai.gov.in) or call the toll-free 155255 / 1800 4254 732.",
-    "ombudsman": "The Insurance Ombudsman is free for the policyholder and its award is binding on the insurer. Go after the insurer has rejected the complaint or not replied within about 30 days; file within a year of the insurer's final reply. File at the Ombudsman centre covering the insurer's office.",
-    "success_factors": [
-      "Written reasons obtained first",
-      "Doctor's certificate answering the exact denial ground",
-      "Complete paper trail kept from day one"
+    "enclosures": [
+      "Treating doctor's clinical justification certificate on hospital letterhead (vitals, warning signs, why OPD/home care was unsafe; factual correction where a resident's casual note triggered a PED query)",
+      "Complete Indoor Case Papers with nursing/TPR and IV charts",
+      "Diagnostic + prescription chronology, with first-diagnosis records proving post-inception onset",
+      "Prior policy schedules proving 60-month continuity or ported waiting-period credit, the CIS, and desk timestamps for pre-auth/discharge submissions"
     ],
-    "with_insurer": {
-      "steps": [
-        "Get the rejection/part-payment reasons in writing (repudiation letter).",
-        "Write a reconsideration request to the insurer's grievance cell addressing each stated reason point by point.",
-        "Attach the missing evidence: treating doctor's certificate, reports, and a short explanation of medical necessity.",
-        "Insurers must resolve grievances within the timelines in IRDAI's protection-of-policyholders rules; keep the complaint reference number."
-      ]
-    }
+    "ladder": [
+      {
+        "forum": "Insurer Grievance Redressal Officer (GRO)",
+        "limit": "No limit; free",
+        "timeline": "Acknowledge immediately; resolve within 14 days (2024 PPHI circular)",
+        "what": "Demand the written repudiation/deduction letter citing the exact clause first - a verbal refusal has no standing. Then a point-by-point written appeal answering that clause."
+      },
+      {
+        "forum": "IRDAI Bima Bharosa (bimabharosa.irdai.gov.in, toll-free 155255 / 1800 4254 732)",
+        "limit": "No limit; free",
+        "timeline": "Regulator-monitored, typically 15-30 working days",
+        "what": "Escalate with the GRO complaint ID; the complaint lands on the insurer's regulatory compliance dashboard."
+      },
+      {
+        "forum": "Insurance Ombudsman (cioins.co.in)",
+        "limit": "Claims up to Rs.50 lakh; free, no lawyer needed",
+        "timeline": "File within 1 year of the insurer's final reply (after 30 days waiting on the GRO); award within 3 months",
+        "what": "Award is 100% binding on the insurer (comply in 30 days or Rs.5,000/day penalty) and non-binding on the policyholder."
+      },
+      {
+        "forum": "Consumer Commission via e-Jagriti",
+        "limit": "No upper limit; nominal fee",
+        "timeline": "File within 2 years of the cause of action",
+        "what": "For claims above Rs.50 lakh or where compensation for harassment/costs is sought."
+      }
+    ],
+    "success_factors": [
+      "Over 75% of Ombudsman decisions in FY 2025-26 favoured policyholders (Council for Insurance Ombudsmen figures) - documented claims win.",
+      "60 months of continuous cover bars non-disclosure challenges except proven fraud - lead with continuity where it applies.",
+      "Bedside necessity documented in ICPs and doctor certificates beats desk reviews (dengue rulings against Care and in the Fortis Mohali case).",
+      "Insurer misapplying a waiting-period list, or unable to prove delivery of policy terms, loses (Delhi SCDRC vs HDFC ERGO, Oct 2026).",
+      "Appeals fail when the insurer produces pre-policy treatment records or recorded calls proving deliberate concealment inside 60 months, or when ICPs show a brief observation stay with normal vitals and an inflated bill."
+    ]
   },
   "cashless": {
     "pitfalls": [
-      "Hospital not in network on the day of admission (networks change) — verify before admission, not at discharge.",
-      "Pre-authorisation approved but final settlement reduced: room-rent proportionate deduction and non-payables are the usual gaps.",
-      "PED or waiting-period flag raised at pre-authorisation — keep past records ready.",
-      "Cashless denied does not mean the claim is dead: pay, then claim reimbursement with the full document set."
+      "Hospital dropped from the network (networks shift during tariff disputes, e.g. Niva Bupa at Max Hospitals Dec 2025) - verify empanelment on the day, not from an old list.",
+      "Cashless denied in the 1-hour window usually means 'cannot verify yet', not final rejection: get the reason in writing and keep the reimbursement route open.",
+      "Room-rent proportionate deduction and List I non-payables (68 items: gloves, PPE, admission fees, attendant meals) are the usual discharge-day gaps; consumables riders (Claim Shield, Extra Protect, Safeguard+, Claim Protector) close them.",
+      "PED or waiting-period flag at pre-authorisation - keep first-diagnosis records and ported-policy continuity ready."
     ],
     "steps": [
-      "Planned: hospital sends pre-authorisation to the insurer/TPA typically 48 hours-4 days before admission; insurer approves an initial amount.",
-      "Emergency: hospital sends pre-authorisation within 24 hours of admission.",
-      "Insurer may query for more documents or approve partially; treatment continues meanwhile.",
-      "At discharge, final bill goes to the insurer; you pay only non-payables, co-pay share and any amount above the approved limit."
+      "Planned: intimate 48-72 hours ahead (Cashless Everywhere minimum 48 hours; ICICI Lombard and Niva Bupa ask 2 days). Emergency: stabilise first, pre-authorisation within 24 hours (48 under Cashless Everywhere for non-network).",
+      "The insurer MUST decide the initial pre-authorisation within 1 hour of a complete request (IRDAI, since 31 Jul 2024); an incomplete request restarts the clock, so send complete papers first time.",
+      "Mid-stay changes go as enhancement requests with updated notes and estimates.",
+      "Final discharge authorisation must come within 3 hours of the discharge request; delay beyond that puts extra stay charges on the insurer's shareholders' fund, never on the patient.",
+      "You pay only: co-pay/deductible share, room-rent differential cuts, sub-limit excesses, and IRDAI List I non-payables (unless a consumables rider covers them)."
     ]
   },
   "choosing_policy": {
     "by_profile": {
-      "family_floater": "Size the cover for the oldest member's likely surgery costs; check restoration terms and whether the floater has age-based premium jumps at 45/60.",
-      "senior_parents": "Expect PED waiting periods and possible co-pay; disclose every known condition fully — a senior policy bought with clean disclosure beats a cheaper one bought with omissions.",
-      "young_individual": "Prioritise short waiting periods and no room-rent limit; buy early because waiting periods and clean disclosure history are assets that compound."
+      "family_floater": "Size for the oldest member's likely surgery; insist on restoration that covers the SAME illness, no room-rent cap (Star Assure waives room limits only at Rs.10 lakh+ SI), 60-day pre / 180-day post hospitalisation windows, and a consumables rider. A Rs.10-15 lakh base plus a super top-up is the economical structure.",
+      "senior_parents": "Entry age is no longer capped (IRDAI 2024). Prioritise short PED waits (12 months Star Senior Red Carpet; 24 months Bajaj Silver Health / Care Freedom / Niva Senior First Gold; Day-1 chronic cover HDFC ERGO Energy), no sub-limits on cataract/joint replacement (Care Supreme Senior Premium, not Senior Super), and check age-linked co-pays and room caps. Disclose everything - the 60-month moratorium only protects honest buyers.",
+      "young_individual": "Lock entry-age underwriting early: Rs.10 lakh+ zero-co-pay, no room-rent cap, guaranteed/carry-forward bonus, and clear the 24-month and 36-month clocks while healthy. Planning a family in 1-3 years? Compare maternity waiting (9 months on some plans vs 24-72 months mainstream). Age-lock offers carry a trap - see red flags."
     },
     "how_to_compare": [
       {
-        "check": "Use the latest IRDAI annual report figures for the insurer, not the insurer's own marketing page.",
-        "factor": "Claim settlement ratio and claim repudiation record",
-        "why": "Shows how often the insurer actually pays; a cheap premium is worthless if claims are fought."
+        "check": "The six majors: Bajaj General 3.85, HDFC ERGO 8.87, ICICI Lombard 15.05, Niva Bupa 37.13, Care 42.67, Star 54.04 (3-year advisor compilations).",
+        "factor": "Complaint volume per 10,000 claims",
+        "why": "The friction signal: it captures delays, part-payments and disputed rejections better than settlement ratio alone. Benchmarks prefer under 20 per 10,000 for general insurers, under 40 for standalone health insurers."
       },
       {
-        "check": "Shorter is better; some policies cut PED waiting to 2-3 years or offer riders to reduce it.",
+        "check": "3-year averages: HDFC ERGO 97.61%, Bajaj General 95.63%, Care 95.45%, Niva Bupa 92.92%, Star 88.63%, ICICI Lombard 86.81%. Single-year portal figures differ sharply by formula.",
+        "factor": "Claim settlement ratio (3-year average)",
+        "why": "Shows how often the insurer pays - but counts claims, not payout adequacy; a heavily deducted claim still counts as settled. Not the same as IRDAI's 'claims paid within 3 months' speed metric."
+      },
+      {
+        "check": "Shorter is better; some plans/riders cut PED waiting to 24 or 12 months, or Day 1 for named chronic conditions.",
         "factor": "Waiting periods",
-        "why": "Most disputes are waiting-period disputes: pre-existing diseases (typically 2-4 years) and listed diseases (typically 2 years) are not covered until the period ends."
+        "why": "Most disputes are waiting-period disputes. PED waiting is legally capped at 36 months (was 48); listed diseases typically wait 24 months."
       },
       {
-        "check": "Prefer 'no room rent limit' or a high limit; avoid '1% of sum insured' caps on a small cover.",
+        "check": "Prefer 'no room rent limit'; beware '1% of sum insured per day' caps on small covers (e.g. Star Assure at Rs.5 lakh).",
         "factor": "Room rent limit",
-        "why": "If your room rent exceeds the limit, the insurer deducts proportionately from the WHOLE bill, not just the rent difference."
+        "why": "Exceed the rent limit and the insurer deducts proportionately from the WHOLE bill, not just the rent difference."
       },
       {
-        "check": "Avoid co-pay where possible, especially mandatory co-pay on all claims.",
+        "check": "Zero co-pay strongly preferred under 60; check age-linked co-pays (Star Assure: 10% if entry age 61+).",
         "factor": "Co-pay clause",
-        "why": "A 10-20% co-pay means you pay that share of every claim — common in senior-citizen policies."
+        "why": "A 10-20% co-pay stacks with rent cuts and sub-limits - one worked industry example leaves Rs.1.75 lakh of a Rs.4 lakh bill with the patient."
       },
       {
-        "check": "Check your preferred hospitals are in the network, and have not been de-listed recently.",
-        "factor": "Network hospitals",
-        "why": "Cashless treatment only works at network hospitals; a wide network near your home matters more than a national headline number."
+        "check": "All six majors run 10,000+ networks; verify YOUR preferred hospitals are empanelled today, not the headline count.",
+        "factor": "Network hospitals near you",
+        "why": "Cashless only works at network hospitals, and networks change - insurers have suspended cashless at major chains mid-dispute (Niva Bupa at Max Hospitals, Dec 2025)."
       },
       {
-        "check": "Check whether restoration triggers only for a different illness or also the same one.",
+        "check": "Verify: unlimited or once, partial or only full exhaustion, same illness or unrelated only (Bajaj Health Care Supreme and ICICI Health Booster restore for unrelated illnesses only).",
         "factor": "Restoration benefit",
-        "why": "Restores the full sum insured after a claim, so a second hospitalisation in the same year is still covered."
+        "why": "Refills the cover after a claim, in the same year."
       },
       {
-        "check": "Read the sub-limit table; prefer policies without disease-wise caps.",
+        "check": "Read the sub-limit table for cataract, knee replacement and modern treatments before buying.",
         "factor": "Sub-limits on treatments",
-        "why": "Caps on cataract, knee replacement, modern treatments etc. quietly shrink the cover."
+        "why": "A per-claim cap overrides the headline cover: Rs.1 lakh modern/robotic cap on Niva Bupa ReAssure lines; cataract caps from Rs.20,000 per eye (Care Freedom) upward."
       },
       {
-        "check": "Rs.10-25 lakh family cover is a saner floor in metros; super top-ups are a cheap way to raise cover.",
-        "factor": "No-claim bonus and sum insured adequacy",
-        "why": "Medical inflation in India runs well ahead of general inflation; Rs.5 lakh no longer covers a major surgery in a metro."
+        "check": "Rs.10-25 lakh family cover is a saner metro floor; pair a base floater with a super top-up.",
+        "factor": "Sum insured adequacy + bonus structure",
+        "why": "Medical inflation outruns general inflation; guaranteed/carry-forward bonuses grow cover even in claim years, unlike traditional NCB that shrinks after a claim."
       }
     ],
     "red_flags": [
-      "Agent discourages disclosing an existing condition — non-disclosure is the single biggest cause of claim rejection years later.",
-      "Very low premium with a long list of sub-limits and a 1%-of-cover room rent cap.",
-      "Room rent limit + proportionate deduction clause on a small sum insured.",
-      "Co-pay that applies to every claim, not just specific treatments."
+      "Headline 'unlimited / 2X-3X cover' masked by per-claim sub-limits (ReAssure 3.0 Classic caps modern treatments at Rs.1 lakh per claim).",
+      "'No medical check-up needed' plans (Star Assure, Senior Red Carpet) still enforce full disclosure - omitted history drives most early repudiations.",
+      "Age-lock traps (Lock the Clock / Freeze Your Age): one small claim and premiums jump to attained-age rates at the next renewal, for life.",
+      "Restoration limited to unrelated illnesses - repeat admissions for the same condition stay uncovered once the base cover runs out.",
+      "Budget sub-variants hiding inside a good brand: Care Supreme Value for Money (single AC cap + 20% out-of-network co-pay) and Super Saver (Rs.25,000 deductible).",
+      "No consumables cover and no domiciliary cover: IRDAI List I items (gloves, PPE, kits) are 100% out of pocket without a rider; Bajaj's flagship lines exclude domiciliary hospitalisation."
     ]
   },
   "insurers": [
     {
+      "metrics": {
+        "complaints_per_10k_claims": 54.04,
+        "csr_3yr_avg": "88.63%",
+        "icr": "67.26%",
+        "network_hospitals": "14,000+"
+      },
       "name": "Star Health",
       "patterns": [
         {
           "pattern": "Fever / dengue admission denied as OPD-convertible",
-          "prevention": "Treating doctor's certificate stating why inpatient care was necessary, platelet trend reports, NS1/antigen report, records of IV fluid administration and vitals monitoring.",
+          "prevention": "Submit full Indoor Case Papers, TPR and IV-fluid charts, serial platelet logs and the doctor's admission-necessity certificate with warning signs upfront - not after a query.",
           "treatments": [
             "dengue",
             "viral fever"
           ],
-          "trigger": "Admission notes show observation and IV fluids without documented medical necessity."
+          "trigger": "Repeated Ombudsman and Consumer Commission disputes: dengue/fever admissions rejected as OPD-manageable (Clause 4.10-type exclusions) when the file shows monitoring rather than active treatment."
         },
         {
-          "pattern": "Room-rent proportionate deduction",
-          "prevention": "Check the rent limit before admission; if exceeded knowingly, budget for a proportionate cut on the full bill.",
-          "treatments": [
-            "all admissions"
-          ],
-          "trigger": "Room chosen above the policy's rent limit."
-        },
-        {
-          "pattern": "PED scrutiny and non-disclosure queries",
-          "prevention": "Full disclosure at purchase; attach treating-doctor history and old prescriptions proactively.",
+          "pattern": "PED / non-disclosure scrutiny on no-checkup plans",
+          "prevention": "Full disclosure at purchase despite no medical test; attach treating-doctor history proactively; after 60 months of continuous cover, invoke the moratorium.",
           "treatments": [
             "diabetes",
             "hypertension",
-            "thyroid related claims"
+            "chronic conditions"
           ],
-          "trigger": "Hospital papers mention a long-standing condition not visible in the proposal form."
+          "trigger": "Plans like Assure and Senior Red Carpet waive pre-policy medicals, so scrutiny moves to claim time and admission notes get mined for undisclosed history."
+        },
+        {
+          "pattern": "Room cap, co-pay and cataract cap on popular plans",
+          "prevention": "Confirm SI is Rs.10 lakh+ on Assure before allotting uncapped rooms; verify the cataract cap and the age-61 co-pay on the CIS; add Extra Protect for consumables.",
+          "treatments": [
+            "all admissions",
+            "cataract"
+          ],
+          "trigger": "Assure carries a 1%-of-SI-per-day room cap at Rs.5 lakh SI, a 10% co-pay if entry age is 61+, cataract caps around Rs.40,000 on Rs.10 lakh templates, and consumables excluded unless Extra Protect is attached."
         }
       ]
     },
     {
-      "name": "Bajaj Allianz",
+      "metrics": {
+        "complaints_per_10k_claims": 3.85,
+        "csr_3yr_avg": "95.63%",
+        "icr": "82.18%",
+        "network_hospitals": "12,600+"
+      },
+      "name": "Bajaj Allianz (now Bajaj General)",
       "patterns": [
         {
-          "pattern": "Documentation-heavy queries before settlement",
-          "prevention": "Submit the complete document set in one go, including indoor case papers and original reports, and keep a copy of everything submitted.",
+          "pattern": "Wrong plan line: Health Guard caps vs Health Care Supreme freedom",
+          "prevention": "Verify the exact line on the card/CIS before room allotment or cataract quoting; map legacy Bajaj Allianz cards to Bajaj General in the payer master.",
           "treatments": [
-            "surgeries",
-            "reimbursement claims"
+            "all admissions",
+            "cataract",
+            "bariatric"
           ],
-          "trigger": "Missing indoor case papers, investigation reports or itemised breakup."
+          "trigger": "Health Care Supreme has zero room caps, zero sub-limits, zero co-pay - but Health Guard imposes 1%-of-SI room caps (Silver), room-category caps on lower Gold/Platinum, and sub-limits (cataract 20% of SI up to Rs.1 lakh per eye on Platinum; bariatric 25% of SI on Silver). Both lines exclude domiciliary hospitalisation."
         },
         {
           "pattern": "Surgery claims checked against waiting periods",
-          "prevention": "Verify the waiting period for that exact surgery before a planned admission; for emergencies, attach the doctor's note on why it could not wait.",
+          "prevention": "Verify the waiting period for that exact surgery before a planned admission; for emergencies attach the doctor's note on why it could not wait.",
           "treatments": [
             "knee replacement",
             "hernia",
             "cataract",
             "gallbladder"
           ],
-          "trigger": "Claim falls inside the 2-year specific-disease waiting period or PED window."
+          "trigger": "Claim falls inside the 24-month specific-disease waiting period or the PED window."
         },
         {
-          "pattern": "Proportionate deduction on room rent",
-          "prevention": "Same as any insurer: confirm eligible room category at admission.",
+          "pattern": "Documentation-heavy queries before settlement",
+          "prevention": "Submit the complete set in one go - indoor case papers, original reports, itemised breakup - and keep a copy of everything submitted.",
           "treatments": [
-            "all admissions"
+            "surgeries",
+            "reimbursement claims"
           ],
-          "trigger": "Room category higher than the eligible limit."
+          "trigger": "Missing indoor case papers, investigation reports or itemised breakup (Bajaj has the lowest complaint rate among the six majors, so complete files move fast)."
         }
       ]
     },
     {
+      "metrics": {
+        "complaints_per_10k_claims": 8.87,
+        "csr_3yr_avg": "97.61%",
+        "icr": "81.62%",
+        "network_hospitals": "16,000+"
+      },
       "name": "HDFC Ergo",
       "patterns": [
         {
-          "pattern": "Network and cashless process queries",
-          "prevention": "File pre-authorisation 3-4 days ahead for planned care with the full estimate and treating doctor's plan.",
+          "pattern": "Waiting period misapplied to acute illness",
+          "prevention": "Cite the policy's own enumerated exclusion schedule; dengue is not on the 24-month list, and unproved delivery of policy terms weakens the insurer's stand.",
           "treatments": [
-            "planned surgeries"
+            "dengue",
+            "acute infections"
           ],
-          "trigger": "Pre-authorisation filed late or hospital documentation incomplete."
+          "trigger": "A Delhi State Consumer Commission ruling (Oct 2026) rejected HDFC ERGO's appeal over a Rs.17.99 lakh dengue claim: the 24-month list was misapplied, cashless withdrawal lacked justification, and delivery of policy terms was unproved."
         },
         {
-          "pattern": "PED waiting-period enforcement",
-          "prevention": "Disclose fully; keep continuity certificates when porting so waiting-period credit carries over.",
+          "pattern": "Year-1 verification and short-stay scrutiny",
+          "prevention": "Comprehensive ICPs and admission rationale on every Year-1 admission; pre-authorisation 3-4 days ahead for planned care.",
           "treatments": [
-            "pre-existing conditions"
+            "first-year admissions",
+            "short stays"
           ],
-          "trigger": "Claim inside the PED waiting window."
+          "trigger": "Field verification reported on admissions under 6 months and strict review of sub-24-hour admissions (Optima Lite also carries room-rent restrictions)."
         }
       ]
     },
     {
+      "metrics": {
+        "complaints_per_10k_claims": 15.05,
+        "csr_3yr_avg": "86.81%",
+        "icr": "79.47%",
+        "network_hospitals": "11,000+"
+      },
       "name": "ICICI Lombard",
       "patterns": [
         {
+          "pattern": "Legacy plan caps (iHealth line) vs new Elevate/Max Protect",
+          "prevention": "Distinguish legacy iHealth/iHealth Plus from Elevate/Max Protect on the CIS; verify Claim Protector before discharge for consumables.",
+          "treatments": [
+            "cataract",
+            "modern treatments"
+          ],
+          "trigger": "Legacy iHealth Plus caps cataract at 10% of SI up to Rs.1 lakh per eye and limits restoration to unrelated illnesses; Elevate removes cataract caps in base cover; Max Protect needs the Claim Protector add-on for consumables."
+        },
+        {
           "pattern": "Admission-necessity review on short stays",
-          "prevention": "Doctor's note documenting active treatment given as an inpatient and why OPD management was unsafe.",
+          "prevention": "Doctor's note documenting active inpatient treatment and why OPD management was unsafe.",
           "treatments": [
             "fever",
             "gastroenteritis",
             "observation admissions"
           ],
           "trigger": "1-2 day admissions with mostly diagnostic workup."
-        },
-        {
-          "pattern": "Sub-limit application on specific treatments",
-          "prevention": "Check the sub-limit table before planned treatment; choose the policy variant without caps where possible.",
-          "treatments": [
-            "cataract",
-            "modern treatments"
-          ],
-          "trigger": "Policy carries treatment-wise caps."
         }
       ]
     },
     {
+      "metrics": {
+        "complaints_per_10k_claims": 37.13,
+        "csr_3yr_avg": "92.92%",
+        "icr": "58.10%",
+        "network_hospitals": "10,000+"
+      },
       "name": "Niva Bupa",
       "patterns": [
         {
-          "pattern": "Reimbursement documentation queries",
-          "prevention": "Cross-check that every billed item maps to a prescription or report before submitting.",
+          "pattern": "Rs.1 lakh modern/robotic treatment cap on ReAssure lines",
+          "prevention": "Check the exact ReAssure variant on the CIS; itemise robotic consumables separately from standard surgical fees so the cap hits only the modern component.",
           "treatments": [
-            "reimbursement claims"
+            "robotic surgery",
+            "modern treatments"
           ],
-          "trigger": "Gaps between bills, prescriptions and reports."
+          "trigger": "ReAssure, ReAssure 2.0, Health Pulse and ReAssure 3.0 Classic/Select cap modern/robotic treatments at Rs.1 lakh per claim (3.0 Black and Elite cover up to SI); room caps also vary by variant."
         },
         {
-          "pattern": "PED and waiting-period checks",
-          "prevention": "Full disclosure and continuity documentation when porting policies.",
+          "pattern": "Network cashless suspensions at chains",
+          "prevention": "Verify live cashless status for the specific hospital before admission; keep the reimbursement document set ready as fallback.",
           "treatments": [
-            "pre-existing conditions"
+            "all cashless admissions"
           ],
-          "trigger": "Early-policy claims for chronic conditions."
+          "trigger": "Periodic suspensions during tariff disputes (e.g. Max Hospitals, Dec 2025), plus consumer litigation over doctor-justified admissions."
+        },
+        {
+          "pattern": "Consumables excluded without the add-on",
+          "prevention": "Confirm Safeguard+ is attached before discharge billing.",
+          "treatments": [
+            "all claims"
+          ],
+          "trigger": "IRDAI List I consumables need the Safeguard+ add-on."
         }
       ]
     },
     {
+      "metrics": {
+        "complaints_per_10k_claims": 42.67,
+        "csr_3yr_avg": "95.45%",
+        "icr": "58.68%",
+        "network_hospitals": "11,400+"
+      },
       "name": "Care Health",
       "patterns": [
         {
-          "pattern": "Optional co-pay surprises",
-          "prevention": "Read the co-pay clause of the exact variant bought; factor it into claim expectations.",
+          "pattern": "Sub-variant traps inside Care Supreme",
+          "prevention": "Read the exact sub-variant name on the CIS before quoting cover - never assume 'Care Supreme' means one thing.",
           "treatments": [
-            "all claims on co-pay variants"
+            "all claims"
           ],
-          "trigger": "Policy variant carries a voluntary/mandatory co-pay the buyer forgot."
+          "trigger": "Senior Super carries disease sub-limits that Senior Premium does not; Value for Money adds an economical single-AC room cap plus 20% co-pay outside select hospitals; Super Saver imposes a Rs.25,000 compulsory deductible."
         },
         {
-          "pattern": "Waiting-period enforcement on listed diseases",
-          "prevention": "Verify dates before planned surgery; attach emergency justification where applicable.",
+          "pattern": "Hard procedure caps on Freedom / Heart plans",
+          "prevention": "Quote the cap, not the sum insured, for these procedures; attach implant stickers and GST invoices.",
           "treatments": [
-            "hernia",
             "cataract",
-            "joint replacement"
+            "knee replacement",
+            "hysterectomy"
           ],
-          "trigger": "Claim inside the specific-disease window."
+          "trigger": "Freedom/Heart cap cataract at Rs.20,000-30,000 per eye, knee replacement at Rs.70,000-1,20,000 per knee, hysterectomy/kidney stone at Rs.50,000-80,000."
+        },
+        {
+          "pattern": "Dengue denial overturned on documented necessity",
+          "prevention": "Same dengue discipline as Star: ICPs, warning signs, doctor certificate - documented necessity wins these disputes.",
+          "treatments": [
+            "dengue"
+          ],
+          "trigger": "A Chandigarh Consumer Commission ruling ordered Care to pay a denied dengue claim plus Rs.10,000 compensation."
         }
       ]
     }
@@ -263,77 +353,101 @@
       "KYC: Aadhaar/PAN of policyholder",
       "Cancelled cheque or NEFT details of the policyholder's bank account",
       "Policy copy / health card",
-      "FIR / medico-legal certificate for accident cases"
+      "FIR / medico-legal certificate for accident cases",
+      "OT notes and surgeon/anaesthetist fee receipts for surgical cases",
+      "Policy copy and health e-card",
+      "Indoor Case Papers (ICPs) with TPR/vital charts and IV fluid records - decisive for fever/dengue and short admissions"
     ],
     "steps": [
-      "Intimate the insurer/TPA as early as possible — before planned admission, or within 24-48 hours of an emergency admission.",
-      "Collect every document at discharge (see checklist) — hospitals are hard to chase afterwards.",
-      "Fill the claim form (Part A by you, Part B by the hospital) and attach the full document set.",
-      "Submit within the policy deadline — typically 15-30 days from discharge; late submission needs a written delay reason.",
-      "Track the claim ID; answer insurer queries with documents, not phone explanations.",
-      "On part-payment or rejection, demand the reasons in writing — that letter is the base of any appeal."
+      "Intimate the insurer/TPA early - 48-72 hours before a planned admission (ICICI Lombard and Niva Bupa ask 2 days), within 24 hours of an emergency admission. Delayed intimation for a genuine emergency cannot by itself justify rejection under IRDAI rules.",
+      "During the stay, make sure the record is complete: dated admission notes, daily Indoor Case Papers, TPR/vital charts, IV/medication logs, prescriptions matching every billed test.",
+      "At discharge, pay and collect originals before leaving: stamped receipts, final itemised bill with day-wise breakup, signed discharge summary, implant stickers/invoices.",
+      "Submit the full packet within the policy deadline - typically 15-30 days from discharge (Bajaj General, ICICI Lombard, Niva Bupa stipulate 30 days). Pre/post-hospitalisation expenses go as a follow-up packet on the same claim reference.",
+      "The insurer must acknowledge within 24 hours and raise ALL missing-document queries in one go. Settlement is due within 15 days of complete documents; delay earns automatic penal interest at RBI Bank Rate + 2%.",
+      "On part-payment or rejection, demand the reasons in writing with the exact policy clause - that letter is the base of any appeal."
     ],
     "when": "You paid the hospital yourself (non-network hospital, or cashless refused/unavailable) and claim the money back from the insurer."
   },
-  "source_note": "Compiled from IRDAI-published norms and the standard claim processes insurers publish. Insurer 'patterns' describe commonly reported denial/query behaviour, not guarantees — the policy wording always governs. Being enriched with a sourced Deep Research report.",
+  "source_note": "v2 enriched 2026-11-14 with a Gemini Deep Research report grounded in IRDAI's 2024 Master Circulars, insurer policy wordings, and published Ombudsman/Consumer Commission orders (source note: backend/knowledge/RESEARCH-SOURCE-2026-11-14.md; full report in the owner's Gemini account). Insurer metrics are advisor-compiled 3-year averages from IRDAI disclosures (Ditto/Nyvo) and diverge by methodology - directional, not exact. Policy wording always governs.",
   "treatment_risks": [
     {
       "prepare": [
-        "6-week (or longer) physiotherapy and medication records",
-        "X-ray/MRI excerpts showing severity",
+        "Conservative-treatment records first: 6-week (or longer) physiotherapy and medication history",
+        "X-ray/MRI excerpts and a carefully documented first-diagnosis date",
+        "Prosthesis implant stickers and the GST invoice",
         "Treating surgeon's note on why surgery is now necessary"
       ],
       "risks": [
-        "Usually inside the 2-year specific-disease waiting period in the first policy years.",
-        "Insurers may ask for proof that conservative treatment (physiotherapy, medication) was tried and failed first.",
-        "Old X-ray/MRI reports get requested to test whether the condition pre-dates the policy."
+        "24-month specific-disease waiting period; up to 36 months if osteoarthritis pre-dates the policy (PED).",
+        "Procedure caps bite on senior/chronic plans: Care Freedom Rs.70,000-1,20,000 per knee, Care Heart Rs.80,000-1,20,000 per knee - against typical costs of Rs.1.5-2.3 lakh.",
+        "Robotic assistance can attract the Rs.1 lakh modern-treatment cap on capped plans; casual 'knee pain for 5 years' admission notes trigger PED probes."
       ],
       "treatment": "knee replacement / joint surgery"
     },
     {
       "prepare": [
-        "NS1/antigen and platelet trend reports",
-        "Doctor's certificate of admission necessity (falling platelets, IV fluids, warning signs)",
-        "Vitals monitoring charts"
+        "NS1/IgM report and serial daily platelet logs",
+        "Admission note recording warning signs (BP, SpO2, vomiting, bleeding, oral intolerance)",
+        "Complete ICPs with TPR and IV fluid charts; doctor certificate on why OPD care was unsafe"
       ],
       "risks": [
-        "Denied as OPD-convertible if the file shows only monitoring.",
-        "Short stays get extra scrutiny."
+        "Denied as OPD-convertible when notes show normal vitals, oral-only medication, or a 4-8 hour observation stay.",
+        "Dengue is NOT on the 24-month specific-disease list and there is no IRDAI platelet cutoff - a waiting-period denial or a 'platelets not low enough' denial is challengeable with the clause schedule and documented warning signs."
       ],
       "treatment": "dengue / viral fever admission"
     },
     {
       "prepare": [
-        "Policy sub-limit check before surgery",
+        "Per-eye cap and lens-type (monofocal vs multifocal) check on the CIS before scheduling the OT",
         "Lens sticker/invoice",
         "Pre and post procedure reports"
       ],
       "risks": [
-        "2-year waiting period commonly applies.",
-        "Per-eye sub-limits in many policies cap the payout below private hospital prices.",
-        "Lens/implant invoices get checked against the billed amount."
+        "24-month waiting period (12-24 months on some plans).",
+        "Per-eye caps range from Rs.20,000 (Care Freedom/Heart) to Rs.1 lakh (Bajaj Health Guard Platinum at 20% of SI) - many policies cap near Rs.40,000 on Rs.10 lakh templates; a few (Optima Secure+, Care Supreme, ReAssure 3.0 Black, Elevate) have no cap."
       ],
       "treatment": "cataract surgery"
     },
     {
       "prepare": [
-        "First diagnosis reports with dates",
-        "Ultrasound/imaging excerpts",
-        "Surgeon note on urgency if operated inside the window for complications"
+        "First diagnosis reports with dates (first USG is decisive for gallbladder)",
+        "Mesh/implant stickers and invoices",
+        "Surgeon note on urgency for emergency presentations inside the window"
       ],
       "risks": [
-        "Listed-disease waiting period (typically 2 years).",
-        "Insurer may probe whether symptoms pre-date the policy."
+        "24-month specific-disease waiting period for both hernia and gallbladder removal (typical costs: hernia Rs.18,000-45,000; gallbladder Rs.45,000-1,80,000).",
+        "A pre-policy USG showing gallstones, omitted at proposal, leads to PED denial - first-diagnosis dates decide these claims."
       ],
       "treatment": "hernia / gallbladder surgery"
+    },
+    {
+      "prepare": [
+        "Gynaecologist note and histopathology/USG establishing a non-maternity clinical indication arising after policy inception",
+        "First-diagnosis dates"
+      ],
+      "risks": [
+        "Typically 24-month waiting period; up to 36 months if pre-existing.",
+        "Care Heart caps hysterectomy at Rs.50,000-80,000 against typical costs of Rs.80,000-1,20,000."
+      ],
+      "treatment": "hysterectomy"
     }
   ],
   "updated": "2026-11-14",
-  "version": 1,
+  "version": 2,
   "waiting_periods": {
-    "initial": "Typically 30 days from policy start for illness claims (accidents are usually covered from day one).",
-    "note": "Exact periods vary by insurer and policy — always read the specific policy wording; the figures here are the common market pattern.",
-    "pre_existing": "Typically 2-4 years depending on the policy, for diseases declared (or found) at purchase.",
-    "specific_diseases": "Typically 2 years for a listed set that commonly includes cataract, hernia, gallbladder stones, knee/joint replacement, hysterectomy, ENT and sinus surgeries, varicose veins."
-  }
+    "initial": "30 days from policy start for illness claims; accidental trauma is covered from day one.",
+    "maternity": "9 months to 6 years depending on the plan - a key comparison point for young families.",
+    "note": "Exact periods vary by policy - read the wording. The caps and the 60-month moratorium are IRDAI rules, not insurer goodwill.",
+    "pre_existing": "Capped at 36 months by IRDAI's 2024 product regulations (reduced from 48). After 60 months of continuous cover (moratorium), non-disclosure cannot be challenged except for proven fraud.",
+    "specific_diseases": "Typically 24 months for cataract, hernia, gallbladder stones, knee/joint replacement, hysterectomy, piles, sinus/ENT surgeries. Dengue and acute fevers are NOT on this list - a waiting-period denial for dengue is challengeable."
+  },
+  "statutory_rights": [
+    "Cashless pre-authorisation must be decided within 1 hour of a complete request (IRDAI, since 31 Jul 2024).",
+    "Final cashless discharge authorisation within 3 hours; if the insurer delays beyond that, extra stay charges are paid by the insurer from shareholders' funds, never billed to the patient.",
+    "Reimbursement claims must be settled within 15 days of complete documents; delay earns automatic penal interest at RBI Bank Rate + 2%.",
+    "Insurer grievances (GRO) must be resolved within 14 days under the 2024 PPHI circular.",
+    "PED waiting period is capped at 36 months; after 60 months of continuous cover, non-disclosure cannot be challenged except for proven fraud (moratorium).",
+    "Insurance Ombudsman is free, takes claims up to Rs.50 lakh, and must award within 3 months; the award binds the insurer.",
+    "A verbal cashless refusal has no legal standing - the insurer must give the denial/query in writing citing the exact policy clause."
+  ]
 }

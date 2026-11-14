@@ -21,7 +21,7 @@ from typing import Any, Dict, List, Optional
 
 DEFAULT_KNOWLEDGE_PATH = Path(__file__).resolve().parent / "knowledge" / "insurance_knowledge.json"
 
-_TOPICS = ("choosing_policy", "reimbursement", "cashless", "waiting_periods", "appeals")
+_TOPICS = ("choosing_policy", "reimbursement", "cashless", "waiting_periods", "appeals", "statutory_rights")
 
 
 def load_knowledge(path: Optional[Path] = None) -> Dict[str, Any]:
