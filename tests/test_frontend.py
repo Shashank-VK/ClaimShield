@@ -54,8 +54,11 @@ def test_cockpit_serves_three_panes(built_frontend):
             except Exception:
                 time.sleep(1)
         assert html is not None, "Next.js server did not answer in time"
-        for pane in ("Band Room", "Hindsight X-Ray", "Repo Viewer"):
+        for pane in ("Live Updates", "Memory Check", "Rules"):
             assert pane in html, f"pane {pane!r} missing from served cockpit"
+        # The plain-language 3-step explainer must be on the first screen.
+        for step in ("It remembers what worked", "It checks the new claim", "It fixes it, or stops it"):
+            assert step in html, f"explainer step {step!r} missing from served cockpit"
         assert "Draft for human review" in html
         assert "SYNTHETIC" in html
     finally:

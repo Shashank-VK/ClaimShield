@@ -55,14 +55,7 @@ const COMPLETE_DENGUE_PACKET = {
   documents: ["discharge_summary", "ns1_antigen_report", "final_bill_icd10"],
 };
 
-const BEAT_NOTES = {
-  1: "Day-1 appeal",
-  2: "SSN intake",
-  3: "Stale PT veto",
-  4: "Commit patch",
-};
-
-const CHAT_CHIPS = ["Run beat 1", "Run beat 2", "Run beat 3", "Commit patch", "Check packet", "Rules"];
+const CHAT_CHIPS = ["Run step 1", "Run step 2", "Run step 3", "Approve & update", "Check this packet", "Show the rules"];
 
 // Floating glass nav — feather-style stroke icons, one per section.
 const NAV_ICONS = {
@@ -70,15 +63,13 @@ const NAV_ICONS = {
   "band-room": <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />,
   xray: <><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></>,
   repo: <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />,
-  outcomes: <><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></>,
   chat: <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />,
 };
 const NAV_ITEMS = [
-  { id: "beats", label: "Beats", short: "Beats" },
-  { id: "band-room", label: "Band Room", short: "Band" },
-  { id: "xray", label: "Hindsight X-Ray", short: "X-Ray" },
-  { id: "repo", label: "Repo Viewer", short: "Repo" },
-  { id: "outcomes", label: "Outcomes", short: "Outcomes" },
+  { id: "beats", label: "Demo Steps", short: "Steps" },
+  { id: "band-room", label: "Live Updates", short: "Live" },
+  { id: "xray", label: "Memory Check", short: "Memory" },
+  { id: "repo", label: "Rules", short: "Rules" },
 ];
 const navIcon = (id) => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{NAV_ICONS[id]}</svg>
@@ -94,7 +85,61 @@ async function post(path, body) {
 }
 
 function pretty(s) {
-  return s.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()).replace("Opd", "OPD");
+  return s.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()).replace("Opd", "OPD").replace("Ns1", "NS1").replace("Icd10", "ICD-10");
+}
+
+// Plain words for the insurance denial codes the backend returns.
+const DENIAL_LABELS = {
+  opd_convertible: "Denied as outpatient care",
+  ped_nondisclosure: "Pre-existing condition not declared",
+  room_rent_cap: "Room rent over the limit",
+};
+
+function denialLabel(s) {
+  return DENIAL_LABELS[s] || pretty(s);
+}
+
+function docLabel(s) {
+  return pretty(String(s));
+}
+
+// Raw case IDs ("SYNTHETIC-CLM-E3-BULLETIN-PT6WK") in short, quiet words.
+function caseLabel(c) {
+  const tokens = String(c || "")
+    .replace(/^SYNTHETIC-CLM-/i, "")
+    .split("-")
+    .filter((p) => p && !/^E\d$/i.test(p))
+    .map((p) => {
+      if (/^PT6WK$/i.test(p)) return "6-week PT";
+      if (/^PT4WK$/i.test(p)) return "4-week PT";
+      return p.charAt(0).toUpperCase() + p.slice(1).toLowerCase();
+    });
+  return tokens.join(" ") || "Past case";
+}
+
+// The backend verdicts, in the words a first-time visitor understands.
+function verdictLabel(v) {
+  if (v === "APPROVE") return "Ready to send";
+  if (v === "VETO") return "Stopped — needs fixing";
+  return v;
+}
+
+function backedNote(n) {
+  return n ? `Backed by ${n} past wins` : "No past cases to back it";
+}
+
+// Raw stream event names ("retain.completed") in plain words.
+function eventLabel(t) {
+  if (!t) return "Update";
+  if (t.includes("retain")) return "Saved to memory";
+  if (t.includes("commit")) return "Rules updated";
+  if (t.includes("veto")) return "Appeal stopped";
+  if (t.includes("appeal")) return "Appeal checked";
+  return t.replace(/[._]/g, " ");
+}
+
+function layerLabel(l) {
+  return l === "native" ? "memory safety check" : "ClaimShield safety check";
 }
 
 export default function Cockpit() {
@@ -112,7 +157,7 @@ export default function Cockpit() {
   const [messages, setMessages] = useState([
     {
       from: "desk",
-      text: "Desk chat. I run the same work as the buttons — try “Run beat 1”, “Check packet”, “Rules”, or “Help”.",
+      text: "Assistant. I run the same steps as the buttons — try “Run step 1”, “Check this packet”, “Show the rules”, or “Help”.",
     },
   ]);
 
@@ -139,12 +184,8 @@ export default function Cockpit() {
   useEffect(() => {
     const onScroll = () => {
       const beats = document.getElementById("beats");
-      const outcomes = document.getElementById("outcomes");
-      if (!beats || !outcomes) return;
-      const oTop = outcomes.getBoundingClientRect().top;
-      const bTop = beats.getBoundingClientRect().top;
-      if (oTop < window.innerHeight * 0.6) setActiveNav("outcomes");
-      else if (bTop > 120) setActiveNav("beats");
+      if (!beats) return;
+      if (beats.getBoundingClientRect().top > 120) setActiveNav("beats");
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -154,7 +195,7 @@ export default function Cockpit() {
     fetch(`${API}/health`)
       .then((r) => r.json())
       .then(setHealth)
-      .catch(() => setError(`Backend not reachable at ${API} — start it with uvicorn backend.main:app`));
+      .catch(() => setError("The system isn't running — the ClaimShield service did not answer. Please start it and reload."));
     fetch(`${API}/scrubber/rules`)
       .then((r) => r.json())
       .then(setRules)
@@ -185,7 +226,7 @@ export default function Cockpit() {
       argument: "Please approve this claim.",
     });
     setPacket(data);
-    setResults((r) => ({ ...r, 1: { out: data.verdict, cls: data.verdict === "APPROVE" ? "ok" : "no", note: `proof ×${data.proof_count}` } }));
+    setResults((r) => ({ ...r, 1: { out: verdictLabel(data.verdict), cls: data.verdict === "APPROVE" ? "ok" : "no", note: backedNote(data.proof_count) } }));
     return data;
   }
 
@@ -197,8 +238,8 @@ export default function Cockpit() {
       tags: ["insurer:star_health", "synthetic"],
     });
     setToast(data);
-    const layers = Object.keys(data.pii_layers || {}).join(", ") || "none";
-    setResults((r) => ({ ...r, 2: { out: "Redacted", cls: "ok", note: layers } }));
+    const layers = [...new Set(Object.values(data.pii_layers || {}))].map(layerLabel).join(", ") || "nothing found";
+    setResults((r) => ({ ...r, 2: { out: "Removed", cls: "ok", note: layers } }));
     return data;
   }
 
@@ -207,7 +248,7 @@ export default function Cockpit() {
     setToast(null);
     const { data } = await post("/appeals/strategy", PT_CLAIM);
     setPacket(data);
-    setResults((r) => ({ ...r, 3: { out: data.verdict, cls: data.verdict === "APPROVE" ? "ok" : "no", note: `proof ×${data.proof_count}` } }));
+    setResults((r) => ({ ...r, 3: { out: verdictLabel(data.verdict), cls: data.verdict === "APPROVE" ? "ok" : "no", note: backedNote(data.proof_count) } }));
     return data;
   }
 
@@ -231,9 +272,9 @@ export default function Cockpit() {
     setResults((prev) => ({
       ...prev,
       4: {
-        out: recheck.data.verdict,
+        out: recheck.data.verdict === "BLOCKED" ? "Blocked" : recheck.data.verdict === "WARN" ? "Passed, with a warning" : "Passed",
         cls: recheck.data.verdict === "BLOCKED" ? "wait" : "ok",
-        note: (recheck.data.missing || []).join(", ") || "all documents present",
+        note: (recheck.data.missing || []).map(docLabel).join(", ") || "Nothing missing",
       },
     }));
     return { commit: data, recheck: recheck.data };
@@ -251,87 +292,87 @@ export default function Cockpit() {
     const t = text.toLowerCase();
 
     if (/help|what can you/.test(t)) {
-      desk("I run the cockpit's work. Try: Run beat 1, Run beat 2, Run beat 3, Commit patch, Check packet, Rules, or Health.");
+      desk("I run the same steps as the buttons. Try: Run step 1, Run step 2, Run step 3, Approve & update, Check this packet, Show the rules, or Status.");
       return;
     }
-    if (/beat 1|day-?1 appeal|first beat/.test(t)) {
+    if (/(step|beat) 1|day-?1 appeal|first (step|beat)/.test(t)) {
       try {
         const d = await beat1();
-        desk(`${d.verdict} — proof ×${d.proof_count}.`, d.reason);
+        desk(`${verdictLabel(d.verdict)} — ${backedNote(d.proof_count).toLowerCase()}.`, d.reason);
       } catch {
-        desk("Beat 1 failed — is the backend running?");
+        desk("Step 1 didn't run — is the system running?");
       }
       return;
     }
-    if (/beat 2|scrub|redact|ssn/.test(t)) {
+    if (/(step|beat) 2|scrub|redact|private|ssn/.test(t)) {
       try {
         const d = await beat2();
-        desk("Packet scrubbed before it was stored — the stored text is clean.", `Redacted: ${(d.pii_scrubbed || []).join(", ")}`);
+        desk("Private details were removed before anything was saved — the saved text is clean.", `Removed: ${(d.pii_scrubbed || []).join(", ")}`);
       } catch {
-        desk("Beat 2 failed — is the backend running?");
+        desk("Step 2 didn't run — is the system running?");
       }
       return;
     }
-    if (/beat 3|stale|pt appeal/.test(t)) {
+    if (/(step|beat) 3|stale|old argument|pt appeal/.test(t)) {
       try {
         const d = await beat3();
-        desk(`${d.verdict} — proof ×${d.proof_count}.`, d.reason);
+        desk(`${verdictLabel(d.verdict)} — ${backedNote(d.proof_count).toLowerCase()}.`, d.reason);
       } catch {
-        desk("Beat 3 failed — is the backend running?");
+        desk("Step 3 didn't run — is the system running?");
       }
       return;
     }
-    if (/beat 4|commit|patch/.test(t)) {
+    if (/(step|beat) 4|commit|patch|approve/.test(t)) {
       try {
         const d = await beat4();
-        if (!d) { desk("Commit failed — see the error bar above the beats."); return; }
-        desk(`Patch committed, then rechecked: ${d.recheck.verdict}.`, `Missing: ${(d.recheck.missing || []).join(", ") || "none"} · rule ${d.recheck.rule_id}`);
+        if (!d) { desk("That update didn't save — see the message above the steps."); return; }
+        desk(`Rules updated, then the same packet was checked again: ${d.recheck.verdict === "BLOCKED" ? "Blocked" : d.recheck.verdict}.`, `Missing: ${(d.recheck.missing || []).map(docLabel).join(", ") || "nothing"}`);
       } catch {
-        desk("Beat 4 failed — is the backend running?");
+        desk("Step 4 didn't run — is the system running?");
       }
       return;
     }
-    if (/check packet|check the packet|verify packet/.test(t)) {
+    if (/check/.test(t)) {
       try {
         const { data } = await post("/scrubber/check", COMPLETE_DENGUE_PACKET);
         setCheck(data);
-        desk(`Packet check: ${data.verdict}.`, `Missing: ${(data.missing || []).join(", ") || "none"} · rule ${data.rule_id}`);
+        desk(`Packet check: ${data.verdict === "BLOCKED" ? "Blocked" : data.verdict}.`, `Missing: ${(data.missing || []).map(docLabel).join(", ") || "nothing"}`);
       } catch {
-        desk("Check failed — is the backend running?");
+        desk("The check didn't run — is the system running?");
       }
       return;
     }
-    if (/rules?/.test(t)) {
+    if (/rules?|checklist/.test(t)) {
       const all = rules?.rules || [];
-      if (!all.length) { desk("Rules are still loading — try again in a moment."); return; }
+      if (!all.length) { desk("The rules are still loading — try again in a moment."); return; }
       const active = all.filter((r) => r.is_active);
       desk(
-        `${active.length} active rules. ${active.map((r) => `${pretty(r.insurer)} ${pretty(r.diagnosis_group)} v${r.version} (proof ×${r.proof_count})`).join("; ")}.`,
-        `${all.length} rules · history v1 → v${Math.max(...all.map((r) => r.version || 0))}`
+        `${active.length} rules are in use. ${active.map((r) => `${pretty(r.insurer)} ${pretty(r.diagnosis_group)}, version ${r.version} (backed by ${r.proof_count} wins)`).join("; ")}.`,
+        `${all.length} rules in total · newest is version ${Math.max(...all.map((r) => r.version || 0))}`
       );
       return;
     }
-    if (/health|status|backend/.test(t)) {
-      if (!health) { desk("Backend is not answering right now."); return; }
-      desk(`Backend ${health.status || "ok"} — band ${health.band || "local"}, rules v${health.rules_version || "?"}`, `Adapter: ${health.backend || health.adapter || "memory"}`);
+    if (/health|status|backend|system/.test(t)) {
+      if (!health) { desk("The system is not answering right now."); return; }
+      desk(`Everything is running. Checklist version ${health.rules_version || "?"}.`, `Memory mode: ${health.backend === "memory" ? "built-in memory (demo)" : health.backend || "memory"}`);
       return;
     }
     if (/appeal dengue|dengue appeal/.test(t)) {
       try {
         const { data } = await post("/appeals/strategy", DENGUE_CLAIM);
         setPacket(data);
-        setResults((r) => ({ ...r, 1: { out: data.verdict, cls: data.verdict === "APPROVE" ? "ok" : "no", note: `proof ×${data.proof_count}` } }));
-        desk(`${data.verdict} — proof ×${data.proof_count}.`, data.reason);
+        setResults((r) => ({ ...r, 1: { out: verdictLabel(data.verdict), cls: data.verdict === "APPROVE" ? "ok" : "no", note: backedNote(data.proof_count) } }));
+        desk(`${verdictLabel(data.verdict)} — ${backedNote(data.proof_count).toLowerCase()}.`, data.reason);
       } catch {
-        desk("Appeal failed — is the backend running?");
+        desk("The appeal check didn't run — is the system running?");
       }
       return;
     }
     if (packet) {
-      desk(`Last packet: ${packet.verdict}, proof ×${packet.proof_count}.`, packet.reason);
+      desk(`Last check: ${verdictLabel(packet.verdict)} — ${backedNote(packet.proof_count).toLowerCase()}.`, packet.reason);
       return;
     }
-    desk("Nothing run yet. Try “Run beat 1” or “Help” and I will run it for you.");
+    desk("Nothing has run yet. Try “Run step 1” or “Help” and I will run it for you.");
   }
 
   const activeRules = (rules?.rules || []).filter((r) => r.is_active);
@@ -368,8 +409,8 @@ export default function Cockpit() {
           <span className="wordmark">ClaimShield Desk</span>
         </div>
         <span className="spacer" />
-        {health && <span className="pill">backend: {health.backend}</span>}
-        <span className="live">Band room · live</span>
+        {health && <span className="pill">Memory: connected</span>}
+        <span className="live">Watching live</span>
         <button className="theme-toggle" onClick={toggleTheme} aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"} title={theme === "dark" ? "Light theme" : "Dark theme"}>
           {theme === "dark" ? (
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
@@ -382,7 +423,7 @@ export default function Cockpit() {
             </svg>
           )}
         </button>
-        <button className="chat-toggle" onClick={() => setChatOpen(true)}>Chat</button>
+        <button className="chat-toggle" onClick={() => setChatOpen(true)}>Assistant</button>
       </header>
       {error && <div className="errorbar">{error}</div>}
 
@@ -394,13 +435,7 @@ export default function Cockpit() {
             {item.label}
           </a>
         ))}
-        <button type="button" className="navlink" onClick={() => setChatOpen(true)}>{navIcon("chat")}Chat</button>
-        <div className="side-card">
-          <div className="side-card-k">On the desk</div>
-          <div className="side-card-v">Star Health · Dengue</div>
-          <div className="side-card-s">₹1,45,000 · SYNTHETIC</div>
-          <div className="side-card-s">Backend: {health?.backend ?? "…"} · Rules v{health?.rules_version ?? (maxVersion || "…")}</div>
-        </div>
+        <button type="button" className="navlink" onClick={() => setChatOpen(true)}>{navIcon("chat")}Assistant</button>
       </nav>
 
       <div className="wrap">
@@ -409,94 +444,121 @@ export default function Cockpit() {
             <span className="t1">Hindsight remembers.</span>
             <span className="t2">The desk decides.</span>
           </div>
-          <div className="desk-stats">
-            <div className="stat"><div className="v"><b>19</b>/20</div><div className="k">Eval set</div></div>
-            <div className="stat"><div className="v"><b>5</b>/5</div><div className="k">Adversarial</div></div>
-            <div className="stat"><div className="v">v{health?.rules_version ?? (maxVersion || "…")}</div><div className="k">Scrubber rules</div></div>
-            <div className="stat"><div className="v">{health?.backend ?? "…"}</div><div className="k">Backend</div></div>
+        </div>
+
+        <div className="beats-outcome howsteps" aria-label="How it works">
+          <div className="beat">
+            <span className="n">1 · REMEMBER</span>
+            <div className="out">It remembers what worked</div>
+            <p>Every past appeal result is saved, along with how many times it worked.</p>
+          </div>
+          <div className="beat">
+            <span className="n">2 · VERIFY</span>
+            <div className="out">It checks the new claim</div>
+            <p>The new packet is compared with the past cases that won.</p>
+          </div>
+          <div className="beat">
+            <span className="n">3 · DO IT RIGHT</span>
+            <div className="out">It fixes it, or stops it</div>
+            <p>A correct appeal is drafted for your approval. An incomplete packet is blocked before it is sent.</p>
           </div>
         </div>
 
         <div className="beats" id="beats">
-          <button onClick={beat1}>Beat 1 · Day-1 appeal</button>
-          <button onClick={beat2}>Beat 2 · SSN intake</button>
-          <button onClick={beat3}>Beat 3 · Stale PT veto</button>
-          <button className="primary" onClick={beat4}>Beat 4 · Commit patch</button>
+          {[
+            { n: 1, label: "Step 1 · Appeal with no memory", fn: beat1 },
+            { n: 2, label: "Step 2 · Remove private details", fn: beat2 },
+            { n: 3, label: "Step 3 · Check an old argument", fn: beat3 },
+            { n: 4, label: "Step 4 · Approve & update rules", fn: beat4, primary: true },
+          ].map((s) => (
+            <div className="beat-step" key={s.n}>
+              <button onClick={s.fn} className={s.primary ? "primary" : undefined}>{s.label}</button>
+              <p className={`beat-status ${results[s.n]?.cls || ""}`}>
+                {results[s.n] ? <><b>{results[s.n].out}</b>{results[s.n].note ? ` — ${results[s.n].note}` : ""}</> : "Not run yet"}
+              </p>
+            </div>
+          ))}
         </div>
 
         <div className="panes">
-          <section className="pane" id="band-room" aria-label="Band Room">
-            <h2>Band Room</h2>
+          <section className="pane" id="band-room" aria-label="Live Updates">
+            <h2>Live Updates</h2>
+            <p className="pane-meta">Everything the desk does, as it happens</p>
             <div className="body">
               {toast && (
                 <div className="toast">
-                  <b>Redacted:</b> {toast.pii_scrubbed.join(", ")} — layers:{" "}
-                  {Object.entries(toast.pii_layers || {}).map(([t, l]) => `${t} (${l})`).join(", ")}
+                  <b>Private details removed:</b> {toast.pii_scrubbed.join(", ")} — caught by{" "}
+                  {[...new Set(Object.values(toast.pii_layers || {}))].map(layerLabel).join(", ")}
                 </div>
               )}
               {events.length === 0 ? (
-                <p className="muted">No events yet. Run a beat to drive the room.</p>
+                <p className="muted">Nothing yet. Run a step above and watch it happen here.</p>
               ) : (
                 events.slice(-6).map((e, i) => (
                   <div className="turn" key={i}>
                     <p>
-                      <b>{e.event_type}</b>
-                      {e.document_id ? ` — ${e.document_id}` : ""}
-                      {e.event_id ? ` — ${e.event_id}` : ""}
+                      <b>{eventLabel(e.event_type)}</b>
+                      {e.document_id ? ` — ${e.document_id.replace("SYNTHETIC-", "")}` : ""}
                     </p>
                   </div>
                 ))
               )}
               {commit && (
                 <p className="commit-note">
-                  Committed <b>{commit.rule?.rule_id}</b> (v{commit.rule?.version}
-                  {commit.rule?.supersedes ? `, supersedes v${commit.rule.supersedes}` : ""}) — probe:{" "}
-                  <b>{commit.probe_verdict}</b>
+                  Checklist updated to <b>version {commit.rule?.version}</b>
+                  {commit.rule?.supersedes ? ` (replaces version ${commit.rule.supersedes})` : ""} — a packet checked with the new rules:{" "}
+                  <b>{commit.probe_verdict === "BLOCKED" ? "Blocked" : commit.probe_verdict}</b>
                 </p>
               )}
             </div>
           </section>
 
-          <section className="pane xray" id="xray" aria-label="Hindsight X-Ray">
+          <section className="pane xray" id="xray" aria-label="Memory Check">
             <svg className="xray-arc" viewBox="0 0 180 90" aria-hidden="true">
               <path d="M10 82 A 80 80 0 0 1 170 82" fill="none" strokeWidth="10" strokeLinecap="round"
                 stroke={packet?.verdict === "APPROVE" ? "var(--approve)" : packet?.verdict === "VETO" ? "var(--veto)" : "var(--accent)"}
                 strokeOpacity="0.35" />
             </svg>
-            <h2>Hindsight X-Ray</h2>
-            <p className="pane-meta">Star Health · Dengue · ₹1,45,000 · SYNTHETIC</p>
+            <h2>Memory Check</h2>
+            <p className="pane-meta">Star Health · Dengue · ₹1,45,000 · Sample case</p>
             <div className="body">
               {!packet ? (
-                <p className="muted">No appeal packet yet. Run Beat 1 or Beat 3.</p>
+                <p className="muted">No claim checked yet. Run Step 1 or Step 3.</p>
               ) : (
                 <>
                   <div className="verdict-row">
-                    <span className={`verdict ${packet.verdict === "APPROVE" ? "approve" : "veto"}`}>{packet.verdict}</span>
+                    <span className={`verdict ${packet.verdict === "APPROVE" ? "approve" : "veto"}`}>{verdictLabel(packet.verdict)}</span>
                     <span className="proof">
-                      proof <b>×{packet.proof_count}</b>
+                      {packet.proof_count ? <>backed by <b>{packet.proof_count} past wins</b></> : "no past cases behind it"}
                     </span>
                   </div>
+                  <p className="label">Why</p>
                   <p className="reason">{packet.reason}</p>
-                  <p className="label">Evidence</p>
+                  <p className="label">Past cases this is based on</p>
                   <div>
-                    {(packet.evidence || []).map((ev, i) => (
+                    {(packet.evidence || []).slice(0, 3).map((ev, i) => (
                       <div className="cite" key={i}>
                         <span className="name">
-                          {ev.citation}
+                          {caseLabel(ev.citation)}
                           <small>
-                            obs {ev.observation_id}
-                            {ev.superseded ? " · superseded" : ""}
+                            Past case {String(ev.observation_id || "").replace("obs_", "")}
+                            {ev.superseded ? " · this rule has changed since" : ""}
                           </small>
                         </span>
                         <span className="pc">
-                          proof <b>×{ev.proof_count}</b>
+                          won <b>{ev.proof_count}</b> times
                         </span>
                       </div>
                     ))}
+                    {(packet.evidence || []).length > 3 && (
+                      <p className="muted" style={{ fontSize: 13, margin: "8px 0 0" }}>
+                        and {(packet.evidence || []).length - 3} more past cases behind this
+                      </p>
+                    )}
                   </div>
                   {packet.missing_evidence?.length > 0 && (
                     <>
-                      <p className="label">Missing evidence</p>
+                      <p className="label">What is missing</p>
                       <ul className="missing">
                         {packet.missing_evidence.map((m, i) => (
                           <li key={i}>{m}</li>
@@ -506,8 +568,8 @@ export default function Cockpit() {
                   )}
                   {check && (
                     <div className="recheck">
-                      <b className={check.verdict === "BLOCKED" ? "blocked" : ""}>{check.verdict}</b>
-                      {check.missing?.length ? ` — missing: ${check.missing.join(", ")}` : ""} (rule {check.rule_id})
+                      <b className={check.verdict === "BLOCKED" ? "blocked" : ""}>{check.verdict === "BLOCKED" ? "Blocked before sending" : check.verdict}</b>
+                      {check.missing?.length ? ` — missing: ${check.missing.map(docLabel).join(", ")}` : ""}
                     </div>
                   )}
                 </>
@@ -515,29 +577,29 @@ export default function Cockpit() {
             </div>
           </section>
 
-          <section className="pane" id="repo" aria-label="Repo Viewer">
-            <h2>Repo Viewer</h2>
-            <p className="pane-meta">scrubber_rules.json{maxVersion ? ` · v${maxVersion}` : ""}</p>
+          <section className="pane" id="repo" aria-label="Rules">
+            <h2>Rules</h2>
+            <p className="pane-meta">The checklist every new claim is checked against{maxVersion ? ` · now on version ${maxVersion}` : ""}</p>
             <div className="body">
               {!rules ? (
-                <p className="muted">Loading rules…</p>
+                <p className="muted">Loading the rules…</p>
               ) : (
                 <>
                   {activeRules.map((r) => (
                     <div className="rule" key={r.rule_id}>
                       <div className="name">
-                        {pretty(r.insurer)} — {pretty(r.diagnosis_group)} — {pretty(r.denial_reason)}
+                        {pretty(r.insurer)} — {pretty(r.diagnosis_group)} — {denialLabel(r.denial_reason)}
                       </div>
                       <div className="meta">
-                        v{r.version} · active · proof <b>×{r.proof_count}</b>
+                        Version {r.version} · in use · backed by <b>{r.proof_count} wins</b>
                       </div>
                       <div className="req">
-                        Requires: <code>{r.requires.join(", ")}</code>
+                        Must have: <code>{r.requires.map(docLabel).join(", ")}</code>
                       </div>
                     </div>
                   ))}
                   <p className="rules-foot">
-                    {rules.rules.length} rules · history v1 → v{maxVersion}
+                    {rules.rules.length} rules in total · oldest version 1, newest version {maxVersion}
                   </p>
                 </>
               )}
@@ -545,27 +607,18 @@ export default function Cockpit() {
           </section>
         </div>
 
-        <div className="beats-outcome" id="outcomes" aria-label="Beat outcomes">
-          {[1, 2, 3, 4].map((n) => (
-            <div className="beat" key={n}>
-              <span className="n">BEAT {n}</span>
-              <div className={`out ${results[n]?.cls || ""}`}>{results[n]?.out || "Not run"}</div>
-              <p>{results[n]?.note || BEAT_NOTES[n]}</p>
-            </div>
-          ))}
-        </div>
         <div className="eval-strip">
-          <span className="eval-k">Measured, not claimed</span>
-          <span>Hindsight <b>19/20</b> · Adversarial <b>5/5</b></span>
-          <span>Stateless 16/20 · Plain RAG 11/20 · Adversarial 0/5</span>
+          <span className="eval-k">Tested, not just claimed</span>
+          <span>With memory: <b>19 of 20</b> cases decided right, and <b>all 5</b> tricky cases caught</span>
+          <span>Without memory: 16 of 20 · With simple search only: 11 of 20, and 0 of 5 tricky cases</span>
         </div>
       </div>
       </div>
 
       {chatOpen && (
-        <aside className="chat" aria-label="Desk chat">
+        <aside className="chat" aria-label="Assistant">
           <div className="chat-head">
-            <span>Desk chat</span>
+            <span>Assistant</span>
             <button className="chat-close" onClick={() => setChatOpen(false)}>Close</button>
           </div>
           <div className="chat-messages">
@@ -588,7 +641,7 @@ export default function Cockpit() {
             <input
               value={chatInput}
               onChange={(e) => setChatInput(e.target.value)}
-              placeholder="Type a command or question"
+              placeholder="Type what you want to do"
               aria-label="Chat input"
             />
             <button type="submit">Send</button>
@@ -604,7 +657,7 @@ export default function Cockpit() {
             <span>{item.short}</span>
           </a>
         ))}
-        <button type="button" onClick={() => setChatOpen(true)}>{navIcon("chat")}<span>Chat</span></button>
+        <button type="button" onClick={() => setChatOpen(true)}>{navIcon("chat")}<span>Assistant</span></button>
       </nav>
     </main>
   );
